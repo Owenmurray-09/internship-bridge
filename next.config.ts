@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        // Apply security headers to all routes
-        source: "/(.*)",
+        // Apply security headers to application routes only (excludes static assets)
+        source: "/((?!_next|favicon.ico|.*\\.(?:js|css|png|jpg|jpeg|gif|svg|woff|woff2)$).*)",
         headers: [
           // Content Security Policy - prevents XSS attacks
           {
@@ -33,11 +33,6 @@ const nextConfig: NextConfig = {
             key: "X-Frame-Options",
             value: "DENY"
           },
-          // Prevents MIME type sniffing
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff"
-          },
           // Referrer policy for privacy
           {
             key: "Referrer-Policy",
@@ -52,19 +47,16 @@ const nextConfig: NextConfig = {
               "geolocation=('self')",
               "interest-cohort=()"
             ].join(", ")
-          },
-          // Cross-Origin policies
+          }
+        ]
+      },
+      {
+        // Apply minimal headers to static assets to ensure proper loading
+        source: "/_next/:path*",
+        headers: [
           {
-            key: "Cross-Origin-Embedder-Policy",
-            value: "credentialless"
-          },
-          {
-            key: "Cross-Origin-Opener-Policy",
-            value: "same-origin"
-          },
-          {
-            key: "Cross-Origin-Resource-Policy",
-            value: "same-origin"
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable"
           }
         ]
       }

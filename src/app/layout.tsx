@@ -32,8 +32,8 @@ export const metadata: Metadata = {
     },
   ],
   icons: [
-    { rel: "apple-touch-icon", url: "/icon-128x128.png" },
-    { rel: "icon", url: "/icon-128x128.png" },
+    { rel: "apple-touch-icon", url: "/next.svg" },
+    { rel: "icon", url: "/next.svg" },
   ],
 };
 
@@ -62,10 +62,8 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#2563eb" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <link rel="apple-touch-icon" href="/icon-192x192.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/icon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/icon-16x16.png" />
-        <link rel="mask-icon" href="/icon-maskable.svg" color="#2563eb" />
+        <link rel="apple-touch-icon" href="/next.svg" />
+        <link rel="icon" type="image/svg+xml" href="/next.svg" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

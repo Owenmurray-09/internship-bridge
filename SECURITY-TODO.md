@@ -72,7 +72,17 @@ This document tracks remaining security improvements for the InternshipBridge ap
 - **Files to modify**: Error boundary components, API error handlers
 - **Status**: ✅ Well handled (generic error messages)
 
-### 7. File Upload Security (Future)
+### 7. Security Headers Optimization
+- **Priority**: LOW
+- **Risk**: Potential conflicts between security headers and static asset loading
+- **Implementation**:
+  - Re-enable X-Content-Type-Options for application routes only
+  - Add Cross-Origin policies with proper static asset exclusions
+  - Test and validate all security headers work with Next.js static assets
+- **Files to modify**: `next.config.ts`
+- **Status**: ⚠️ Partially implemented (basic exclusions in place)
+
+### 8. File Upload Security (Future)
 - **Priority**: LOW (when file uploads are added)
 - **Risk**: Malicious file uploads, XSS through files
 - **Implementation**:
@@ -101,8 +111,9 @@ This document tracks remaining security improvements for the InternshipBridge ap
 - ✅ **Content Security Policy**: Strict CSP preventing XSS
 - ✅ **HTTP Strict Transport Security**: Forces HTTPS
 - ✅ **X-Frame-Options**: Prevents clickjacking
-- ✅ **X-Content-Type-Options**: Prevents MIME confusion
 - ✅ **Referrer Policy**: Privacy protection
+- ⚠️ **X-Content-Type-Options**: Temporarily excluded from static assets to prevent loading issues
+- ⚠️ **Cross-Origin Policies**: Temporarily excluded to ensure compatibility with Next.js
 
 ### Dependencies & Infrastructure
 - ✅ **Zero Vulnerabilities**: All high-severity issues resolved
