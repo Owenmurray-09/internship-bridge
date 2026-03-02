@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const origin = requestUrl.origin
 
   if (code) {
-    const supabase = createServerSupabase()
+    const supabase = await createServerSupabase()
     await supabase.auth.exchangeCodeForSession(code)
   }
 

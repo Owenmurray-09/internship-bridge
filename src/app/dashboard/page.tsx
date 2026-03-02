@@ -7,16 +7,16 @@ import Link from 'next/link'
 export default async function DashboardPage() {
   const supabase = await createServerSupabase()
 
-  const { data: { session } } = await supabase.auth.getSession()
+  const { data: { user }, error } = await supabase.auth.getUser()
 
-  if (!session) {
+  if (!user || error) {
     redirect('/auth/login')
   }
 
   const { data: userData } = await supabase
     .from('users')
     .select('*')
-    .eq('id', session.user.id)
+    .eq('id', user.id)
     .single()
 
   const isStudent = userData?.role === 'student'
@@ -32,7 +32,7 @@ export default async function DashboardPage() {
               <h1 className="text-xl font-semibold text-gray-900">InternshipBridge</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">Welcome, {userData?.full_name || session.user.email}</span>
+              <span className="text-sm text-gray-600">Welcome, {userData?.full_name || user.email}</span>
               <form action="/auth/signout" method="post">
                 <Button type="submit" variant="outline" size="sm">
                   Sign Out

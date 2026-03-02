@@ -29,14 +29,7 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  const { data: { session } } = await supabase.auth.getSession()
-
-  // Debug logging
-  console.log('Middleware:', {
-    path: request.nextUrl.pathname,
-    hasSession: !!session,
-    userId: session?.user?.id
-  })
+  const { data: { user }, error } = await supabase.auth.getUser()
 
   // Protected routes that require authentication
   const protectedRoutes = ['/dashboard', '/profile', '/applications', '/internships/create']
@@ -45,15 +38,13 @@ export async function middleware(request: NextRequest) {
   const isProtectedRoute = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
   const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname)
 
-  // Redirect to login if accessing protected route without session
-  if (isProtectedRoute && !session) {
-    console.log('Redirecting to login: no session for protected route')
+  // Redirect to login if accessing protected route without valid user
+  if (isProtectedRoute && (!user || error)) {
     return NextResponse.redirect(new URL('/auth/login', request.url))
   }
 
-  // Redirect to dashboard if accessing auth pages with active session
-  if (session && (request.nextUrl.pathname.startsWith('/auth/login') || request.nextUrl.pathname.startsWith('/auth/signup'))) {
-    console.log('Redirecting to dashboard: has session on auth page')
+  // Redirect to dashboard if accessing auth pages with valid user
+  if (user && !error && (request.nextUrl.pathname.startsWith('/auth/login') || request.nextUrl.pathname.startsWith('/auth/signup'))) {
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 

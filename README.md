@@ -9,7 +9,7 @@ A modern web application connecting talented students with amazing internship op
 - **Database**: PostgreSQL (via Supabase)
 - **Authentication**: Supabase Auth
 - **Deployment**: Vercel
-- **PWA**: next-pwa for offline functionality
+- **PWA**: Native Next.js PWA implementation (custom service worker)
 
 ## Features
 
@@ -215,12 +215,40 @@ The app uses Supabase Auth with custom role-based access control:
 - Secure cookie-based storage
 - Server-side session validation
 
-## PWA Features
+## PWA Implementation
 
-- Offline functionality
-- Install prompt for mobile and desktop
-- Responsive design optimized for all devices
-- Push notifications (planned)
+### Architecture Decision
+
+**We intentionally chose NOT to use `next-pwa` package** and instead implemented a **custom, secure PWA solution** for the following reasons:
+
+#### Why We Avoided next-pwa
+- **Security vulnerabilities**: The `next-pwa` package had multiple high-severity vulnerabilities (serialize-javascript RCE)
+- **Maintenance issues**: The package was not actively maintained and had dependency conflicts
+- **Bloated dependencies**: Brought in unnecessary webpack plugins and outdated libraries
+
+#### Our Custom Implementation
+Instead, we use **native Next.js capabilities** with a custom service worker approach:
+
+**Files:**
+- `public/sw.js` - Custom service worker for caching and offline functionality
+- `public/manifest.json` - PWA manifest for installation prompts
+- `src/components/PWAInstaller.tsx` - Service worker registration component
+- `next.config.ts` - Security headers and PWA configuration
+
+**Features:**
+- ✅ **Offline functionality** - Smart caching with fallback strategies
+- ✅ **Install prompts** - Native browser install prompts on mobile/desktop
+- ✅ **App-like experience** - Fullscreen mode, splash screen, app icons
+- ✅ **Security-first** - No vulnerable dependencies, strict CSP headers
+- ✅ **Responsive design** - Optimized for all device sizes
+- 🔄 **Push notifications** - Ready for implementation when needed
+
+### For Future PWA Enhancements
+
+When adding new PWA features, refer to the **official Next.js PWA documentation**:
+https://nextjs.org/docs/app/guides/progressive-web-apps
+
+This ensures we stay aligned with Next.js best practices and avoid introducing security vulnerabilities through third-party packages.
 
 ## Deployment
 

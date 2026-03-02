@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -8,38 +9,33 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClientSupabase } from '@/lib/supabase'
+import { loginSchema, type LoginInput } from '@/lib/validation'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
   const router = useRouter()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError: setFormError,
+  } = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
+  })
 
-  const handleSignIn = async (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Login form submitted:', { email })
-    setLoading(true)
-    setError('')
-
+  const onSubmit = async (data: LoginInput) => {
     try {
-      console.log('Attempting Supabase auth...')
       const supabase = createClientSupabase()
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      const { data: authData, error } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
       })
 
-      console.log('Supabase auth result:', { data: data?.user?.email, error })
-
       if (error) {
-        console.error('Login error:', error)
-        setError(error.message)
+        setFormError('root', { message: error.message })
         return
       }
 
-      if (data?.user) {
-        console.log('Login successful, redirecting to dashboard...')
+      if (authData?.user) {
         // Give a small delay to ensure session is set
         setTimeout(() => {
           router.push('/dashboard')
@@ -47,10 +43,7 @@ export default function LoginPage() {
         }, 100)
       }
     } catch (err) {
-      console.error('Unexpected login error:', err)
-      setError('An unexpected error occurred')
-    } finally {
-      setLoading(false)
+      setFormError('root', { message: 'An unexpected error occurred' })
     }
   }
 
@@ -64,10 +57,10 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSignIn} className="space-y-4">
-            {error && (
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {errors.root && (
               <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
-                {error}
+                {errors.root.message}
               </div>
             )}
             <div className="space-y-2">
@@ -75,33 +68,33 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={loading}
+                {...register('email')}
+                disabled={isSubmitting}
+                aria-invalid={!!errors.email}
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                disabled={loading}
+                {...register('password')}
+                disabled={isSubmitting}
+                aria-invalid={!!errors.password}
               />
+              {errors.password && (
+                <p className="text-red-500 text-sm">{errors.password.message}</p>
+              )}
             </div>
             <Button
               type="submit"
               className="w-full"
-              disabled={loading}
-              onClick={(e) => {
-                console.log('Button clicked')
-                // Let form submission handle it, but log for debugging
-              }}
+              disabled={isSubmitting}
             >
-              {loading ? 'Signing In...' : 'Sign In'}
+              {isSubmitting ? 'Signing In...' : 'Sign In'}
             </Button>
           </form>
           <div className="mt-6 text-center text-sm">

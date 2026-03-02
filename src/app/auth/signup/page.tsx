@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -8,63 +10,67 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClientSupabase } from '@/lib/supabase'
+import { signupSchema, type SignupInput } from '@/lib/validation'
 import type { UserRole } from '@/types/database'
 
 export default function SignUpPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [fullName, setFullName] = useState('')
-  const [role, setRole] = useState<UserRole>('student')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [message, setMessage] = useState('')
   const router = useRouter()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError: setFormError,
+    watch,
+  } = useForm<SignupInput>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: {
+      role: 'student',
+    },
+  })
 
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+  const [message, setMessage] = useState('')
+
+  const onSubmit = async (data: SignupInput) => {
     setMessage('')
 
     try {
       const supabase = createClientSupabase()
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
+      const { data: authData, error } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
         options: {
           data: {
-            full_name: fullName,
-            role: role,
+            full_name: data.fullName,
+            role: data.role,
           }
         }
       })
 
       if (error) {
-        setError(error.message)
+        setFormError('root', { message: error.message })
         return
       }
 
-      if (data?.user) {
+      if (authData?.user) {
         // Insert user data into our users table
         const { error: userError } = await supabase
           .from('users')
           .insert({
-            id: data.user.id,
-            email: data.user.email!,
-            full_name: fullName,
-            role: role
+            id: authData.user.id,
+            email: authData.user.email!,
+            full_name: data.fullName,
+            role: data.role
           })
 
         if (userError) {
-          console.error('Error creating user profile:', userError)
+          // Silent fail for user profile creation
+          // The auth user is still created successfully
         }
 
         setMessage('Check your email for the confirmation link!')
       }
     } catch (err) {
-      setError('An unexpected error occurred')
-    } finally {
-      setLoading(false)
+      setFormError('root', { message: 'An unexpected error occurred' })
     }
   }
 
@@ -78,10 +84,10 @@ export default function SignUpPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSignUp} className="space-y-4">
-            {error && (
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {errors.root && (
               <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
-                {error}
+                {errors.root.message}
               </div>
             )}
             {message && (
@@ -94,50 +100,61 @@ export default function SignUpPage() {
               <Input
                 id="fullName"
                 type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required
-                disabled={loading}
+                {...register('fullName')}
+                disabled={isSubmitting}
+                aria-invalid={!!errors.fullName}
               />
+              {errors.fullName && (
+                <p className="text-red-500 text-sm">{errors.fullName.message}</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={loading}
+                {...register('email')}
+                disabled={isSubmitting}
+                aria-invalid={!!errors.email}
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                disabled={loading}
-                minLength={6}
+                {...register('password')}
+                disabled={isSubmitting}
+                aria-invalid={!!errors.password}
               />
+              {errors.password && (
+                <p className="text-red-500 text-sm">{errors.password.message}</p>
+              )}
+              <p className="text-gray-500 text-xs">
+                Password must be at least 8 characters and include uppercase, lowercase, number, and special character.
+              </p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="role">I am a...</Label>
               <select
                 id="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value as UserRole)}
+                {...register('role')}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                disabled={loading}
+                disabled={isSubmitting}
+                aria-invalid={!!errors.role}
               >
                 <option value="student">Student looking for internships</option>
                 <option value="employer">Employer posting internships</option>
               </select>
+              {errors.role && (
+                <p className="text-red-500 text-sm">{errors.role.message}</p>
+              )}
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Creating Account...' : 'Create Account'}
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? 'Creating Account...' : 'Create Account'}
             </Button>
           </form>
           <div className="mt-6 text-center text-sm">
