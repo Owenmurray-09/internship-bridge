@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { supabase } from '@/lib/supabase'
+import { createClientSupabase } from '@/lib/supabase'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -18,25 +18,36 @@ export default function LoginPage() {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log('Login form submitted:', { email })
     setLoading(true)
     setError('')
 
     try {
+      console.log('Attempting Supabase auth...')
+      const supabase = createClientSupabase()
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
+      console.log('Supabase auth result:', { data: data?.user?.email, error })
+
       if (error) {
+        console.error('Login error:', error)
         setError(error.message)
         return
       }
 
       if (data?.user) {
-        router.push('/dashboard')
-        router.refresh()
+        console.log('Login successful, redirecting to dashboard...')
+        // Give a small delay to ensure session is set
+        setTimeout(() => {
+          router.push('/dashboard')
+          router.refresh()
+        }, 100)
       }
     } catch (err) {
+      console.error('Unexpected login error:', err)
       setError('An unexpected error occurred')
     } finally {
       setLoading(false)
@@ -81,7 +92,15 @@ export default function LoginPage() {
                 disabled={loading}
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading}
+              onClick={(e) => {
+                console.log('Button clicked')
+                // Let form submission handle it, but log for debugging
+              }}
+            >
               {loading ? 'Signing In...' : 'Sign In'}
             </Button>
           </form>

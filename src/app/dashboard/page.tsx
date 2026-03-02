@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 export default async function DashboardPage() {
-  const supabase = createServerSupabase()
+  const supabase = await createServerSupabase()
 
   const { data: { session } } = await supabase.auth.getSession()
 
