@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import PWAInstaller from "@/components/PWAInstaller";
 import { I18nProvider } from "@/lib/i18n/index";
 import DynamicLayout from "@/components/DynamicLayout";
 
@@ -72,7 +71,6 @@ export default function RootLayout({
       >
         <I18nProvider>
           <DynamicLayout>
-            <PWAInstaller />
             {children}
           </DynamicLayout>
         </I18nProvider>
