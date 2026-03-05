@@ -1,0 +1,221 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "close": "Close"
+  },
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "applications": "Applications",
+    "internships": "Internships",
+    "messages": "Messages",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "description": "Enter your credentials to access your account",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign In",
+      "submitting": "Signing In...",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    },
+    "signup": {
+      "title": "Create Account",
+      "description": "Enter your information to get started",
+      "fullName": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "passwordHint": "Password must be at least 8 characters and include uppercase, lowercase, number, and special character.",
+      "role": "I am a...",
+      "roleStudent": "Student looking for internships",
+      "roleEmployer": "Employer posting internships",
+      "submit": "Create Account",
+      "submitting": "Creating Account...",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "confirmationMessage": "Check your email for the confirmation link!"
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "InternshipBridge",
+      "subtitle": "Connecting talented students with amazing internship opportunities",
+      "description": "Your bridge to professional experience",
+      "getStarted": "Get Started",
+      "signIn": "Sign In"
+    },
+    "features": {
+      "title": "Why Choose InternshipBridge?",
+      "subtitle": "We make it easy for students to find internships and for companies to find talent.",
+      "students": {
+        "title": "For Students",
+        "description": "Find internships that match your skills and career goals",
+        "benefits": {
+          "0": "Browse thousands of internship opportunities",
+          "1": "Create a professional profile",
+          "2": "Track your applications",
+          "3": "Connect directly with employers"
+        }
+      },
+      "employers": {
+        "title": "For Employers",
+        "description": "Find talented students for your internship programs",
+        "benefits": {
+          "0": "Post internship opportunities",
+          "1": "Review student profiles",
+          "2": "Manage applications efficiently",
+          "3": "Build your talent pipeline"
+        }
+      },
+      "matching": {
+        "title": "Perfect Matching",
+        "description": "Smart algorithms help match students with the right opportunities",
+        "benefits": {
+          "0": "Skill-based matching",
+          "1": "Location preferences",
+          "2": "Industry alignment",
+          "3": "Seamless communication"
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to get started?",
+      "subtitle": "Join thousands of students and employers already using InternshipBridge to make meaningful connections.",
+      "createAccount": "Create Account"
+    },
+    "footer": {
+      "copyright": "© 2025 InternshipBridge. Built for connecting talent with opportunity."
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "overview": "Overview",
+    "recentActivity": "Recent Activity",
+    "quickActions": "Quick Actions",
+    "stats": "Statistics"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": {
+      "required": "Email is required",
+      "invalid": "Invalid email format",
+      "tooLong": "Email too long"
+    },
+    "password": {
+      "required": "Password is required",
+      "tooShort": "Password must be at least 8 characters",
+      "tooLong": "Password too long",
+      "complexity": "Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character"
+    },
+    "name": {
+      "required": "Name is required",
+      "tooLong": "Name too long",
+      "invalidChars": "Name can only contain letters, spaces, hyphens, and apostrophes"
+    }
+  },
+  "errors": {
+    "general": "An unexpected error occurred",
+    "network": "Network error. Please check your connection.",
+    "unauthorized": "You are not authorized to perform this action",
+    "notFound": "The requested resource was not found"
+  },
+  "language": {
+    "switch": "Language",
+    "english": "English",
+    "spanish": "Español"
+  },
+  "internships": {
+    "create": {
+      "title": "Post New Internship",
+      "description": "Create a new internship opportunity for students",
+      "basicInfo": "Basic Information",
+      "requirements": "Requirements & Responsibilities",
+      "details": "Details & Benefits",
+      "preview": "Preview",
+      "fields": {
+        "title": "Internship Title",
+        "titlePlaceholder": "e.g., Software Development Intern",
+        "description": "Description",
+        "descriptionPlaceholder": "Describe the internship opportunity, company culture, and what the intern will learn...",
+        "location": "Location",
+        "locationPlaceholder": "e.g., San Francisco, CA",
+        "remoteAllowed": "Remote work allowed",
+        "duration": "Duration (months)",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "applicationDeadline": "Application Deadline",
+        "requirements": "Requirements",
+        "requirementsPlaceholder": "Enter each requirement and press Enter",
+        "responsibilities": "Responsibilities",
+        "responsibilitiesPlaceholder": "Enter each responsibility and press Enter",
+        "skillsRequired": "Required Skills",
+        "skillsPlaceholder": "Enter each skill and press Enter",
+        "stipendAmount": "Stipend Amount",
+        "stipendCurrency": "Currency",
+        "maxApplications": "Maximum Applications",
+        "maxApplicationsHint": "Leave empty for unlimited"
+      },
+      "actions": {
+        "saveDraft": "Save Draft",
+        "publish": "Publish",
+        "publishing": "Publishing...",
+        "savingDraft": "Saving Draft..."
+      },
+      "success": {
+        "published": "Internship published successfully!",
+        "draftSaved": "Draft saved successfully!"
+      }
+    },
+    "manage": {
+      "title": "My Internships",
+      "description": "Manage your posted internship opportunities",
+      "noInternships": "You haven't posted any internships yet.",
+      "createFirst": "Create your first internship posting",
+      "filters": {
+        "all": "All",
+        "draft": "Draft",
+        "active": "Active",
+        "closed": "Closed",
+        "cancelled": "Cancelled"
+      },
+      "status": {
+        "draft": "Draft",
+        "active": "Active",
+        "closed": "Closed",
+        "cancelled": "Cancelled"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "activate": "Activate",
+        "close": "Close",
+        "cancel": "Cancel",
+        "viewApplications": "View Applications"
+      },
+      "stats": {
+        "applications": "applications",
+        "noApplications": "No applications yet"
+      },
+      "confirmDelete": {
+        "title": "Delete Internship",
+        "message": "Are you sure you want to delete this internship? This action cannot be undone.",
+        "confirm": "Delete",
+        "cancel": "Cancel"
+      }
+    }
+  }
+}

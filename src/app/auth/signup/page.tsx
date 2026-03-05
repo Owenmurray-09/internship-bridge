@@ -12,9 +12,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { createClientSupabase } from '@/lib/supabase'
 import { signupSchema, type SignupInput } from '@/lib/validation'
 import type { UserRole } from '@/types/database'
+import { useTranslations } from '@/lib/i18n'
+import LanguageToggle from '@/components/LanguageToggle'
 
 export default function SignUpPage() {
   const router = useRouter()
+  const { t } = useTranslations('auth.signup')
+  const { t: tErrors } = useTranslations('errors')
+
   const {
     register,
     handleSubmit,
@@ -67,20 +72,30 @@ export default function SignUpPage() {
           // The auth user is still created successfully
         }
 
-        setMessage('Check your email for the confirmation link!')
+        setMessage(t('confirmationMessage'))
       }
     } catch (err) {
-      setFormError('root', { message: 'An unexpected error occurred' })
+      setFormError('root', { message: tErrors('general') })
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      {/* Header with Language Toggle */}
+      <div className="flex justify-between items-center p-4">
+        <Link href="/" className="text-lg font-semibold text-gray-900">
+          InternshipBridge
+        </Link>
+        <LanguageToggle variant="compact" />
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Create Account</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">{t('title')}</CardTitle>
           <CardDescription className="text-center">
-            Enter your information to get started
+            {t('description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -96,7 +111,7 @@ export default function SignUpPage() {
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="fullName">Full Name</Label>
+              <Label htmlFor="fullName">{t('fullName')}</Label>
               <Input
                 id="fullName"
                 type="text"
@@ -109,7 +124,7 @@ export default function SignUpPage() {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('email')}</Label>
               <Input
                 id="email"
                 type="email"
@@ -122,7 +137,7 @@ export default function SignUpPage() {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('password')}</Label>
               <Input
                 id="password"
                 type="password"
@@ -134,11 +149,11 @@ export default function SignUpPage() {
                 <p className="text-red-500 text-sm">{errors.password.message}</p>
               )}
               <p className="text-gray-500 text-xs">
-                Password must be at least 8 characters and include uppercase, lowercase, number, and special character.
+                {t('passwordHint')}
               </p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="role">I am a...</Label>
+              <Label htmlFor="role">{t('role')}</Label>
               <select
                 id="role"
                 {...register('role')}
@@ -146,25 +161,26 @@ export default function SignUpPage() {
                 disabled={isSubmitting}
                 aria-invalid={!!errors.role}
               >
-                <option value="student">Student looking for internships</option>
-                <option value="employer">Employer posting internships</option>
+                <option value="student">{t('roleStudent')}</option>
+                <option value="employer">{t('roleEmployer')}</option>
               </select>
               {errors.role && (
                 <p className="text-red-500 text-sm">{errors.role.message}</p>
               )}
             </div>
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? 'Creating Account...' : 'Create Account'}
+              {isSubmitting ? t('submitting') : t('submit')}
             </Button>
           </form>
           <div className="mt-6 text-center text-sm">
-            <span className="text-gray-600">Already have an account? </span>
+            <span className="text-gray-600">{t('hasAccount')} </span>
             <Link href="/auth/login" className="font-medium text-blue-600 hover:text-blue-500">
-              Sign in
+              {t('signIn')}
             </Link>
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   )
 }

@@ -272,6 +272,107 @@ npm start
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key |
 | `SUPABASE_ACCESS_TOKEN` | Personal access token for Supabase CLI |
 
+## Internationalization (i18n)
+
+### Language Support
+This application supports both **English** and **Spanish** languages with easy switching.
+
+### Implementation Details
+- **Architecture**: Simple static JSON translations with React Context
+- **No URL routing**: Language preference stored in localStorage + database
+- **Libraries**: Custom lightweight hooks (no external i18n libraries)
+- **Translation files**: `src/lib/i18n/messages/en.json` and `es.json`
+
+### Developer Guidelines
+
+**IMPORTANT**: When adding new features, you MUST create translations for both languages:
+
+#### ✅ Correct Approach
+```tsx
+// 1. Add to both translation files
+// en.json
+{
+  "dashboard": {
+    "welcome": "Welcome back",
+    "newFeature": "My new feature"
+  }
+}
+
+// es.json
+{
+  "dashboard": {
+    "welcome": "Bienvenido de nuevo",
+    "newFeature": "Mi nueva característica"
+  }
+}
+
+// 2. Use in components
+const { t } = useTranslations('dashboard')
+return <h1>{t('welcome')}</h1>
+```
+
+#### ❌ Wrong Approach
+```tsx
+// DON'T hardcode strings
+return <h1>Welcome back</h1>
+
+// DON'T add only English
+return <h1>{t('welcome')}</h1> // without Spanish translation
+```
+
+#### Translation Key Conventions
+- Use **nested keys**: `auth.login.title` not `authLoginTitle`
+- Use **descriptive names**: `passwordHint` not `hint1`
+- **Organize by feature**: `dashboard.*`, `auth.*`, `validation.*`
+- **Common words**: Use `common.*` for reused terms like "Save", "Cancel"
+
+#### Using Translations
+```tsx
+// Basic usage
+const { t } = useTranslations('auth.login')
+return <button>{t('submit')}</button>
+
+// With parameters
+const { t } = useTranslations('dashboard')
+return <p>{t('welcome', { name: user.name })}</p> // "Welcome back, {{name}}"
+
+// Multiple namespaces
+const { t } = useTranslations('auth.login')
+const { t: tCommon } = useTranslations('common')
+const { t: tErrors } = useTranslations('errors')
+```
+
+#### Adding New Translation Keys
+1. Add key to **both** `en.json` and `es.json`
+2. Use **human-friendly** Spanish (get help if needed)
+3. Test language switching works
+4. Include translations in same PR as feature
+
+### Language Toggle
+The language toggle follows standard web design patterns and is placed in intuitive locations:
+
+**Locations & Variants:**
+- **Landing page**: Compact toggle in header navigation (top-right)
+- **Auth pages**: Compact toggle in header navigation
+- **Dashboard**: Full toggle in user menu/settings area
+- **Mobile**: Responsive design adapts to smaller screens
+
+**Design Patterns:**
+- **Compact variant**: `EN/ES` with language icon for headers
+- **Full variant**: `English/Español` with globe icon for prominent areas
+- **Dropdown style**: Shows both languages with current selection highlighted
+
+**Implementation:**
+```tsx
+// Compact for headers
+<LanguageToggle variant="compact" />
+
+// Full for prominence
+<LanguageToggle variant="full" showLabel={true} />
+```
+
+Language preference is automatically saved to localStorage and will persist to user database profile when implemented.
+
 ## Development
 
 ### Project Structure
@@ -282,8 +383,14 @@ src/
 │   ├── dashboard/      # Main dashboard
 │   └── layout.tsx      # Root layout
 ├── components/
-│   └── ui/             # shadcn/ui components
+│   ├── ui/             # shadcn/ui components
+│   └── LanguageToggle.tsx # Language switcher component
 ├── lib/                # Utilities and configurations
+│   ├── i18n/           # Internationalization
+│   │   ├── index.ts    # i18n context and hooks
+│   │   └── messages/   # Translation files
+│   │       ├── en.json # English translations
+│   │       └── es.json # Spanish translations
 │   ├── supabase.ts     # Supabase client setup
 │   └── utils.ts        # Utility functions
 └── types/              # TypeScript type definitions
