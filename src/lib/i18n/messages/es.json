@@ -1,0 +1,221 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "submit": "Enviar",
+    "close": "Cerrar"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "dashboard": "Panel",
+    "profile": "Perfil",
+    "applications": "Solicitudes",
+    "internships": "Prácticas",
+    "messages": "Mensajes",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión"
+  },
+  "auth": {
+    "login": {
+      "title": "Iniciar Sesión",
+      "description": "Ingresa tus credenciales para acceder a tu cuenta",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Iniciar Sesión",
+      "submitting": "Iniciando Sesión...",
+      "noAccount": "¿No tienes una cuenta?",
+      "signUp": "Regístrate"
+    },
+    "signup": {
+      "title": "Crear Cuenta",
+      "description": "Ingresa tu información para comenzar",
+      "fullName": "Nombre Completo",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "passwordHint": "La contraseña debe tener al menos 8 caracteres e incluir mayúsculas, minúsculas, números y caracteres especiales.",
+      "role": "Soy un...",
+      "roleStudent": "Estudiante buscando prácticas",
+      "roleEmployer": "Empleador publicando prácticas",
+      "submit": "Crear Cuenta",
+      "submitting": "Creando Cuenta...",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "signIn": "Iniciar sesión",
+      "confirmationMessage": "¡Revisa tu correo electrónico para el enlace de confirmación!"
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "InternshipBridge",
+      "subtitle": "Conectando estudiantes talentosos con oportunidades increíbles de prácticas",
+      "description": "Tu puente hacia la experiencia profesional",
+      "getStarted": "Comenzar",
+      "signIn": "Iniciar Sesión"
+    },
+    "features": {
+      "title": "¿Por qué elegir InternshipBridge?",
+      "subtitle": "Facilitamos que los estudiantes encuentren prácticas y que las empresas encuentren talento.",
+      "students": {
+        "title": "Para Estudiantes",
+        "description": "Encuentra prácticas que coincidan con tus habilidades y objetivos profesionales",
+        "benefits": {
+          "0": "Explora miles de oportunidades de prácticas",
+          "1": "Crea un perfil profesional",
+          "2": "Rastrea tus solicitudes",
+          "3": "Conecta directamente con empleadores"
+        }
+      },
+      "employers": {
+        "title": "Para Empleadores",
+        "description": "Encuentra estudiantes talentosos para tus programas de prácticas",
+        "benefits": {
+          "0": "Publica oportunidades de prácticas",
+          "1": "Revisa perfiles de estudiantes",
+          "2": "Gestiona solicitudes eficientemente",
+          "3": "Construye tu pipeline de talento"
+        }
+      },
+      "matching": {
+        "title": "Emparejamiento Perfecto",
+        "description": "Algoritmos inteligentes ayudan a emparejar estudiantes con las oportunidades correctas",
+        "benefits": {
+          "0": "Emparejamiento basado en habilidades",
+          "1": "Preferencias de ubicación",
+          "2": "Alineación de industria",
+          "3": "Comunicación fluida"
+        }
+      }
+    },
+    "cta": {
+      "title": "¿Listo para comenzar?",
+      "subtitle": "Únete a miles de estudiantes y empleadores que ya usan InternshipBridge para hacer conexiones significativas.",
+      "createAccount": "Crear Cuenta"
+    },
+    "footer": {
+      "copyright": "© 2025 InternshipBridge. Construido para conectar talento con oportunidad."
+    }
+  },
+  "dashboard": {
+    "welcome": "Bienvenido de vuelta",
+    "overview": "Resumen",
+    "recentActivity": "Actividad Reciente",
+    "quickActions": "Acciones Rápidas",
+    "stats": "Estadísticas"
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "email": {
+      "required": "El correo electrónico es obligatorio",
+      "invalid": "Formato de correo electrónico inválido",
+      "tooLong": "Correo electrónico demasiado largo"
+    },
+    "password": {
+      "required": "La contraseña es obligatoria",
+      "tooShort": "La contraseña debe tener al menos 8 caracteres",
+      "tooLong": "Contraseña demasiado larga",
+      "complexity": "La contraseña debe contener al menos una letra minúscula, una mayúscula, un número y un carácter especial"
+    },
+    "name": {
+      "required": "El nombre es obligatorio",
+      "tooLong": "Nombre demasiado largo",
+      "invalidChars": "El nombre solo puede contener letras, espacios, guiones y apostrofes"
+    }
+  },
+  "errors": {
+    "general": "Ha ocurrido un error inesperado",
+    "network": "Error de red. Por favor, verifica tu conexión.",
+    "unauthorized": "No tienes autorización para realizar esta acción",
+    "notFound": "El recurso solicitado no fue encontrado"
+  },
+  "language": {
+    "switch": "Idioma",
+    "english": "English",
+    "spanish": "Español"
+  },
+  "internships": {
+    "create": {
+      "title": "Publicar Nueva Práctica",
+      "description": "Crea una nueva oportunidad de práctica para estudiantes",
+      "basicInfo": "Información Básica",
+      "requirements": "Requisitos y Responsabilidades",
+      "details": "Detalles y Beneficios",
+      "preview": "Vista Previa",
+      "fields": {
+        "title": "Título de la Práctica",
+        "titlePlaceholder": "ej., Practicante de Desarrollo de Software",
+        "description": "Descripción",
+        "descriptionPlaceholder": "Describe la oportunidad de práctica, cultura de la empresa y lo que aprenderá el practicante...",
+        "location": "Ubicación",
+        "locationPlaceholder": "ej., San Francisco, CA",
+        "remoteAllowed": "Trabajo remoto permitido",
+        "duration": "Duración (meses)",
+        "startDate": "Fecha de Inicio",
+        "endDate": "Fecha de Fin",
+        "applicationDeadline": "Fecha Límite de Solicitud",
+        "requirements": "Requisitos",
+        "requirementsPlaceholder": "Ingresa cada requisito y presiona Enter",
+        "responsibilities": "Responsabilidades",
+        "responsibilitiesPlaceholder": "Ingresa cada responsabilidad y presiona Enter",
+        "skillsRequired": "Habilidades Requeridas",
+        "skillsPlaceholder": "Ingresa cada habilidad y presiona Enter",
+        "stipendAmount": "Cantidad de Estipendio",
+        "stipendCurrency": "Moneda",
+        "maxApplications": "Máximo de Solicitudes",
+        "maxApplicationsHint": "Dejar vacío para ilimitado"
+      },
+      "actions": {
+        "saveDraft": "Guardar Borrador",
+        "publish": "Publicar",
+        "publishing": "Publicando...",
+        "savingDraft": "Guardando Borrador..."
+      },
+      "success": {
+        "published": "¡Práctica publicada exitosamente!",
+        "draftSaved": "¡Borrador guardado exitosamente!"
+      }
+    },
+    "manage": {
+      "title": "Mis Prácticas",
+      "description": "Gestiona tus oportunidades de práctica publicadas",
+      "noInternships": "Aún no has publicado ninguna práctica.",
+      "createFirst": "Crea tu primera publicación de práctica",
+      "filters": {
+        "all": "Todas",
+        "draft": "Borrador",
+        "active": "Activa",
+        "closed": "Cerrada",
+        "cancelled": "Cancelada"
+      },
+      "status": {
+        "draft": "Borrador",
+        "active": "Activa",
+        "closed": "Cerrada",
+        "cancelled": "Cancelada"
+      },
+      "actions": {
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "activate": "Activar",
+        "close": "Cerrar",
+        "cancel": "Cancelar",
+        "viewApplications": "Ver Solicitudes"
+      },
+      "stats": {
+        "applications": "solicitudes",
+        "noApplications": "Aún no hay solicitudes"
+      },
+      "confirmDelete": {
+        "title": "Eliminar Práctica",
+        "message": "¿Estás seguro de que quieres eliminar esta práctica? Esta acción no se puede deshacer.",
+        "confirm": "Eliminar",
+        "cancel": "Cancelar"
+      }
+    }
+  }
+}

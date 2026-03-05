@@ -10,9 +10,15 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClientSupabase } from '@/lib/supabase'
 import { loginSchema, type LoginInput } from '@/lib/validation'
+import { useTranslations } from '@/lib/i18n'
+import LanguageToggle from '@/components/LanguageToggle'
 
 export default function LoginPage() {
   const router = useRouter()
+  const { t } = useTranslations('auth.login')
+  const { t: tCommon } = useTranslations('common')
+  const { t: tErrors } = useTranslations('errors')
+
   const {
     register,
     handleSubmit,
@@ -43,17 +49,27 @@ export default function LoginPage() {
         }, 100)
       }
     } catch (err) {
-      setFormError('root', { message: 'An unexpected error occurred' })
+      setFormError('root', { message: tErrors('general') })
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      {/* Header with Language Toggle */}
+      <div className="flex justify-between items-center p-4">
+        <Link href="/" className="text-lg font-semibold text-gray-900">
+          InternshipBridge
+        </Link>
+        <LanguageToggle variant="compact" />
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Sign In</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">{t('title')}</CardTitle>
           <CardDescription className="text-center">
-            Enter your credentials to access your account
+            {t('description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -64,7 +80,7 @@ export default function LoginPage() {
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('email')}</Label>
               <Input
                 id="email"
                 type="email"
@@ -77,7 +93,7 @@ export default function LoginPage() {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('password')}</Label>
               <Input
                 id="password"
                 type="password"
@@ -94,17 +110,18 @@ export default function LoginPage() {
               className="w-full"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Signing In...' : 'Sign In'}
+              {isSubmitting ? t('submitting') : t('submit')}
             </Button>
           </form>
           <div className="mt-6 text-center text-sm">
-            <span className="text-gray-600">Don't have an account? </span>
+            <span className="text-gray-600">{t('noAccount')} </span>
             <Link href="/auth/signup" className="font-medium text-blue-600 hover:text-blue-500">
-              Sign up
+              {t('signUp')}
             </Link>
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   )
 }

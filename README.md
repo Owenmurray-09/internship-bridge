@@ -166,19 +166,147 @@ The application uses the following main tables with Row Level Security (RLS) ena
 
 ### Schema Management
 
-The database schema is managed through Supabase migrations located in:
-- `supabase/migrations/20241201000000_initial_schema.sql`
+The database schema is managed through **Supabase migrations** located in `supabase/migrations/`. This ensures database changes are version-controlled, reproducible, and safely deployable.
 
-To apply schema changes:
+#### Current Migration Files
+- `20241201000000_initial_schema.sql` - Complete initial database setup with tables, RLS policies, and triggers
+- `20260305004345_add_preferred_locale_to_users.sql` - Adds `preferred_locale` field for i18n support
+
+#### Migration Workflow
+
+**1. Creating New Migrations**
 ```bash
-# Make changes to migration files
-supabase db push
+# Create a new migration file with descriptive name
+supabase migration new add_feature_name
+
+# Edit the generated SQL file in supabase/migrations/
+# Example: supabase/migrations/TIMESTAMP_add_feature_name.sql
 ```
 
-To view current schema:
+**2. Testing Migrations (Recommended)**
 ```bash
-# Generate types based on database
-supabase gen types typescript --local > src/types/supabase.ts
+# Test migration without applying (dry-run)
+supabase db push --dry-run
+
+# Review what would be changed before applying
+```
+
+**3. Applying Migrations**
+```bash
+# Apply migrations to remote database
+supabase db push
+
+# Confirm when prompted (or use -y to auto-accept)
+```
+
+**4. Update TypeScript Types**
+```bash
+# Generate updated types after successful migration
+supabase gen types typescript --project-id guaicbvtfvpduthaqxbf > src/types/supabase.ts
+
+# Or use the linked project (when properly configured)
+supabase gen types typescript > src/types/supabase.ts
+```
+
+#### Migration Best Practices
+
+**✅ DO:**
+- Always test with `--dry-run` first
+- Use descriptive migration names: `add_user_preferences`, `create_analytics_table`
+- Include comments explaining complex changes
+- Add CHECK constraints for data validation (like the locale field)
+- Use reversible migrations when possible
+- Update TypeScript types after each migration
+
+**❌ DON'T:**
+- Edit existing migration files after they've been applied
+- Skip the dry-run step for production databases
+- Use generic names like `update_schema` or `fix_database`
+- Apply migrations without reviewing the changes first
+
+#### Migration Examples
+
+**Adding a new column:**
+```sql
+-- Migration: add_user_timezone.sql
+ALTER TABLE public.users
+ADD COLUMN timezone TEXT DEFAULT 'UTC';
+
+COMMENT ON COLUMN public.users.timezone IS 'User timezone for displaying dates (IANA timezone identifier)';
+```
+
+**Creating a new table with RLS:**
+```sql
+-- Migration: create_notifications_table.sql
+CREATE TABLE public.notifications (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES public.users(id) ON DELETE CASCADE NOT NULL,
+    title TEXT NOT NULL,
+    message TEXT NOT NULL,
+    read_at TIMESTAMP WITH TIME ZONE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- Enable RLS
+ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
+
+-- RLS Policy
+CREATE POLICY "Users can view own notifications"
+ON public.notifications FOR SELECT
+USING (auth.uid() = user_id);
+
+-- Index for performance
+CREATE INDEX idx_notifications_user_id ON public.notifications(user_id);
+```
+
+#### Local Development (Requires Docker)
+
+For local development with full migration testing:
+
+```bash
+# Start local Supabase stack (requires Docker Desktop)
+supabase start
+
+# Apply migrations locally
+supabase db reset  # Fresh start with all migrations
+
+# Test migration changes locally first
+supabase db push --local
+
+# Stop local stack when done
+supabase stop
+```
+
+#### Troubleshooting Migrations
+
+**Common Issues:**
+
+1. **Migration fails due to existing data**
+   - Solution: Add data migration steps or use ALTER TABLE with default values
+
+2. **RLS policy prevents access**
+   - Solution: Review and update RLS policies to match new schema
+
+3. **Type generation fails**
+   - Solution: Ensure migrations are fully applied and database is accessible
+
+4. **Docker not running (local development)**
+   - Solution: Install Docker Desktop and start it before using `supabase start`
+
+**Useful Commands:**
+```bash
+# Check migration status
+supabase db diff --schema public
+
+# View migration history
+supabase migration list
+
+# Reset to specific migration (LOCAL ONLY - DESTRUCTIVE)
+supabase db reset --local
+
+# Get database URL for manual inspection
+supabase status --local  # Shows local URLs
+supabase projects list   # Shows remote project info
 ```
 
 ## Authentication & Authorization
@@ -272,6 +400,107 @@ npm start
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key |
 | `SUPABASE_ACCESS_TOKEN` | Personal access token for Supabase CLI |
 
+## Internationalization (i18n)
+
+### Language Support
+This application supports both **English** and **Spanish** languages with easy switching.
+
+### Implementation Details
+- **Architecture**: Simple static JSON translations with React Context
+- **No URL routing**: Language preference stored in localStorage + database
+- **Libraries**: Custom lightweight hooks (no external i18n libraries)
+- **Translation files**: `src/lib/i18n/messages/en.json` and `es.json`
+
+### Developer Guidelines
+
+**IMPORTANT**: When adding new features, you MUST create translations for both languages:
+
+#### ✅ Correct Approach
+```tsx
+// 1. Add to both translation files
+// en.json
+{
+  "dashboard": {
+    "welcome": "Welcome back",
+    "newFeature": "My new feature"
+  }
+}
+
+// es.json
+{
+  "dashboard": {
+    "welcome": "Bienvenido de nuevo",
+    "newFeature": "Mi nueva característica"
+  }
+}
+
+// 2. Use in components
+const { t } = useTranslations('dashboard')
+return <h1>{t('welcome')}</h1>
+```
+
+#### ❌ Wrong Approach
+```tsx
+// DON'T hardcode strings
+return <h1>Welcome back</h1>
+
+// DON'T add only English
+return <h1>{t('welcome')}</h1> // without Spanish translation
+```
+
+#### Translation Key Conventions
+- Use **nested keys**: `auth.login.title` not `authLoginTitle`
+- Use **descriptive names**: `passwordHint` not `hint1`
+- **Organize by feature**: `dashboard.*`, `auth.*`, `validation.*`
+- **Common words**: Use `common.*` for reused terms like "Save", "Cancel"
+
+#### Using Translations
+```tsx
+// Basic usage
+const { t } = useTranslations('auth.login')
+return <button>{t('submit')}</button>
+
+// With parameters
+const { t } = useTranslations('dashboard')
+return <p>{t('welcome', { name: user.name })}</p> // "Welcome back, {{name}}"
+
+// Multiple namespaces
+const { t } = useTranslations('auth.login')
+const { t: tCommon } = useTranslations('common')
+const { t: tErrors } = useTranslations('errors')
+```
+
+#### Adding New Translation Keys
+1. Add key to **both** `en.json` and `es.json`
+2. Use **human-friendly** Spanish (get help if needed)
+3. Test language switching works
+4. Include translations in same PR as feature
+
+### Language Toggle
+The language toggle follows standard web design patterns and is placed in intuitive locations:
+
+**Locations & Variants:**
+- **Landing page**: Compact toggle in header navigation (top-right)
+- **Auth pages**: Compact toggle in header navigation
+- **Dashboard**: Full toggle in user menu/settings area
+- **Mobile**: Responsive design adapts to smaller screens
+
+**Design Patterns:**
+- **Compact variant**: `EN/ES` with language icon for headers
+- **Full variant**: `English/Español` with globe icon for prominent areas
+- **Dropdown style**: Shows both languages with current selection highlighted
+
+**Implementation:**
+```tsx
+// Compact for headers
+<LanguageToggle variant="compact" />
+
+// Full for prominence
+<LanguageToggle variant="full" showLabel={true} />
+```
+
+Language preference is automatically saved to localStorage and will persist to user database profile when implemented.
+
 ## Development
 
 ### Project Structure
@@ -282,8 +511,14 @@ src/
 │   ├── dashboard/      # Main dashboard
 │   └── layout.tsx      # Root layout
 ├── components/
-│   └── ui/             # shadcn/ui components
+│   ├── ui/             # shadcn/ui components
+│   └── LanguageToggle.tsx # Language switcher component
 ├── lib/                # Utilities and configurations
+│   ├── i18n/           # Internationalization
+│   │   ├── index.ts    # i18n context and hooks
+│   │   └── messages/   # Translation files
+│   │       ├── en.json # English translations
+│   │       └── es.json # Spanish translations
 │   ├── supabase.ts     # Supabase client setup
 │   └── utils.ts        # Utility functions
 └── types/              # TypeScript type definitions
@@ -296,26 +531,50 @@ src/
 - `npm run lint` - Run ESLint
 
 ### Supabase CLI Commands
+
+**Project Management:**
 ```bash
-# Project management
-supabase projects list                    # List all projects
-supabase projects create <name>           # Create new project
-supabase link --project-ref <ref>         # Link to existing project
+supabase projects list                              # List all projects
+supabase projects create <name>                     # Create new project
+supabase link --project-ref guaicbvtfvpduthaqxbf    # Link to internship-bridge project
+```
 
-# Database operations
-supabase db push                          # Apply migrations to remote
-supabase db pull                          # Pull schema changes
-supabase db reset                         # Reset database
-supabase db diff                          # Show pending changes
+**Migration & Schema Operations:**
+```bash
+# Migration workflow (RECOMMENDED ORDER)
+supabase migration new <descriptive_name>          # Create new migration
+supabase db push --dry-run                         # Test migration (no changes)
+supabase db push                                   # Apply migration to remote
+supabase gen types typescript --project-id guaicbvtfvpduthaqxbf > src/types/supabase.ts  # Update types
 
-# Authentication & API
-supabase projects api-keys                # Get project API keys
-supabase gen types typescript --local     # Generate TypeScript types
+# Alternative type generation (when linked properly)
+supabase gen types typescript > src/types/supabase.ts
 
-# Local development (requires Docker)
-supabase start                           # Start local Supabase stack
-supabase stop                            # Stop local Supabase stack
-supabase status                          # Check local stack status
+# Schema inspection
+supabase db diff --schema public                   # Show pending schema changes
+supabase migration list                            # View migration history
+```
+
+**Local Development (Docker Required):**
+```bash
+supabase start                            # Start local Supabase stack
+supabase db reset --local                 # Fresh start with all migrations
+supabase db push --local                  # Apply migrations locally only
+supabase status --local                   # Check local stack status
+supabase stop                            # Stop local stack
+```
+
+**API & Authentication:**
+```bash
+supabase projects api-keys --project-ref guaicbvtfvpduthaqxbf  # Get project API keys
+```
+
+**CLI Maintenance:**
+```bash
+# Recommended: Update CLI regularly for latest features
+brew upgrade supabase                     # macOS
+scoop update supabase                     # Windows
+# Or follow instructions in CLI output
 ```
 
 ### Useful Supabase Dashboard Links

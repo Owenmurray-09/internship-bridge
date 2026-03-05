@@ -1,30 +1,62 @@
+'use client'
+
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useTranslations } from '@/lib/i18n'
+import LanguageToggle from '@/components/LanguageToggle'
 
 export default function Home() {
+  const { t } = useTranslations('landing')
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Navigation Header */}
+      <nav className="relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo/Brand */}
+            <div className="flex items-center">
+              <h1 className="text-xl font-bold text-gray-900">{t('hero.title')}</h1>
+            </div>
+
+            {/* Right side navigation */}
+            <div className="flex items-center gap-4">
+              <LanguageToggle variant="compact" />
+              <Link href="/auth/login">
+                <Button variant="ghost" size="sm">
+                  {t('hero.signIn')}
+                </Button>
+              </Link>
+              <Link href="/auth/signup">
+                <Button size="sm">
+                  {t('hero.getStarted')}
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              InternshipBridge
+              {t('hero.title')}
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Connecting talented students with amazing internship opportunities.
-              Your bridge to professional experience.
+              {t('hero.subtitle')} {t('hero.description')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/auth/signup">
                 <Button size="lg" className="w-full sm:w-auto">
-                  Get Started
+                  {t('hero.getStarted')}
                 </Button>
               </Link>
               <Link href="/auth/login">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                  Sign In
+                  {t('hero.signIn')}
                 </Button>
               </Link>
             </div>
@@ -37,10 +69,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose InternshipBridge?
+              {t('features.title')}
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We make it easy for students to find internships and for companies to find talent.
+              {t('features.subtitle')}
             </p>
           </div>
 
@@ -51,18 +83,18 @@ export default function Home() {
                   <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                     <span className="text-blue-600 font-bold">👨‍🎓</span>
                   </div>
-                  For Students
+                  {t('features.students.title')}
                 </CardTitle>
                 <CardDescription>
-                  Find internships that match your skills and career goals
+                  {t('features.students.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="text-sm text-gray-600 space-y-2">
-                  <li>• Browse thousands of internship opportunities</li>
-                  <li>• Create a professional profile</li>
-                  <li>• Track your applications</li>
-                  <li>• Connect directly with employers</li>
+                  <li>• {t('features.students.benefits.0')}</li>
+                  <li>• {t('features.students.benefits.1')}</li>
+                  <li>• {t('features.students.benefits.2')}</li>
+                  <li>• {t('features.students.benefits.3')}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -73,18 +105,18 @@ export default function Home() {
                   <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
                     <span className="text-green-600 font-bold">🏢</span>
                   </div>
-                  For Employers
+                  {t('features.employers.title')}
                 </CardTitle>
                 <CardDescription>
-                  Find talented students for your internship programs
+                  {t('features.employers.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="text-sm text-gray-600 space-y-2">
-                  <li>• Post internship opportunities</li>
-                  <li>• Review student profiles</li>
-                  <li>• Manage applications efficiently</li>
-                  <li>• Build your talent pipeline</li>
+                  <li>• {t('features.employers.benefits.0')}</li>
+                  <li>• {t('features.employers.benefits.1')}</li>
+                  <li>• {t('features.employers.benefits.2')}</li>
+                  <li>• {t('features.employers.benefits.3')}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -95,18 +127,18 @@ export default function Home() {
                   <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
                     <span className="text-purple-600 font-bold">🤝</span>
                   </div>
-                  Perfect Matching
+                  {t('features.matching.title')}
                 </CardTitle>
                 <CardDescription>
-                  Smart algorithms help match students with the right opportunities
+                  {t('features.matching.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="text-sm text-gray-600 space-y-2">
-                  <li>• Skill-based matching</li>
-                  <li>• Location preferences</li>
-                  <li>• Industry alignment</li>
-                  <li>• Seamless communication</li>
+                  <li>• {t('features.matching.benefits.0')}</li>
+                  <li>• {t('features.matching.benefits.1')}</li>
+                  <li>• {t('features.matching.benefits.2')}</li>
+                  <li>• {t('features.matching.benefits.3')}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -118,15 +150,15 @@ export default function Home() {
       <div className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to get started?
+            {t('cta.title')}
           </h2>
           <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join thousands of students and employers already using InternshipBridge to make meaningful connections.
+            {t('cta.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/auth/signup">
               <Button size="lg" className="w-full sm:w-auto bg-white text-gray-900 hover:bg-gray-100">
-                Create Account
+                {t('cta.createAccount')}
               </Button>
             </Link>
           </div>
@@ -137,7 +169,7 @@ export default function Home() {
       <footer className="bg-gray-50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center text-gray-600">
-            <p>&copy; 2025 InternshipBridge. Built for connecting talent with opportunity.</p>
+            <p>{t('footer.copyright')}</p>
           </div>
         </div>
       </footer>
