@@ -32,7 +32,7 @@ export async function middleware(request: NextRequest) {
   const { data: { user }, error } = await supabase.auth.getUser()
 
   // Protected routes that require authentication
-  const protectedRoutes = ['/dashboard', '/profile', '/applications', '/internships/create']
+  const protectedRoutes = ['/dashboard', '/profile', '/applications', '/internships/create', '/admin', '/global-admin']
   const publicRoutes = ['/', '/auth/login', '/auth/signup', '/auth/callback']
 
   const isProtectedRoute = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
@@ -41,6 +41,27 @@ export async function middleware(request: NextRequest) {
   // Redirect to login if accessing protected route without valid user
   if (isProtectedRoute && (!user || error)) {
     return NextResponse.redirect(new URL('/auth/login', request.url))
+  }
+
+  // Role-based route guards for admin pages
+  if (user && !error && (request.nextUrl.pathname.startsWith('/admin') || request.nextUrl.pathname.startsWith('/global-admin'))) {
+    const { data: userData } = await supabase
+      .from('users')
+      .select('role')
+      .eq('id', user.id)
+      .single()
+
+    const role = userData?.role
+
+    // /global-admin requires global_admin only
+    if (request.nextUrl.pathname.startsWith('/global-admin') && role !== 'global_admin') {
+      return NextResponse.redirect(new URL('/dashboard', request.url))
+    }
+
+    // /admin requires school_admin or global_admin
+    if (request.nextUrl.pathname.startsWith('/admin') && role !== 'school_admin' && role !== 'global_admin') {
+      return NextResponse.redirect(new URL('/dashboard', request.url))
+    }
   }
 
   // Redirect to dashboard if accessing auth pages with valid user

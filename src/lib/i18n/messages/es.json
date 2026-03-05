@@ -43,6 +43,9 @@
       "role": "Soy un...",
       "roleStudent": "Estudiante buscando prácticas",
       "roleEmployer": "Empleador publicando prácticas",
+      "school": "Tu Escuela",
+      "selectSchool": "Selecciona tu escuela",
+      "schoolOptionalGlobal": "Todas las escuelas (empleador global)",
       "submit": "Crear Cuenta",
       "submitting": "Creando Cuenta...",
       "hasAccount": "¿Ya tienes una cuenta?",
@@ -132,6 +135,14 @@
     "network": "Error de red. Por favor, verifica tu conexión.",
     "unauthorized": "No tienes autorización para realizar esta acción",
     "notFound": "El recurso solicitado no fue encontrado"
+  },
+  "school": {
+    "picker": "Escuela",
+    "allSchools": "Todas las Escuelas",
+    "settings": "Configuración de Escuela",
+    "manageStudents": "Gestionar Estudiantes",
+    "manageEmployers": "Gestionar Empleadores",
+    "stats": "Estadísticas de Escuela"
   },
   "language": {
     "switch": "Idioma",

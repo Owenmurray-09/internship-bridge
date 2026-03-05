@@ -79,6 +79,7 @@ export type Database = {
           description: string | null
           id: string
           industry: string | null
+          is_global: boolean | null
           location: string | null
           logo_url: string | null
           updated_at: string
@@ -93,6 +94,7 @@ export type Database = {
           description?: string | null
           id?: string
           industry?: string | null
+          is_global?: boolean | null
           location?: string | null
           logo_url?: string | null
           updated_at?: string
@@ -107,6 +109,7 @@ export type Database = {
           description?: string | null
           id?: string
           industry?: string | null
+          is_global?: boolean | null
           location?: string | null
           logo_url?: string | null
           updated_at?: string
@@ -138,6 +141,7 @@ export type Database = {
           remote_allowed: boolean | null
           requirements: string[] | null
           responsibilities: string[] | null
+          school_id: string | null
           skills_required: string[] | null
           start_date: string | null
           status: Database["public"]["Enums"]["internship_status"] | null
@@ -159,6 +163,7 @@ export type Database = {
           remote_allowed?: boolean | null
           requirements?: string[] | null
           responsibilities?: string[] | null
+          school_id?: string | null
           skills_required?: string[] | null
           start_date?: string | null
           status?: Database["public"]["Enums"]["internship_status"] | null
@@ -180,6 +185,7 @@ export type Database = {
           remote_allowed?: boolean | null
           requirements?: string[] | null
           responsibilities?: string[] | null
+          school_id?: string | null
           skills_required?: string[] | null
           start_date?: string | null
           status?: Database["public"]["Enums"]["internship_status"] | null
@@ -194,6 +200,13 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "company_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "internships_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
             referencedColumns: ["id"]
           },
         ]
@@ -249,6 +262,81 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      school_memberships: {
+        Row: {
+          created_at: string
+          id: string
+          is_primary: boolean | null
+          school_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_primary?: boolean | null
+          school_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_primary?: boolean | null
+          school_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "school_memberships_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "school_memberships_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      schools: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          id: string
+          logo_url: string | null
+          name: string
+          primary_color: string | null
+          secondary_color: string | null
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          name: string
+          primary_color?: string | null
+          secondary_color?: string | null
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          name?: string
+          primary_color?: string | null
+          secondary_color?: string | null
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       student_profiles: {
         Row: {
@@ -326,6 +414,7 @@ export type Database = {
           id: string
           phone: string | null
           preferred_locale: string | null
+          preferred_school_id: string | null
           role: Database["public"]["Enums"]["user_role"]
           updated_at: string
         }
@@ -336,6 +425,7 @@ export type Database = {
           id: string
           phone?: string | null
           preferred_locale?: string | null
+          preferred_school_id?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string
         }
@@ -346,10 +436,19 @@ export type Database = {
           id?: string
           phone?: string | null
           preferred_locale?: string | null
+          preferred_school_id?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "users_preferred_school_id_fkey"
+            columns: ["preferred_school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -366,7 +465,12 @@ export type Database = {
         | "rejected"
         | "withdrawn"
       internship_status: "draft" | "active" | "closed" | "cancelled"
-      user_role: "student" | "employer" | "admin"
+      user_role:
+        | "student"
+        | "employer"
+        | "admin"
+        | "school_admin"
+        | "global_admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -502,7 +606,13 @@ export const Constants = {
         "withdrawn",
       ],
       internship_status: ["draft", "active", "closed", "cancelled"],
-      user_role: ["student", "employer", "admin"],
+      user_role: [
+        "student",
+        "employer",
+        "admin",
+        "school_admin",
+        "global_admin",
+      ],
     },
   },
 } as const

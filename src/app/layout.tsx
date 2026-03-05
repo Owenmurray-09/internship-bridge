@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import PWAInstaller from "@/components/PWAInstaller";
 import { I18nProvider } from "@/lib/i18n/index";
+import { SchoolProvider } from "@/lib/school";
 import DynamicLayout from "@/components/DynamicLayout";
 
 const geistSans = Geist({
@@ -71,10 +72,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <I18nProvider>
-          <DynamicLayout>
-            <PWAInstaller />
-            {children}
-          </DynamicLayout>
+          <SchoolProvider>
+            <DynamicLayout>
+              <PWAInstaller />
+              {children}
+            </DynamicLayout>
+          </SchoolProvider>
         </I18nProvider>
       </body>
     </html>

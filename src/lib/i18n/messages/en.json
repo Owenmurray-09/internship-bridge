@@ -43,6 +43,9 @@
       "role": "I am a...",
       "roleStudent": "Student looking for internships",
       "roleEmployer": "Employer posting internships",
+      "school": "Your School",
+      "selectSchool": "Select your school",
+      "schoolOptionalGlobal": "All schools (global employer)",
       "submit": "Create Account",
       "submitting": "Creating Account...",
       "hasAccount": "Already have an account?",
@@ -132,6 +135,14 @@
     "network": "Network error. Please check your connection.",
     "unauthorized": "You are not authorized to perform this action",
     "notFound": "The requested resource was not found"
+  },
+  "school": {
+    "picker": "School",
+    "allSchools": "All Schools",
+    "settings": "School Settings",
+    "manageStudents": "Manage Students",
+    "manageEmployers": "Manage Employers",
+    "stats": "School Statistics"
   },
   "language": {
     "switch": "Language",

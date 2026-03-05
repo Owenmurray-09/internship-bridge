@@ -25,7 +25,10 @@ const nameSchema = z
   .transform((val) => val.trim())
 
 // User role validation
-const userRoleSchema = z.enum(['student', 'employer', 'admin'] as const)
+const userRoleSchema = z.enum(['student', 'employer', 'school_admin', 'global_admin'] as const)
+
+// Signup-specific role (only student and employer can self-register)
+const signupRoleSchema = z.enum(['student', 'employer'] as const)
 
 // Authentication schemas
 export const loginSchema = z.object({
@@ -40,7 +43,21 @@ export const signupSchema = z.object({
   email: emailSchema,
   password: passwordSchema,
   fullName: nameSchema,
-  role: userRoleSchema,
+  role: signupRoleSchema,
+  schoolId: z.string().uuid('Invalid school').optional().or(z.literal('')),
+})
+
+// School validation schema
+export const schoolSchema = z.object({
+  name: z.string().min(1, 'School name is required').max(200, 'School name too long'),
+  slug: z
+    .string()
+    .min(3, 'Slug must be at least 3 characters')
+    .max(50, 'Slug too long')
+    .regex(/^[a-z0-9][a-z0-9-]*[a-z0-9]$/, 'Slug must be lowercase alphanumeric with hyphens'),
+  logoUrl: z.string().url('Invalid logo URL').optional().or(z.literal('')),
+  primaryColor: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'Must be a valid hex color').default('#2563eb'),
+  secondaryColor: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'Must be a valid hex color').default('#1e40af'),
 })
 
 // Profile schemas
@@ -229,6 +246,7 @@ export const messageSchema = z.object({
 // Type exports for components
 export type LoginInput = z.infer<typeof loginSchema>
 export type SignupInput = z.infer<typeof signupSchema>
+export type SchoolInput = z.infer<typeof schoolSchema>
 export type StudentProfileInput = z.infer<typeof studentProfileSchema>
 export type CompanyProfileInput = z.infer<typeof companyProfileSchema>
 export type InternshipInput = z.infer<typeof internshipSchema>
