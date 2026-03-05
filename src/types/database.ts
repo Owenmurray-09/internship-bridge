@@ -1,6 +1,28 @@
-export type UserRole = 'student' | 'employer' | 'admin'
+export type UserRole = 'student' | 'employer' | 'school_admin' | 'global_admin'
 export type ApplicationStatus = 'pending' | 'reviewed' | 'accepted' | 'rejected' | 'withdrawn'
 export type InternshipStatus = 'draft' | 'active' | 'closed' | 'cancelled'
+
+export interface School {
+  id: string
+  name: string
+  slug: string
+  logo_url?: string
+  primary_color: string
+  secondary_color: string
+  active: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface SchoolMembership {
+  id: string
+  user_id: string
+  school_id: string
+  is_primary: boolean
+  created_at: string
+  school?: School
+  user?: User
+}
 
 export interface User {
   id: string
@@ -8,6 +30,7 @@ export interface User {
   role: UserRole
   full_name?: string
   phone?: string
+  preferred_school_id?: string
   created_at: string
   updated_at: string
 }
@@ -44,6 +67,7 @@ export interface CompanyProfile {
   description?: string
   location?: string
   verified: boolean
+  is_global: boolean
   created_at: string
   updated_at: string
   user?: User
@@ -67,9 +91,11 @@ export interface Internship {
   application_deadline?: string
   status: InternshipStatus
   max_applications?: number
+  school_id?: string
   created_at: string
   updated_at: string
   company_profile?: CompanyProfile
+  school?: School
 }
 
 export interface Application {

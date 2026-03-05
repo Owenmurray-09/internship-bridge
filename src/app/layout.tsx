@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n/index";
+import { SchoolProvider } from "@/lib/school";
 import DynamicLayout from "@/components/DynamicLayout";
 
 const geistSans = Geist({
@@ -70,9 +71,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <I18nProvider>
-          <DynamicLayout>
-            {children}
-          </DynamicLayout>
+          <SchoolProvider>
+            <DynamicLayout>
+              {children}
+            </DynamicLayout>
+          </SchoolProvider>
         </I18nProvider>
       </body>
     </html>

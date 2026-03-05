@@ -1,6 +1,6 @@
 # InternshipBridge
 
-A modern web application connecting talented students with amazing internship opportunities. Built as a responsive PWA for optimal mobile and desktop experience.
+A multi-tenant web application connecting high school students with internship opportunities. Each school gets its own branded experience. Built as a responsive PWA for optimal mobile and desktop experience.
 
 ## Tech Stack
 
@@ -14,18 +14,29 @@ A modern web application connecting talented students with amazing internship op
 ## Features
 
 ### For Students
-- Browse internship opportunities
+- Browse internship opportunities within your school
 - Create and manage professional profiles
 - Apply to internships with cover letters
 - Track application status
 - Communicate with employers
 
 ### For Employers
-- Post internship opportunities
+- Post internship opportunities (school-specific or global)
 - Review student applications
 - Manage company profiles
-- Search and filter student profiles
+- Affiliate with a specific school or operate globally across all schools
+- Search and filter student profiles (with school as a filter tag for global employers)
 - Communicate with applicants
+
+### For School Admins
+- Manage students and employers within their school
+- Configure school branding (logo, colors)
+- View school-level statistics
+
+### For Global Admins
+- Manage all schools in the system
+- Full system access across all schools and users
+- System-wide statistics and oversight
 
 ## Getting Started
 
@@ -123,23 +134,34 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 The application uses the following main tables with Row Level Security (RLS) enabled:
 
+#### Multi-Tenancy Tables
+- **`schools`** - School entities for multi-tenant isolation
+  - Fields: id (UUID), name, slug (unique), logo_url, primary_color, secondary_color, active, timestamps
+  - Supports 10-100 schools
+
+- **`school_memberships`** - Many-to-many relationship between users and schools
+  - Fields: id (UUID), user_id, school_id, is_primary, timestamps
+  - Unique constraint on (user_id, school_id)
+  - Students belong to one or more schools; employers may affiliate with specific schools
+
 #### Core Tables
 - **`users`** - Extends Supabase auth.users with role-based access
-  - Fields: id (UUID), email, role (enum), full_name, phone, timestamps
-  - Roles: 'student', 'employer', 'admin'
+  - Fields: id (UUID), email, role (enum), full_name, phone, preferred_school_id, timestamps
+  - Roles: 'student', 'employer', 'school_admin', 'global_admin'
 
 - **`student_profiles`** - Extended profiles for students
   - Fields: university, major, graduation_year, gpa, resume_url, portfolio_url, github_url, linkedin_url, bio, skills[], location, availability dates
   - Links to: users.id
 
 - **`company_profiles`** - Company information for employers
-  - Fields: company_name, company_size, industry, website_url, logo_url, description, location, verified status
+  - Fields: company_name, company_size, industry, website_url, logo_url, description, location, verified status, is_global
   - Links to: users.id
+  - `is_global`: when true, employer sees students across all schools
 
 - **`internships`** - Internship postings
-  - Fields: title, description, requirements[], responsibilities[], skills_required[], location, remote_allowed, duration, dates, stipend details, status (enum), max_applications
+  - Fields: title, description, requirements[], responsibilities[], skills_required[], location, remote_allowed, duration, dates, stipend details, status (enum), max_applications, school_id
   - Status: 'draft', 'active', 'closed', 'cancelled'
-  - Links to: company_profiles.id
+  - Links to: company_profiles.id, schools.id (optional, NULL = visible to all schools)
 
 - **`applications`** - Student applications to internships
   - Fields: cover_letter, resume_url, status (enum), applied_at, reviewed_at, notes
@@ -156,11 +178,15 @@ The application uses the following main tables with Row Level Security (RLS) ena
 - **Triggers**: Automatic timestamp updates on row modifications
 - **Indexes**: Optimized for common query patterns
 - **Row Level Security**: Comprehensive policies ensuring data access control
+- **Multi-tenancy**: School-based data isolation via RLS and application-layer filtering
 
 #### RLS Policies Summary
 - Users can only view/edit their own data
-- Students can view active internships and create applications
+- Students can view active internships (global + their school's)
 - Employers can manage their internships and view applications
+- Global employers can view all student profiles; school-affiliated employers see their school's students
+- School admins can manage users and data within their school
+- Global admins have full access to all tables
 - Verified company profiles are publicly viewable
 - Messages are restricted to application participants
 
@@ -171,6 +197,7 @@ The database schema is managed through **Supabase migrations** located in `supab
 #### Current Migration Files
 - `20241201000000_initial_schema.sql` - Complete initial database setup with tables, RLS policies, and triggers
 - `20260305004345_add_preferred_locale_to_users.sql` - Adds `preferred_locale` field for i18n support
+- `TIMESTAMP_add_multi_tenant_schools.sql` - Adds schools, school_memberships tables; expands user_role enum; adds school_id to internships; adds is_global to company_profiles; school-aware RLS policies
 
 #### Migration Workflow
 
@@ -315,17 +342,29 @@ supabase projects list   # Shows remote project info
 The app uses Supabase Auth with custom role-based access control:
 
 #### User Roles
-- **Students**: Can browse internships, create profiles, and apply
-- **Employers**: Can post internships, review applications, and manage company profiles
-- **Admin**: Full system access (for future features)
+- **Students**: Belong to a school. Can browse internships, create profiles, and apply
+- **Employers**: Can affiliate with a school or operate globally. Post internships, review applications, manage company profiles
+- **School Admins**: Administer a specific school's users, settings, and branding
+- **Global Admins**: Full system access across all schools
 
 #### Authentication Flow
-1. **Sign Up**: Users choose their role during registration
+1. **Sign Up**: Users choose their role and school during registration
 2. **Email Confirmation**: Supabase handles email verification
-3. **Profile Creation**: Extended profile based on user role
-4. **Role-based Access**: Middleware enforces route protection
+3. **School Context**: User's school is loaded into React context (like i18n locale)
+4. **Profile Creation**: Extended profile based on user role
+5. **Role-based Access**: Middleware enforces route protection
+
+#### Multi-Tenancy Architecture
+School context follows the same pattern as i18n -- **no dynamic URL routes** (no `/[school]/dashboard`):
+- **React Context**: `SchoolProvider` + `useSchool()` hook, mirroring `I18nProvider` + `useI18n()`
+- **Persistence**: `localStorage` + `preferred_school_id` in users table
+- **Branding**: School logo and colors applied via CSS custom properties (`--school-primary`, `--school-secondary`)
+- **School Picker**: Dropdown component (like `LanguageToggle`) for users with multiple schools
+- **Data Filtering**: RLS policies + application-layer queries filter by current school context
 
 #### Implementation Details
+- **School Context**: `src/lib/school/index.tsx` - School context provider and hooks
+- **School Picker**: `src/components/SchoolPicker.tsx` - School switcher component
 - **Middleware**: `src/middleware.ts` - Route protection and session management
 - **Auth Pages**: `src/app/auth/` - Login, signup, and callback handlers
 - **Client Setup**: `src/lib/supabase.ts` - Client-side Supabase configuration
@@ -336,6 +375,8 @@ The app uses Supabase Auth with custom role-based access control:
 - `/profile` - User profile management
 - `/applications` - Application management
 - `/internships/create` - Internship creation (employers only)
+- `/admin` - School admin pages (school_admin and global_admin only)
+- `/global-admin` - Global admin pages (global_admin only)
 
 #### Session Management
 - Sessions persist across browser sessions
@@ -508,17 +549,22 @@ Language preference is automatically saved to localStorage and will persist to u
 src/
 ├── app/                 # Next.js 14 app directory
 │   ├── auth/           # Authentication pages
-│   ├── dashboard/      # Main dashboard
+│   ├── dashboard/      # Main dashboard (role-specific)
+│   ├── admin/          # School admin pages
+│   ├── global-admin/   # Global admin pages
 │   └── layout.tsx      # Root layout
 ├── components/
 │   ├── ui/             # shadcn/ui components
-│   └── LanguageToggle.tsx # Language switcher component
+│   ├── LanguageToggle.tsx # Language switcher component
+│   └── SchoolPicker.tsx   # School context switcher
 ├── lib/                # Utilities and configurations
 │   ├── i18n/           # Internationalization
 │   │   ├── index.ts    # i18n context and hooks
 │   │   └── messages/   # Translation files
 │   │       ├── en.json # English translations
 │   │       └── es.json # Spanish translations
+│   ├── school/         # Multi-tenancy
+│   │   └── index.tsx   # School context provider and hooks
 │   ├── supabase.ts     # Supabase client setup
 │   └── utils.ts        # Utility functions
 └── types/              # TypeScript type definitions

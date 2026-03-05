@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import DashboardNav from '@/components/DashboardNav'
 
 export default async function DashboardPage() {
   const supabase = await createServerSupabase()
@@ -21,27 +22,23 @@ export default async function DashboardPage() {
 
   const isStudent = userData?.role === 'student'
   const isEmployer = userData?.role === 'employer'
+  const isSchoolAdmin = userData?.role === 'school_admin'
+  const isGlobalAdmin = userData?.role === 'global_admin'
+
+  const getRoleDescription = () => {
+    if (isStudent) return 'Find and apply for internships that match your skills and interests.'
+    if (isEmployer) return 'Manage your internship postings and review applications.'
+    if (isSchoolAdmin) return 'Manage your school\'s students, employers, and settings.'
+    if (isGlobalAdmin) return 'System-wide administration across all schools.'
+    return ''
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <h1 className="text-xl font-semibold text-gray-900">InternshipBridge</h1>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">Welcome, {userData?.full_name || user.email}</span>
-              <form action="/auth/signout" method="post">
-                <Button type="submit" variant="outline" size="sm">
-                  Sign Out
-                </Button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <DashboardNav
+        userName={userData?.full_name || user.email || ''}
+        userRole={userData?.role ?? 'student'}
+      />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -49,10 +46,7 @@ export default async function DashboardPage() {
           <h2 className="text-2xl font-bold text-gray-900">
             Dashboard
           </h2>
-          <p className="text-gray-600 mt-1">
-            {isStudent && 'Find and apply for internships that match your skills and interests.'}
-            {isEmployer && 'Manage your internship postings and review applications.'}
-          </p>
+          <p className="text-gray-600 mt-1">{getRoleDescription()}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -163,6 +157,100 @@ export default async function DashboardPage() {
               </Card>
             </>
           )}
+
+          {/* School Admin Dashboard Cards */}
+          {isSchoolAdmin && (
+            <>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Manage Students</CardTitle>
+                  <CardDescription>
+                    View and manage students at your school
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Link href="/admin/students">
+                    <Button className="w-full">View Students</Button>
+                  </Link>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Manage Employers</CardTitle>
+                  <CardDescription>
+                    View employers affiliated with your school
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Link href="/admin/employers">
+                    <Button className="w-full" variant="outline">View Employers</Button>
+                  </Link>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>School Settings</CardTitle>
+                  <CardDescription>
+                    Update school branding and configuration
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Link href="/admin/settings">
+                    <Button className="w-full" variant="outline">School Settings</Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            </>
+          )}
+
+          {/* Global Admin Dashboard Cards */}
+          {isGlobalAdmin && (
+            <>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Manage Schools</CardTitle>
+                  <CardDescription>
+                    Add, edit, and manage all schools in the system
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Link href="/global-admin/schools">
+                    <Button className="w-full">Manage Schools</Button>
+                  </Link>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Manage Users</CardTitle>
+                  <CardDescription>
+                    View and manage all users across all schools
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Link href="/global-admin/users">
+                    <Button className="w-full" variant="outline">View Users</Button>
+                  </Link>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>System Statistics</CardTitle>
+                  <CardDescription>
+                    View aggregate statistics across all schools
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Link href="/global-admin/stats">
+                    <Button className="w-full" variant="outline">View Stats</Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            </>
+          )}
         </div>
 
         {/* Quick Stats */}
@@ -173,7 +261,10 @@ export default async function DashboardPage() {
               <CardContent className="p-6">
                 <div className="text-2xl font-bold text-blue-600">0</div>
                 <p className="text-sm text-gray-600">
-                  {isStudent ? 'Applications Submitted' : 'Active Internships'}
+                  {isStudent && 'Applications Submitted'}
+                  {isEmployer && 'Active Internships'}
+                  {isSchoolAdmin && 'Students'}
+                  {isGlobalAdmin && 'Total Schools'}
                 </p>
               </CardContent>
             </Card>
@@ -181,7 +272,10 @@ export default async function DashboardPage() {
               <CardContent className="p-6">
                 <div className="text-2xl font-bold text-green-600">0</div>
                 <p className="text-sm text-gray-600">
-                  {isStudent ? 'Interview Invites' : 'Total Applications'}
+                  {isStudent && 'Interview Invites'}
+                  {isEmployer && 'Total Applications'}
+                  {isSchoolAdmin && 'Employers'}
+                  {isGlobalAdmin && 'Total Users'}
                 </p>
               </CardContent>
             </Card>
@@ -189,7 +283,10 @@ export default async function DashboardPage() {
               <CardContent className="p-6">
                 <div className="text-2xl font-bold text-orange-600">0</div>
                 <p className="text-sm text-gray-600">
-                  {isStudent ? 'Profile Views' : 'Applications This Week'}
+                  {isStudent && 'Profile Views'}
+                  {isEmployer && 'Applications This Week'}
+                  {isSchoolAdmin && 'Active Internships'}
+                  {isGlobalAdmin && 'Active Internships'}
                 </p>
               </CardContent>
             </Card>
@@ -197,7 +294,10 @@ export default async function DashboardPage() {
               <CardContent className="p-6">
                 <div className="text-2xl font-bold text-purple-600">0</div>
                 <p className="text-sm text-gray-600">
-                  {isStudent ? 'Saved Internships' : 'Company Profile Views'}
+                  {isStudent && 'Saved Internships'}
+                  {isEmployer && 'Company Profile Views'}
+                  {isSchoolAdmin && 'Applications This Week'}
+                  {isGlobalAdmin && 'Applications This Week'}
                 </p>
               </CardContent>
             </Card>

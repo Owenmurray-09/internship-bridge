@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClientSupabase } from '@/lib/supabase'
 import { signupSchema, type SignupInput } from '@/lib/validation'
-import type { UserRole } from '@/types/database'
+import type { School } from '@/types/database'
 import { useTranslations } from '@/lib/i18n'
 import LanguageToggle from '@/components/LanguageToggle'
 
@@ -30,10 +30,26 @@ export default function SignUpPage() {
     resolver: zodResolver(signupSchema),
     defaultValues: {
       role: 'student',
+      schoolId: '',
     },
   })
 
   const [message, setMessage] = useState('')
+  const [schools, setSchools] = useState<School[]>([])
+  const watchedRole = watch('role')
+
+  useEffect(() => {
+    const loadSchools = async () => {
+      const supabase = createClientSupabase()
+      const { data } = await supabase
+        .from('schools')
+        .select('*')
+        .eq('active', true)
+        .order('name')
+      if (data) setSchools(data as School[])
+    }
+    loadSchools()
+  }, [])
 
   const onSubmit = async (data: SignupInput) => {
     setMessage('')
@@ -57,6 +73,8 @@ export default function SignUpPage() {
       }
 
       if (authData?.user) {
+        const schoolId = data.schoolId || null
+
         // Insert user data into our users table
         const { error: userError } = await supabase
           .from('users')
@@ -64,12 +82,24 @@ export default function SignUpPage() {
             id: authData.user.id,
             email: authData.user.email!,
             full_name: data.fullName,
-            role: data.role
+            role: data.role,
+            preferred_school_id: schoolId,
           })
 
         if (userError) {
           // Silent fail for user profile creation
           // The auth user is still created successfully
+        }
+
+        // Create school membership if a school was selected
+        if (schoolId) {
+          await supabase
+            .from('school_memberships')
+            .insert({
+              user_id: authData.user.id,
+              school_id: schoolId,
+              is_primary: true,
+            })
         }
 
         setMessage(t('confirmationMessage'))
@@ -168,6 +198,27 @@ export default function SignUpPage() {
                 <p className="text-red-500 text-sm">{errors.role.message}</p>
               )}
             </div>
+            {schools.length > 0 && (
+              <div className="space-y-2">
+                <Label htmlFor="schoolId">{t('school')}</Label>
+                <select
+                  id="schoolId"
+                  {...register('schoolId')}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  disabled={isSubmitting}
+                >
+                  <option value="">
+                    {watchedRole === 'employer' ? t('schoolOptionalGlobal') : t('selectSchool')}
+                  </option>
+                  {schools.map(school => (
+                    <option key={school.id} value={school.id}>{school.name}</option>
+                  ))}
+                </select>
+                {errors.schoolId && (
+                  <p className="text-red-500 text-sm">{errors.schoolId.message}</p>
+                )}
+              </div>
+            )}
             <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? t('submitting') : t('submit')}
             </Button>
