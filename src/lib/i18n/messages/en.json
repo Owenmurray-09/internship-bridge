@@ -275,6 +275,24 @@
         "draftSaved": "Draft saved successfully!"
       }
     },
+    "apply": {
+      "title": "Apply to Internship",
+      "fields": {
+        "coverLetter": "Cover Letter",
+        "coverLetterHint": "Tell the employer why you're interested and what makes you a great fit."
+      },
+      "placeholders": {
+        "coverLetter": "Write your cover letter here..."
+      },
+      "submit": "Submit Application",
+      "submitting": "Submitting...",
+      "success": {
+        "title": "Application Submitted!",
+        "description": "Your application has been sent. The employer will review it and get back to you.",
+        "browseMore": "Browse More Internships",
+        "backToDashboard": "Back to Dashboard"
+      }
+    },
     "manage": {
       "title": "My Internships",
       "description": "Manage your posted internship opportunities",

@@ -275,6 +275,24 @@
         "draftSaved": "¡Borrador guardado exitosamente!"
       }
     },
+    "apply": {
+      "title": "Aplicar a Práctica",
+      "fields": {
+        "coverLetter": "Carta de Presentación",
+        "coverLetterHint": "Cuéntale al empleador por qué te interesa y qué te hace un gran candidato."
+      },
+      "placeholders": {
+        "coverLetter": "Escribe tu carta de presentación aquí..."
+      },
+      "submit": "Enviar Solicitud",
+      "submitting": "Enviando...",
+      "success": {
+        "title": "¡Solicitud Enviada!",
+        "description": "Tu solicitud ha sido enviada. El empleador la revisará y se pondrá en contacto contigo.",
+        "browseMore": "Explorar Más Prácticas",
+        "backToDashboard": "Volver al Panel"
+      }
+    },
     "manage": {
       "title": "Mis Prácticas",
       "description": "Gestiona tus oportunidades de práctica publicadas",
