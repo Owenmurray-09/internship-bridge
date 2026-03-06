@@ -205,6 +205,41 @@
     "submitEdit": "Guardar Cambios",
     "submitting": "Guardando..."
   },
+  "applications": {
+    "review": {
+      "title": "Revisar Solicitudes",
+      "description": "Revisa y responde a las solicitudes de estudiantes para tus prácticas",
+      "noApplications": "Aún no hay solicitudes para revisar.",
+      "unknownStudent": "Estudiante Desconocido",
+      "appliedTo": "Aplicó a",
+      "appliedOn": "Aplicó el",
+      "gradYear": "Clase de",
+      "showCoverLetter": "Mostrar carta de presentación",
+      "hideCoverLetter": "Ocultar carta de presentación",
+      "coverLetter": "Carta de Presentación",
+      "studentBio": "Sobre el Estudiante",
+      "filters": {
+        "all": "Todas",
+        "pending": "Pendiente",
+        "reviewed": "Revisada",
+        "accepted": "Aceptada",
+        "rejected": "Rechazada"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "reviewed": "Revisada",
+        "accepted": "Aceptada",
+        "rejected": "Rechazada",
+        "withdrawn": "Retirada"
+      },
+      "actions": {
+        "markReviewed": "Marcar Revisada",
+        "accept": "Aceptar",
+        "reject": "Rechazar",
+        "moveBack": "Mover a Revisada"
+      }
+    }
+  },
   "internships": {
     "browse": {
       "title": "Explorar Prácticas",
