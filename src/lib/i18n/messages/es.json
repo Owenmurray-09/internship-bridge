@@ -206,6 +206,39 @@
     "submitting": "Guardando..."
   },
   "applications": {
+    "student": {
+      "title": "Mis Solicitudes",
+      "description": "Sigue el estado de tus solicitudes de prácticas",
+      "noApplications": "Aún no has aplicado a ninguna práctica.",
+      "noResults": "Ninguna solicitud coincide con este filtro.",
+      "browseInternships": "Explorar Prácticas",
+      "appliedOn": "Aplicado el",
+      "reviewedOn": "Revisado el",
+      "viewInternship": "Ver Práctica",
+      "withdraw": "Retirar",
+      "confirmWithdraw": "¿Estás seguro?",
+      "filters": {
+        "all": "Todas",
+        "pending": "Pendiente",
+        "reviewed": "Revisada",
+        "accepted": "Aceptada",
+        "rejected": "Rechazada",
+        "withdrawn": "Retirada"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "reviewed": "Revisada",
+        "accepted": "Aceptada",
+        "rejected": "Rechazada",
+        "withdrawn": "Retirada"
+      },
+      "stats": {
+        "total": "Total de Solicitudes",
+        "pending": "Pendientes",
+        "accepted": "Aceptadas",
+        "reviewed": "En Revisión"
+      }
+    },
     "review": {
       "title": "Revisar Solicitudes",
       "description": "Revisa y responde a las solicitudes de estudiantes para tus prácticas",

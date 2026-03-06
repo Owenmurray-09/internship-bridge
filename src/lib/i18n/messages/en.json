@@ -206,6 +206,39 @@
     "submitting": "Saving..."
   },
   "applications": {
+    "student": {
+      "title": "My Applications",
+      "description": "Track the status of your internship applications",
+      "noApplications": "You haven't applied to any internships yet.",
+      "noResults": "No applications match this filter.",
+      "browseInternships": "Browse Internships",
+      "appliedOn": "Applied on",
+      "reviewedOn": "Reviewed on",
+      "viewInternship": "View Internship",
+      "withdraw": "Withdraw",
+      "confirmWithdraw": "Are you sure?",
+      "filters": {
+        "all": "All",
+        "pending": "Pending",
+        "reviewed": "Reviewed",
+        "accepted": "Accepted",
+        "rejected": "Rejected",
+        "withdrawn": "Withdrawn"
+      },
+      "status": {
+        "pending": "Pending",
+        "reviewed": "Reviewed",
+        "accepted": "Accepted",
+        "rejected": "Rejected",
+        "withdrawn": "Withdrawn"
+      },
+      "stats": {
+        "total": "Total Applications",
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "reviewed": "Under Review"
+      }
+    },
     "review": {
       "title": "Review Applications",
       "description": "Review and respond to student applications for your internships",
