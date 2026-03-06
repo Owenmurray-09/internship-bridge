@@ -21,23 +21,15 @@ CREATE TABLE public.users (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Student profiles
+-- Student profiles (high school students)
 CREATE TABLE public.student_profiles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES public.users(id) ON DELETE CASCADE UNIQUE NOT NULL,
-    university TEXT,
-    major TEXT,
+    email TEXT,
     graduation_year INTEGER,
-    gpa DECIMAL(3,2),
-    resume_url TEXT,
-    portfolio_url TEXT,
-    github_url TEXT,
-    linkedin_url TEXT,
+    gender TEXT,
+    birth_year INTEGER,
     bio TEXT,
-    skills TEXT[], -- Array of skills
-    location TEXT,
-    available_start DATE,
-    available_end DATE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );

@@ -340,59 +340,35 @@ export type Database = {
       }
       student_profiles: {
         Row: {
-          available_end: string | null
-          available_start: string | null
           bio: string | null
+          birth_year: number | null
           created_at: string
-          github_url: string | null
-          gpa: number | null
+          email: string | null
+          gender: string | null
           graduation_year: number | null
           id: string
-          linkedin_url: string | null
-          location: string | null
-          major: string | null
-          portfolio_url: string | null
-          resume_url: string | null
-          skills: string[] | null
-          university: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
-          available_end?: string | null
-          available_start?: string | null
           bio?: string | null
+          birth_year?: number | null
           created_at?: string
-          github_url?: string | null
-          gpa?: number | null
+          email?: string | null
+          gender?: string | null
           graduation_year?: number | null
           id?: string
-          linkedin_url?: string | null
-          location?: string | null
-          major?: string | null
-          portfolio_url?: string | null
-          resume_url?: string | null
-          skills?: string[] | null
-          university?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
-          available_end?: string | null
-          available_start?: string | null
           bio?: string | null
+          birth_year?: number | null
           created_at?: string
-          github_url?: string | null
-          gpa?: number | null
+          email?: string | null
+          gender?: string | null
           graduation_year?: number | null
           id?: string
-          linkedin_url?: string | null
-          location?: string | null
-          major?: string | null
-          portfolio_url?: string | null
-          resume_url?: string | null
-          skills?: string[] | null
-          university?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -455,7 +431,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      current_user_role: {
+        Args: never
+        Returns: Database["public"]["Enums"]["user_role"]
+      }
+      get_user_school_ids: { Args: never; Returns: string[] }
+      is_global_admin: { Args: never; Returns: boolean }
+      is_school_admin: { Args: never; Returns: boolean }
     }
     Enums: {
       application_status:
