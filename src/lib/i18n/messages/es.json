@@ -206,6 +206,21 @@
     "submitting": "Guardando..."
   },
   "internships": {
+    "detail": {
+      "backToList": "Volver a prácticas",
+      "remote": "Remoto",
+      "duration": "Duración",
+      "months": "meses",
+      "startDate": "Fecha de Inicio",
+      "deadline": "Fecha Límite de Solicitud",
+      "description": "Descripción",
+      "requirements": "Requisitos",
+      "responsibilities": "Responsabilidades",
+      "skills": "Habilidades Requeridas",
+      "aboutCompany": "Sobre la Empresa",
+      "applyNow": "Aplicar Ahora",
+      "alreadyApplied": "Ya has aplicado a esta práctica."
+    },
     "create": {
       "title": "Publicar Nueva Práctica",
       "description": "Crea una nueva oportunidad de práctica para estudiantes",
