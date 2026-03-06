@@ -216,6 +216,21 @@
       "deadline": "Apply by",
       "viewDetails": "View Details"
     },
+    "detail": {
+      "backToList": "Back to internships",
+      "remote": "Remote",
+      "duration": "Duration",
+      "months": "months",
+      "startDate": "Start Date",
+      "deadline": "Application Deadline",
+      "description": "Description",
+      "requirements": "Requirements",
+      "responsibilities": "Responsibilities",
+      "skills": "Required Skills",
+      "aboutCompany": "About the Company",
+      "applyNow": "Apply Now",
+      "alreadyApplied": "You have already applied to this internship."
+    },
     "create": {
       "title": "Post New Internship",
       "description": "Create a new internship opportunity for students",
