@@ -149,6 +149,36 @@
     "english": "English",
     "spanish": "Español"
   },
+  "studentProfile": {
+    "loading": "Cargando...",
+    "titleCreate": "Crea Tu Perfil",
+    "titleEdit": "Editar Tu Perfil",
+    "descriptionCreate": "Cuéntanos un poco sobre ti para comenzar",
+    "descriptionEdit": "Actualiza la información de tu perfil",
+    "fields": {
+      "email": "Correo Electrónico",
+      "graduationYear": "Año de Graduación",
+      "birthYear": "Año de Nacimiento",
+      "gender": "Género",
+      "bio": "Sobre Mí"
+    },
+    "placeholders": {
+      "email": "tu@ejemplo.com",
+      "graduationYear": "ej., 2027",
+      "birthYear": "ej., 2009",
+      "gender": "Seleccionar género (opcional)",
+      "bio": "Cuéntale a los empleadores un poco sobre ti..."
+    },
+    "genderOptions": {
+      "male": "Masculino",
+      "female": "Femenino",
+      "nonBinary": "No binario",
+      "preferNotToSay": "Prefiero no decir"
+    },
+    "submitCreate": "Crear Perfil",
+    "submitEdit": "Guardar Cambios",
+    "submitting": "Guardando..."
+  },
   "companyProfile": {
     "loading": "Cargando...",
     "titleCreate": "Crear Perfil de Empresa",
