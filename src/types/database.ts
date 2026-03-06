@@ -38,19 +38,11 @@ export interface User {
 export interface StudentProfile {
   id: string
   user_id: string
-  university?: string
-  major?: string
+  email?: string
   graduation_year?: number
-  gpa?: number
-  resume_url?: string
-  portfolio_url?: string
-  github_url?: string
-  linkedin_url?: string
+  gender?: string
+  birth_year?: number
   bio?: string
-  skills?: string[]
-  location?: string
-  available_start?: string
-  available_end?: string
   created_at: string
   updated_at: string
   user?: User

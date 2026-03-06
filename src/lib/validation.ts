@@ -62,58 +62,28 @@ export const schoolSchema = z.object({
 
 // Profile schemas
 export const studentProfileSchema = z.object({
-  university: z
+  email: z
     .string()
-    .max(200, 'University name too long')
-    .optional(),
-  major: z
-    .string()
-    .max(100, 'Major too long')
-    .optional(),
+    .min(1, 'Email is required')
+    .email('Invalid email format')
+    .max(254, 'Email too long'),
   graduationYear: z
     .number()
     .int()
-    .min(new Date().getFullYear(), 'Graduation year must be in the future')
-    .max(new Date().getFullYear() + 10, 'Graduation year too far in the future')
+    .min(new Date().getFullYear(), 'Graduation year must be current or future')
+    .max(new Date().getFullYear() + 6, 'Graduation year too far in the future'),
+  gender: z
+    .string()
+    .max(50, 'Gender too long')
     .optional(),
-  gpa: z
+  birthYear: z
     .number()
-    .min(0, 'GPA cannot be negative')
-    .max(4.0, 'GPA cannot exceed 4.0')
-    .optional(),
-  resumeUrl: z
-    .string()
-    .url('Invalid resume URL')
-    .optional()
-    .or(z.literal('')),
-  portfolioUrl: z
-    .string()
-    .url('Invalid portfolio URL')
-    .optional()
-    .or(z.literal('')),
-  githubUrl: z
-    .string()
-    .url('Invalid GitHub URL')
-    .refine((url) => url.includes('github.com'), 'Must be a GitHub URL')
-    .optional()
-    .or(z.literal('')),
-  linkedinUrl: z
-    .string()
-    .url('Invalid LinkedIn URL')
-    .refine((url) => url.includes('linkedin.com'), 'Must be a LinkedIn URL')
-    .optional()
-    .or(z.literal('')),
+    .int()
+    .min(new Date().getFullYear() - 20, 'Birth year too far in the past')
+    .max(new Date().getFullYear() - 13, 'Must be at least 13 years old'),
   bio: z
     .string()
-    .max(1000, 'Bio too long')
-    .optional(),
-  skills: z
-    .array(z.string().min(1).max(50))
-    .max(20, 'Too many skills')
-    .optional(),
-  location: z
-    .string()
-    .max(200, 'Location too long')
+    .max(500, 'Bio too long')
     .optional(),
 })
 
