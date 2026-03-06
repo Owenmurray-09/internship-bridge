@@ -205,6 +205,41 @@
     "submitEdit": "Save Changes",
     "submitting": "Saving..."
   },
+  "applications": {
+    "review": {
+      "title": "Review Applications",
+      "description": "Review and respond to student applications for your internships",
+      "noApplications": "No applications to review yet.",
+      "unknownStudent": "Unknown Student",
+      "appliedTo": "Applied to",
+      "appliedOn": "Applied on",
+      "gradYear": "Class of",
+      "showCoverLetter": "Show cover letter",
+      "hideCoverLetter": "Hide cover letter",
+      "coverLetter": "Cover Letter",
+      "studentBio": "About the Student",
+      "filters": {
+        "all": "All",
+        "pending": "Pending",
+        "reviewed": "Reviewed",
+        "accepted": "Accepted",
+        "rejected": "Rejected"
+      },
+      "status": {
+        "pending": "Pending",
+        "reviewed": "Reviewed",
+        "accepted": "Accepted",
+        "rejected": "Rejected",
+        "withdrawn": "Withdrawn"
+      },
+      "actions": {
+        "markReviewed": "Mark Reviewed",
+        "accept": "Accept",
+        "reject": "Reject",
+        "moveBack": "Move to Reviewed"
+      }
+    }
+  },
   "internships": {
     "browse": {
       "title": "Browse Internships",
