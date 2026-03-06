@@ -206,6 +206,16 @@
     "submitting": "Guardando..."
   },
   "internships": {
+    "browse": {
+      "title": "Explorar Prácticas",
+      "description": "Encuentra oportunidades de prácticas que coincidan con tus intereses",
+      "searchPlaceholder": "Buscar por título, descripción o ubicación...",
+      "noInternships": "No hay prácticas disponibles ahora. ¡Vuelve pronto!",
+      "noResults": "Ninguna práctica coincide con tu búsqueda.",
+      "remote": "Remoto",
+      "deadline": "Aplicar antes del",
+      "viewDetails": "Ver Detalles"
+    },
     "detail": {
       "backToList": "Volver a prácticas",
       "remote": "Remoto",
