@@ -149,10 +149,38 @@
     "english": "English",
     "spanish": "Español"
   },
+  "companyProfile": {
+    "loading": "Loading...",
+    "titleCreate": "Create Company Profile",
+    "titleEdit": "Edit Company Profile",
+    "descriptionCreate": "Set up your company profile to start posting internships",
+    "descriptionEdit": "Update your company information",
+    "fields": {
+      "companyName": "Company Name",
+      "industry": "Industry",
+      "location": "Location",
+      "website": "Website",
+      "companySize": "Company Size",
+      "description": "Description"
+    },
+    "placeholders": {
+      "companyName": "e.g., Acme Corp",
+      "industry": "e.g., Technology",
+      "location": "e.g., San Francisco, CA",
+      "website": "https://example.com",
+      "companySize": "Select company size",
+      "description": "Tell students about your company..."
+    },
+    "submitCreate": "Create Profile",
+    "submitEdit": "Save Changes",
+    "submitting": "Saving..."
+  },
   "internships": {
     "create": {
       "title": "Post New Internship",
       "description": "Create a new internship opportunity for students",
+      "editTitle": "Edit Internship",
+      "editDescription": "Update your internship posting",
       "basicInfo": "Basic Information",
       "requirements": "Requirements & Responsibilities",
       "details": "Details & Benefits",
@@ -181,10 +209,13 @@
         "maxApplicationsHint": "Leave empty for unlimited"
       },
       "actions": {
+        "cancel": "Cancel",
         "saveDraft": "Save Draft",
         "publish": "Publish",
         "publishing": "Publishing...",
-        "savingDraft": "Saving Draft..."
+        "savingDraft": "Saving Draft...",
+        "saveChanges": "Save Changes",
+        "saving": "Saving..."
       },
       "success": {
         "published": "Internship published successfully!",
@@ -194,8 +225,8 @@
     "manage": {
       "title": "My Internships",
       "description": "Manage your posted internship opportunities",
-      "noInternships": "You haven't posted any internships yet.",
-      "createFirst": "Create your first internship posting",
+      "noInternships": "No internships here.",
+      "createFirst": "Post an internship",
       "filters": {
         "all": "All",
         "draft": "Draft",
@@ -213,8 +244,10 @@
         "edit": "Edit",
         "delete": "Delete",
         "activate": "Activate",
+        "publish": "Publish",
         "close": "Close",
         "cancel": "Cancel",
+        "moveToDraft": "Move to Draft",
         "viewApplications": "View Applications"
       },
       "stats": {
