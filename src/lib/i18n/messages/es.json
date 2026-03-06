@@ -149,10 +149,38 @@
     "english": "English",
     "spanish": "Español"
   },
+  "companyProfile": {
+    "loading": "Cargando...",
+    "titleCreate": "Crear Perfil de Empresa",
+    "titleEdit": "Editar Perfil de Empresa",
+    "descriptionCreate": "Configura el perfil de tu empresa para comenzar a publicar practicas",
+    "descriptionEdit": "Actualiza la informacion de tu empresa",
+    "fields": {
+      "companyName": "Nombre de la Empresa",
+      "industry": "Industria",
+      "location": "Ubicacion",
+      "website": "Sitio Web",
+      "companySize": "Tamano de la Empresa",
+      "description": "Descripcion"
+    },
+    "placeholders": {
+      "companyName": "ej., Acme Corp",
+      "industry": "ej., Tecnologia",
+      "location": "ej., San Francisco, CA",
+      "website": "https://ejemplo.com",
+      "companySize": "Seleccionar tamano de empresa",
+      "description": "Cuentale a los estudiantes sobre tu empresa..."
+    },
+    "submitCreate": "Crear Perfil",
+    "submitEdit": "Guardar Cambios",
+    "submitting": "Guardando..."
+  },
   "internships": {
     "create": {
       "title": "Publicar Nueva Práctica",
       "description": "Crea una nueva oportunidad de práctica para estudiantes",
+      "editTitle": "Editar Práctica",
+      "editDescription": "Actualiza tu publicación de práctica",
       "basicInfo": "Información Básica",
       "requirements": "Requisitos y Responsabilidades",
       "details": "Detalles y Beneficios",
@@ -181,10 +209,13 @@
         "maxApplicationsHint": "Dejar vacío para ilimitado"
       },
       "actions": {
+        "cancel": "Cancelar",
         "saveDraft": "Guardar Borrador",
         "publish": "Publicar",
         "publishing": "Publicando...",
-        "savingDraft": "Guardando Borrador..."
+        "savingDraft": "Guardando Borrador...",
+        "saveChanges": "Guardar Cambios",
+        "saving": "Guardando..."
       },
       "success": {
         "published": "¡Práctica publicada exitosamente!",
@@ -194,8 +225,8 @@
     "manage": {
       "title": "Mis Prácticas",
       "description": "Gestiona tus oportunidades de práctica publicadas",
-      "noInternships": "Aún no has publicado ninguna práctica.",
-      "createFirst": "Crea tu primera publicación de práctica",
+      "noInternships": "No hay prácticas aquí.",
+      "createFirst": "Publicar una práctica",
       "filters": {
         "all": "Todas",
         "draft": "Borrador",
@@ -213,8 +244,10 @@
         "edit": "Editar",
         "delete": "Eliminar",
         "activate": "Activar",
+        "publish": "Publicar",
         "close": "Cerrar",
         "cancel": "Cancelar",
+        "moveToDraft": "Mover a Borrador",
         "viewApplications": "Ver Solicitudes"
       },
       "stats": {
