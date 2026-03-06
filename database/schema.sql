@@ -64,8 +64,6 @@ CREATE TABLE public.internships (
     duration_months INTEGER,
     start_date DATE,
     end_date DATE,
-    stipend_amount DECIMAL(10,2),
-    stipend_currency TEXT DEFAULT 'USD',
     application_deadline DATE,
     status internship_status DEFAULT 'draft',
     max_applications INTEGER,

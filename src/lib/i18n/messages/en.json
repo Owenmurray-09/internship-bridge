@@ -233,8 +233,6 @@
         "responsibilitiesPlaceholder": "Enter each responsibility and press Enter",
         "skillsRequired": "Required Skills",
         "skillsPlaceholder": "Enter each skill and press Enter",
-        "stipendAmount": "Stipend Amount",
-        "stipendCurrency": "Currency",
         "maxApplications": "Maximum Applications",
         "maxApplicationsHint": "Leave empty for unlimited"
       },

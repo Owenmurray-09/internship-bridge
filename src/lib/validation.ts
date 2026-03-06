@@ -162,15 +162,6 @@ export const internshipSchema = z.object({
     .string()
     .datetime()
     .optional(),
-  stipendAmount: z
-    .number()
-    .min(0, 'Stipend cannot be negative')
-    .max(50000, 'Stipend amount too high')
-    .optional(),
-  stipendCurrency: z
-    .string()
-    .length(3, 'Currency code must be 3 characters')
-    .default('USD'),
   applicationDeadline: z
     .string()
     .datetime()

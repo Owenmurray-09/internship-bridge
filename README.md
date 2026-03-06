@@ -21,7 +21,7 @@ A multi-tenant web application connecting high school students with internship o
 - Communicate with employers
 
 ### For Employers
-- Post internship opportunities (school-specific or global)
+- Post free, unpaid internship opportunities (school-specific or global)
 - Review student applications
 - Manage company profiles
 - Affiliate with a specific school or operate globally across all schools
@@ -158,10 +158,11 @@ The application uses the following main tables with Row Level Security (RLS) ena
   - Links to: users.id
   - `is_global`: when true, employer sees students across all schools
 
-- **`internships`** - Internship postings
-  - Fields: title, description, requirements[], responsibilities[], skills_required[], location, remote_allowed, duration, dates, stipend details, status (enum), max_applications, school_id
+- **`internships`** - Internship postings (all internships are unpaid/volunteer)
+  - Fields: title, description, requirements[], responsibilities[], skills_required[], location, remote_allowed, duration, dates, status (enum), max_applications, school_id
   - Status: 'draft', 'active', 'closed', 'cancelled'
   - Links to: company_profiles.id, schools.id (optional, NULL = visible to all schools)
+  - Note: Stipend/compensation fields were intentionally removed — the platform only supports free, unpaid internships
 
 - **`applications`** - Student applications to internships
   - Fields: cover_letter, resume_url, status (enum), applied_at, reviewed_at, notes

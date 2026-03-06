@@ -78,8 +78,6 @@ export interface Internship {
   duration_months?: number
   start_date?: string
   end_date?: string
-  stipend_amount?: number
-  stipend_currency: string
   application_deadline?: string
   status: InternshipStatus
   max_applications?: number

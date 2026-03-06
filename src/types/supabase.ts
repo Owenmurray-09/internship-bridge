@@ -145,8 +145,6 @@ export type Database = {
           skills_required: string[] | null
           start_date: string | null
           status: Database["public"]["Enums"]["internship_status"] | null
-          stipend_amount: number | null
-          stipend_currency: string | null
           title: string
           updated_at: string
         }
@@ -167,8 +165,6 @@ export type Database = {
           skills_required?: string[] | null
           start_date?: string | null
           status?: Database["public"]["Enums"]["internship_status"] | null
-          stipend_amount?: number | null
-          stipend_currency?: string | null
           title: string
           updated_at?: string
         }
@@ -189,8 +185,6 @@ export type Database = {
           skills_required?: string[] | null
           start_date?: string | null
           status?: Database["public"]["Enums"]["internship_status"] | null
-          stipend_amount?: number | null
-          stipend_currency?: string | null
           title?: string
           updated_at?: string
         }

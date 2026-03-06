@@ -21,8 +21,6 @@ const createInternshipSchema = z.object({
   description: z.string().min(1, 'Description is required').max(5000, 'Description too long'),
   location: z.string().max(200, 'Location too long').optional(),
   remoteAllowed: z.boolean(),
-  stipendAmount: z.string().optional(),
-  stipendCurrency: z.string().max(3).optional(),
   applicationDeadline: z.string().optional(),
 })
 
@@ -45,7 +43,6 @@ export default function CreateInternshipPage() {
     resolver: zodResolver(createInternshipSchema),
     defaultValues: {
       remoteAllowed: false,
-      stipendCurrency: 'USD',
     },
   })
 
@@ -81,16 +78,12 @@ export default function CreateInternshipPage() {
     try {
       const supabase = createClientSupabase()
 
-      const stipend = data.stipendAmount ? parseFloat(data.stipendAmount) : null
-
       const row = {
         company_id: companyId,
         title: data.title.trim(),
         description: data.description,
         location: data.location || null,
         remote_allowed: data.remoteAllowed,
-        stipend_amount: stipend,
-        stipend_currency: data.stipendCurrency || 'USD',
         application_deadline: data.applicationDeadline || null,
         status,
       }
@@ -187,29 +180,6 @@ export default function CreateInternshipPage() {
                   disabled={isSubmitting}
                 />
                 <Label htmlFor="remoteAllowed">{t('fields.remoteAllowed')}</Label>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="stipendAmount">{t('fields.stipendAmount')}</Label>
-                  <Input
-                    id="stipendAmount"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    {...register('stipendAmount')}
-                    disabled={isSubmitting}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="stipendCurrency">{t('fields.stipendCurrency')}</Label>
-                  <Input
-                    id="stipendCurrency"
-                    {...register('stipendCurrency')}
-                    disabled={isSubmitting}
-                    maxLength={3}
-                  />
-                </div>
               </div>
 
               <div className="space-y-2">
