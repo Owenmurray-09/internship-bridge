@@ -319,7 +319,7 @@
     "placeholders": {
       "companyName": "ej., Acme Corp",
       "industry": "ej., Tecnologia",
-      "location": "ej., San Francisco, CA",
+      "location": "ej., San José, Costa Rica",
       "website": "https://ejemplo.com",
       "description": "Cuentale a los estudiantes sobre tu empresa..."
     },
@@ -447,7 +447,7 @@
         "description": "Descripción",
         "descriptionPlaceholder": "Describe la oportunidad de práctica, cultura de la empresa y lo que aprenderá el practicante...",
         "location": "Ubicación",
-        "locationPlaceholder": "ej., San Francisco, CA",
+        "locationPlaceholder": "ej., San José, Costa Rica",
         "remoteAllowed": "Trabajo remoto permitido",
         "duration": "Duración (meses)",
         "startDate": "Fecha de Inicio",

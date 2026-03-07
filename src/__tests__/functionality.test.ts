@@ -137,7 +137,7 @@ describe('companyProfileSchema', () => {
       industry: 'Technology',
       websiteUrl: 'https://acme.com',
       description: 'We build great things.',
-      location: 'San Francisco, CA',
+      location: 'San José, Costa Rica',
     })
     expect(result.success).toBe(true)
   })

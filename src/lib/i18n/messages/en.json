@@ -319,7 +319,7 @@
     "placeholders": {
       "companyName": "e.g., Acme Corp",
       "industry": "e.g., Technology",
-      "location": "e.g., San Francisco, CA",
+      "location": "e.g., San José, Costa Rica",
       "website": "https://example.com",
       "description": "Tell students about your company..."
     },
@@ -447,7 +447,7 @@
         "description": "Description",
         "descriptionPlaceholder": "Describe the internship opportunity, company culture, and what the intern will learn...",
         "location": "Location",
-        "locationPlaceholder": "e.g., San Francisco, CA",
+        "locationPlaceholder": "e.g., San José, Costa Rica",
         "remoteAllowed": "Remote work allowed",
         "duration": "Duration (months)",
         "startDate": "Start Date",
