@@ -14,14 +14,9 @@ import { createClientSupabase } from '@/lib/supabase'
 import { useTranslations } from '@/lib/i18n'
 import LanguageToggle from '@/components/LanguageToggle'
 
-const applySchema = z.object({
-  coverLetter: z
-    .string()
-    .min(1, 'Cover letter is required')
-    .max(3000, 'Cover letter too long'),
-})
-
-type ApplyInput = z.infer<typeof applySchema>
+type ApplyInput = {
+  coverLetter: string
+}
 
 export default function ApplyToInternshipPage() {
   const router = useRouter()
@@ -29,6 +24,14 @@ export default function ApplyToInternshipPage() {
   const { t } = useTranslations('internships.apply')
   const { t: tCommon } = useTranslations('common')
   const { t: tErrors } = useTranslations('errors')
+  const { t: tVal } = useTranslations('validation')
+
+  const applySchema = z.object({
+    coverLetter: z
+      .string()
+      .min(1, tVal('coverLetterRequired'))
+      .max(3000, tVal('coverLetterTooLong')),
+  })
 
   const [loading, setLoading] = useState(true)
   const [internshipTitle, setInternshipTitle] = useState('')
@@ -67,7 +70,7 @@ export default function ApplyToInternshipPage() {
       }
 
       setInternshipTitle(internship.title)
-      const company = internship.company_profiles as { company_name: string } | null
+      const company = internship.company_profiles as unknown as { company_name: string } | null
       setCompanyName(company?.company_name || '')
 
       // Get student profile

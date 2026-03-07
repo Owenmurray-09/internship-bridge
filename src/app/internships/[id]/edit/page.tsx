@@ -16,15 +16,13 @@ import { useTranslations } from '@/lib/i18n'
 import LanguageToggle from '@/components/LanguageToggle'
 import type { InternshipStatus } from '@/types/database'
 
-const editInternshipSchema = z.object({
-  title: z.string().min(1, 'Title is required').max(200, 'Title too long'),
-  description: z.string().min(1, 'Description is required').max(5000, 'Description too long'),
-  location: z.string().max(200, 'Location too long').optional(),
-  remoteAllowed: z.boolean(),
-  applicationDeadline: z.string().optional(),
-})
-
-type EditInternshipInput = z.infer<typeof editInternshipSchema>
+type EditInternshipInput = {
+  title: string
+  description: string
+  location?: string
+  remoteAllowed: boolean
+  applicationDeadline?: string
+}
 
 export default function EditInternshipPage() {
   const router = useRouter()
@@ -32,6 +30,15 @@ export default function EditInternshipPage() {
   const internshipId = params.id as string
   const { t } = useTranslations('internships.create')
   const { t: tErrors } = useTranslations('errors')
+  const { t: tVal } = useTranslations('validation')
+
+  const editInternshipSchema = z.object({
+    title: z.string().min(1, tVal('titleRequired')).max(200, tVal('titleTooLong')),
+    description: z.string().min(1, tVal('descriptionRequired')).max(5000, tVal('descriptionTooLong')),
+    location: z.string().max(200, tVal('locationTooLong')).optional(),
+    remoteAllowed: z.boolean(),
+    applicationDeadline: z.string().optional(),
+  })
 
   const [loading, setLoading] = useState(true)
   const [currentStatus, setCurrentStatus] = useState<InternshipStatus>('draft')

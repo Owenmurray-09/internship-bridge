@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClientSupabase } from '@/lib/supabase'
 import { useTranslations } from '@/lib/i18n'
 import DashboardNav from '@/components/DashboardNav'
-import type { Internship } from '@/types/database'
+import type { Internship, UserRole } from '@/types/database'
 
 interface InternshipWithCompany extends Internship {
   company_profiles?: {
@@ -30,7 +30,7 @@ export default function InternshipDetailPage() {
   const [internship, setInternship] = useState<InternshipWithCompany | null>(null)
   const [loading, setLoading] = useState(true)
   const [userName, setUserName] = useState('')
-  const [userRole, setUserRole] = useState<string>('student')
+  const [userRole, setUserRole] = useState<UserRole>('student')
   const [hasApplied, setHasApplied] = useState(false)
 
   useEffect(() => {

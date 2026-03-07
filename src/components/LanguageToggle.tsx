@@ -1,6 +1,7 @@
 'use client'
 
 import { useI18n, type Locale } from '@/lib/i18n'
+import { useTranslations } from '@/lib/i18n'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -15,13 +16,14 @@ interface LanguageToggleProps {
   showLabel?: boolean
 }
 
+const languages: { code: Locale; nativeLabel: string }[] = [
+  { code: 'en', nativeLabel: 'English' },
+  { code: 'es', nativeLabel: 'Español' },
+]
+
 export default function LanguageToggle({ variant = 'full', showLabel = true }: LanguageToggleProps) {
   const { locale, setLocale } = useI18n()
-
-  const languages: { code: Locale; label: string; nativeLabel: string }[] = [
-    { code: 'en', label: 'English', nativeLabel: 'English' },
-    { code: 'es', label: 'Español', nativeLabel: 'Español' },
-  ]
+  const { t } = useTranslations('language')
 
   const currentLanguage = languages.find(lang => lang.code === locale)
 
@@ -64,7 +66,7 @@ export default function LanguageToggle({ variant = 'full', showLabel = true }: L
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[140px]">
         <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
-          Language
+          {t('switch')}
         </div>
         {languages.map(language => (
           <DropdownMenuItem
