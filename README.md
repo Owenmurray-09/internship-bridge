@@ -543,6 +543,15 @@ The language toggle follows standard web design patterns and is placed in intuit
 
 Language preference is automatically saved to localStorage and will persist to user database profile when implemented.
 
+## Test Accounts
+
+For development and testing:
+
+| Role | Email | Password |
+|------|-------|----------|
+| Employer | `employer@mail.com` | `1234Test!` |
+| Student | `student@mail.com` | `1234Test!` |
+
 ## Development
 
 ### Project Structure
