@@ -1,6 +1,16 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
+
+interface CommentRow {
+  id: string
+  comment: string
+  created_at: string
+  updated_at: string
+  users: {
+    full_name: string | null
+  }
+}
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -47,6 +57,8 @@ export default function StudentApplicationsPage() {
   const [studentProfileId, setStudentProfileId] = useState<string | null>(null)
   const [filter, setFilter] = useState<ApplicationStatus | 'all'>('all')
   const [withdrawingId, setWithdrawingId] = useState<string | null>(null)
+  const [comments, setComments] = useState<Record<string, CommentRow[]>>({})
+  const [expandedCommentsId, setExpandedCommentsId] = useState<string | null>(null)
 
   const fetchApplications = useCallback(async (profileId: string) => {
     const supabase = createClientSupabase()
@@ -60,6 +72,24 @@ export default function StudentApplicationsPage() {
       .order('applied_at', { ascending: false })
 
     setApplications((data as unknown as ApplicationRow[]) || [])
+
+    // Fetch comments for accepted applications
+    const accepted = (data as unknown as ApplicationRow[])?.filter((a) => a.status === 'accepted') || []
+    if (accepted.length > 0) {
+      const supabase2 = createClientSupabase()
+      const commentsMap: Record<string, CommentRow[]> = {}
+      await Promise.all(
+        accepted.map(async (a) => {
+          const { data: cData } = await supabase2
+            .from('performance_comments')
+            .select('id, comment, created_at, updated_at, users(full_name)')
+            .eq('application_id', a.id)
+            .order('created_at', { ascending: true })
+          commentsMap[a.id] = (cData as unknown as CommentRow[]) || []
+        })
+      )
+      setComments(commentsMap)
+    }
   }, [])
 
   useEffect(() => {
@@ -229,7 +259,31 @@ export default function StudentApplicationsPage() {
                       </span>
                     </div>
                   </CardHeader>
-                  <CardContent className="pt-0">
+                  <CardContent className="pt-0 space-y-3">
+                    {/* Performance comments for accepted applications */}
+                    {app.status === 'accepted' && (comments[app.id] || []).length > 0 && (
+                      <div>
+                        <button
+                          onClick={() => setExpandedCommentsId(expandedCommentsId === app.id ? null : app.id)}
+                          className="text-sm text-blue-600 hover:text-blue-800"
+                        >
+                          {t('performanceComments.title')} ({comments[app.id].length})
+                        </button>
+                        {expandedCommentsId === app.id && (
+                          <div className="space-y-2 mt-2">
+                            {comments[app.id].map((c) => (
+                              <div key={c.id} className="bg-gray-50 rounded-lg p-3">
+                                <p className="text-sm text-gray-700 whitespace-pre-line">{c.comment}</p>
+                                <p className="text-xs text-gray-400 mt-1">
+                                  {c.users?.full_name || ''} &middot; {new Date(c.created_at).toLocaleDateString()}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
                     <div className="flex gap-2">
                       <Link href={`/internships/${app.internship_id}`}>
                         <Button size="sm" variant="outline">

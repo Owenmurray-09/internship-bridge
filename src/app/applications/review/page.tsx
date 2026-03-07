@@ -5,10 +5,22 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Textarea } from '@/components/ui/textarea'
 import { createClientSupabase } from '@/lib/supabase'
 import { useTranslations } from '@/lib/i18n'
 import DashboardNav from '@/components/DashboardNav'
 import type { ApplicationStatus } from '@/types/database'
+
+interface CommentRow {
+  id: string
+  comment: string
+  created_at: string
+  updated_at: string
+  employer_id: string
+  users: {
+    full_name: string | null
+  }
+}
 
 interface ApplicationRow {
   id: string
@@ -50,9 +62,14 @@ export default function ReviewApplicationsPage() {
   const [applications, setApplications] = useState<ApplicationRow[]>([])
   const [loading, setLoading] = useState(true)
   const [userName, setUserName] = useState('')
+  const [userId, setUserId] = useState<string | null>(null)
   const [companyId, setCompanyId] = useState<string | null>(null)
   const [filter, setFilter] = useState<ApplicationStatus | 'all'>('all')
   const [expandedId, setExpandedId] = useState<string | null>(null)
+  const [comments, setComments] = useState<Record<string, CommentRow[]>>({})
+  const [newComment, setNewComment] = useState<Record<string, string>>({})
+  const [submittingComment, setSubmittingComment] = useState<string | null>(null)
+  const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null)
 
   const fetchApplications = useCallback(async (cId: string) => {
     const supabase = createClientSupabase()
@@ -68,6 +85,50 @@ export default function ReviewApplicationsPage() {
 
     setApplications((data as unknown as ApplicationRow[]) || [])
   }, [])
+
+  const fetchComments = useCallback(async (applicationId: string) => {
+    const supabase = createClientSupabase()
+    const { data } = await supabase
+      .from('performance_comments')
+      .select('id, comment, created_at, updated_at, employer_id, users(full_name)')
+      .eq('application_id', applicationId)
+      .order('created_at', { ascending: true })
+
+    setComments((prev) => ({
+      ...prev,
+      [applicationId]: (data as unknown as CommentRow[]) || [],
+    }))
+  }, [])
+
+  const addComment = async (applicationId: string) => {
+    const text = newComment[applicationId]?.trim()
+    if (!text || !userId) return
+
+    setSubmittingComment(applicationId)
+    const supabase = createClientSupabase()
+    const { error } = await supabase
+      .from('performance_comments')
+      .insert({ application_id: applicationId, employer_id: userId, comment: text })
+
+    if (!error) {
+      setNewComment((prev) => ({ ...prev, [applicationId]: '' }))
+      await fetchComments(applicationId)
+    }
+    setSubmittingComment(null)
+  }
+
+  const deleteComment = async (commentId: string, applicationId: string) => {
+    const supabase = createClientSupabase()
+    const { error } = await supabase
+      .from('performance_comments')
+      .delete()
+      .eq('id', commentId)
+
+    if (!error) {
+      setDeletingCommentId(null)
+      await fetchComments(applicationId)
+    }
+  }
 
   useEffect(() => {
     async function init() {
@@ -90,6 +151,7 @@ export default function ReviewApplicationsPage() {
       }
 
       setUserName(userData.full_name || user.email || '')
+      setUserId(user.id)
 
       const { data: profile } = await supabase
         .from('company_profiles')
@@ -104,10 +166,22 @@ export default function ReviewApplicationsPage() {
 
       setCompanyId(profile.id)
       await fetchApplications(profile.id)
+
+      // Fetch comments for accepted applications
+      const { data: apps } = await supabase
+        .from('applications')
+        .select('id, status, internships!inner(company_id)')
+        .eq('internships.company_id', profile.id)
+        .eq('status', 'accepted')
+
+      if (apps) {
+        await Promise.all(apps.map((a) => fetchComments(a.id)))
+      }
+
       setLoading(false)
     }
     init()
-  }, [router, fetchApplications])
+  }, [router, fetchApplications, fetchComments])
 
   const updateStatus = async (id: string, status: ApplicationStatus) => {
     const supabase = createClientSupabase()
@@ -118,6 +192,9 @@ export default function ReviewApplicationsPage() {
 
     if (!error && companyId) {
       await fetchApplications(companyId)
+      if (status === 'accepted') {
+        await fetchComments(id)
+      }
     }
   }
 
@@ -221,6 +298,82 @@ export default function ReviewApplicationsPage() {
                       <div className="bg-gray-50 rounded-lg p-4">
                         <h4 className="text-sm font-medium text-gray-700 mb-2">{t('studentBio')}</h4>
                         <p className="text-sm text-gray-600">{student.bio}</p>
+                      </div>
+                    )}
+
+                    {/* Performance Comments - only for accepted applications */}
+                    {app.status === 'accepted' && (
+                      <div className="border-t pt-3 mt-1">
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">
+                          {t('performanceComments.title')}
+                        </h4>
+
+                        {/* Existing comments */}
+                        {(comments[app.id] || []).length > 0 ? (
+                          <div className="space-y-2 mb-3">
+                            {comments[app.id].map((c) => (
+                              <div key={c.id} className="bg-gray-50 rounded-lg p-3">
+                                <div className="flex items-start justify-between">
+                                  <p className="text-sm text-gray-700 whitespace-pre-line flex-1">{c.comment}</p>
+                                  {c.employer_id === userId && (
+                                    deletingCommentId === c.id ? (
+                                      <div className="flex gap-1 ml-2 shrink-0">
+                                        <Button
+                                          size="xs"
+                                          variant="destructive"
+                                          onClick={() => deleteComment(c.id, app.id)}
+                                        >
+                                          {tCommon('confirm')}
+                                        </Button>
+                                        <Button
+                                          size="xs"
+                                          variant="outline"
+                                          onClick={() => setDeletingCommentId(null)}
+                                        >
+                                          {tCommon('cancel')}
+                                        </Button>
+                                      </div>
+                                    ) : (
+                                      <button
+                                        onClick={() => setDeletingCommentId(c.id)}
+                                        className="text-xs text-gray-400 hover:text-red-500 ml-2 shrink-0"
+                                      >
+                                        {tCommon('delete')}
+                                      </button>
+                                    )
+                                  )}
+                                </div>
+                                <p className="text-xs text-gray-400 mt-1">
+                                  {c.users?.full_name || ''} &middot; {new Date(c.created_at).toLocaleDateString()}
+                                  {c.updated_at !== c.created_at && ` (${t('performanceComments.edited')})`}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-sm text-gray-400 mb-3">{t('performanceComments.noComments')}</p>
+                        )}
+
+                        {/* Add new comment */}
+                        <div className="flex gap-2">
+                          <Textarea
+                            value={newComment[app.id] || ''}
+                            onChange={(e) => setNewComment((prev) => ({ ...prev, [app.id]: e.target.value }))}
+                            placeholder={t('performanceComments.placeholder')}
+                            className="text-sm min-h-[60px]"
+                            rows={2}
+                          />
+                          <Button
+                            size="sm"
+                            onClick={() => addComment(app.id)}
+                            disabled={!newComment[app.id]?.trim() || submittingComment === app.id}
+                            className="shrink-0 self-end"
+                          >
+                            {submittingComment === app.id
+                              ? t('performanceComments.submitting')
+                              : t('performanceComments.submit')}
+                          </Button>
+                        </div>
                       </div>
                     )}
 

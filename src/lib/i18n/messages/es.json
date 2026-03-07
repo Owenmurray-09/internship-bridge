@@ -140,8 +140,8 @@
         "button": "Explorar Oportunidades"
       },
       "myApplications": {
-        "title": "Mis Solicitudes",
-        "description": "Sigue el estado de tus solicitudes de prácticas",
+        "title": "Mis Solicitudes y Prácticas",
+        "description": "Sigue el estado de tus solicitudes y prácticas",
         "button": "Ver Solicitudes"
       },
       "completeProfile": {
@@ -329,7 +329,7 @@
   },
   "applications": {
     "student": {
-      "title": "Mis Solicitudes",
+      "title": "Mis Solicitudes y Prácticas",
       "description": "Sigue el estado de tus solicitudes de prácticas",
       "noApplications": "Aún no has aplicado a ninguna práctica.",
       "noResults": "Ninguna solicitud coincide con este filtro.",
@@ -359,6 +359,10 @@
         "pending": "Pendientes",
         "accepted": "Aceptadas",
         "reviewed": "En Revisión"
+      },
+      "performanceComments": {
+        "title": "Comentarios del Empleador",
+        "noComments": "Sin comentarios aún."
       }
     },
     "review": {
@@ -392,6 +396,15 @@
         "accept": "Aceptar",
         "reject": "Rechazar",
         "moveBack": "Mover a Revisada"
+      },
+      "performanceComments": {
+        "title": "Comentarios de Desempeño",
+        "placeholder": "Comparte comentarios sobre el desempeño de este estudiante...",
+        "submit": "Agregar Comentario",
+        "submitting": "Agregando...",
+        "noComments": "Sin comentarios aún.",
+        "deleteConfirm": "¿Eliminar este comentario?",
+        "edited": "editado"
       }
     }
   },

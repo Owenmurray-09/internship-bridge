@@ -102,6 +102,16 @@ export interface Application {
   student_profile?: StudentProfile
 }
 
+export interface PerformanceComment {
+  id: string
+  application_id: string
+  employer_id: string
+  comment: string
+  created_at: string
+  updated_at: string
+  employer?: User
+}
+
 export interface Message {
   id: string
   application_id: string
