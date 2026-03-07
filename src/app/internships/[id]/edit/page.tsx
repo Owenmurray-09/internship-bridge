@@ -21,7 +21,6 @@ type EditInternshipInput = {
   description: string
   location?: string
   remoteAllowed: boolean
-  applicationDeadline?: string
 }
 
 export default function EditInternshipPage() {
@@ -37,7 +36,6 @@ export default function EditInternshipPage() {
     description: z.string().min(1, tVal('descriptionRequired')).max(5000, tVal('descriptionTooLong')),
     location: z.string().max(200, tVal('locationTooLong')).optional(),
     remoteAllowed: z.boolean(),
-    applicationDeadline: z.string().optional(),
   })
 
   const [loading, setLoading] = useState(true)
@@ -79,7 +77,6 @@ export default function EditInternshipPage() {
         description: internship.description,
         location: internship.location || '',
         remoteAllowed: internship.remote_allowed,
-        applicationDeadline: internship.application_deadline || '',
       })
       setLoading(false)
     }
@@ -94,7 +91,6 @@ export default function EditInternshipPage() {
         description: data.description,
         location: data.location || null,
         remote_allowed: data.remoteAllowed,
-        application_deadline: data.applicationDeadline || null,
         status,
       }
 
@@ -193,16 +189,6 @@ export default function EditInternshipPage() {
                   disabled={isSubmitting}
                 />
                 <Label htmlFor="remoteAllowed">{t('fields.remoteAllowed')}</Label>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="applicationDeadline">{t('fields.applicationDeadline')}</Label>
-                <Input
-                  id="applicationDeadline"
-                  type="date"
-                  {...register('applicationDeadline')}
-                  disabled={isSubmitting}
-                />
               </div>
 
               <div className="flex gap-3 pt-2">

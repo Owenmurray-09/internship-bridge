@@ -129,7 +129,6 @@ export type Database = {
       }
       internships: {
         Row: {
-          application_deadline: string | null
           company_id: string
           created_at: string
           description: string
@@ -149,7 +148,6 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          application_deadline?: string | null
           company_id: string
           created_at?: string
           description: string
@@ -169,7 +167,6 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          application_deadline?: string | null
           company_id?: string
           created_at?: string
           description?: string

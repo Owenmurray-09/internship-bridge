@@ -64,7 +64,6 @@ CREATE TABLE public.internships (
     duration_months INTEGER,
     start_date DATE,
     end_date DATE,
-    application_deadline DATE,
     status internship_status DEFAULT 'draft',
     max_applications INTEGER,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,

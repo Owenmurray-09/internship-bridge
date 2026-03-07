@@ -405,7 +405,6 @@
       "noInternships": "No internships available right now. Check back soon!",
       "noResults": "No internships match your search.",
       "remote": "Remote",
-      "deadline": "Apply by",
       "viewDetails": "View Details"
     },
     "detail": {
@@ -414,7 +413,6 @@
       "duration": "Duration",
       "months": "months",
       "startDate": "Start Date",
-      "deadline": "Application Deadline",
       "description": "Description",
       "requirements": "Requirements",
       "responsibilities": "Responsibilities",
@@ -443,7 +441,6 @@
         "duration": "Duration (months)",
         "startDate": "Start Date",
         "endDate": "End Date",
-        "applicationDeadline": "Application Deadline",
         "requirements": "Requirements",
         "requirementsPlaceholder": "Enter each requirement and press Enter",
         "responsibilities": "Responsibilities",

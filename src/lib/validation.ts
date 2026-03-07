@@ -162,10 +162,6 @@ export const internshipSchema = z.object({
     .string()
     .datetime()
     .optional(),
-  applicationDeadline: z
-    .string()
-    .datetime()
-    .optional(),
   maxApplications: z
     .number()
     .int()

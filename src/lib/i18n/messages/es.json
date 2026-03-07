@@ -405,7 +405,6 @@
       "noInternships": "No hay prácticas disponibles ahora. ¡Vuelve pronto!",
       "noResults": "Ninguna práctica coincide con tu búsqueda.",
       "remote": "Remoto",
-      "deadline": "Aplicar antes del",
       "viewDetails": "Ver Detalles"
     },
     "detail": {
@@ -414,7 +413,6 @@
       "duration": "Duración",
       "months": "meses",
       "startDate": "Fecha de Inicio",
-      "deadline": "Fecha Límite de Solicitud",
       "description": "Descripción",
       "requirements": "Requisitos",
       "responsibilities": "Responsabilidades",
@@ -443,7 +441,6 @@
         "duration": "Duración (meses)",
         "startDate": "Fecha de Inicio",
         "endDate": "Fecha de Fin",
-        "applicationDeadline": "Fecha Límite de Solicitud",
         "requirements": "Requisitos",
         "requirementsPlaceholder": "Ingresa cada requisito y presiona Enter",
         "responsibilities": "Responsabilidades",
