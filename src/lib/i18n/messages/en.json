@@ -314,7 +314,6 @@
       "industry": "Industry",
       "location": "Location",
       "website": "Website",
-      "companySize": "Company Size",
       "description": "Description"
     },
     "placeholders": {
@@ -322,7 +321,6 @@
       "industry": "e.g., Technology",
       "location": "e.g., San Francisco, CA",
       "website": "https://example.com",
-      "companySize": "Select company size",
       "description": "Tell students about your company..."
     },
     "submitCreate": "Create Profile",

@@ -39,7 +39,6 @@ CREATE TABLE public.company_profiles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES public.users(id) ON DELETE CASCADE UNIQUE NOT NULL,
     company_name TEXT NOT NULL,
-    company_size TEXT,
     industry TEXT,
     website_url TEXT,
     logo_url TEXT,

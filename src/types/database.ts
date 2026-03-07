@@ -52,7 +52,6 @@ export interface CompanyProfile {
   id: string
   user_id: string
   company_name: string
-  company_size?: string
   industry?: string
   website_url?: string
   logo_url?: string
