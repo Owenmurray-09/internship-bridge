@@ -252,57 +252,6 @@ export default async function DashboardPage() {
             </>
           )}
         </div>
-
-        {/* Quick Stats */}
-        <div className="mt-8">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Quick Stats</h3>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-2xl font-bold text-blue-600">0</div>
-                <p className="text-sm text-gray-600">
-                  {isStudent && 'Applications Submitted'}
-                  {isEmployer && 'Active Internships'}
-                  {isSchoolAdmin && 'Students'}
-                  {isGlobalAdmin && 'Total Schools'}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-2xl font-bold text-green-600">0</div>
-                <p className="text-sm text-gray-600">
-                  {isStudent && 'Interview Invites'}
-                  {isEmployer && 'Total Applications'}
-                  {isSchoolAdmin && 'Employers'}
-                  {isGlobalAdmin && 'Total Users'}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-2xl font-bold text-orange-600">0</div>
-                <p className="text-sm text-gray-600">
-                  {isStudent && 'Profile Views'}
-                  {isEmployer && 'Applications This Week'}
-                  {isSchoolAdmin && 'Active Internships'}
-                  {isGlobalAdmin && 'Active Internships'}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-2xl font-bold text-purple-600">0</div>
-                <p className="text-sm text-gray-600">
-                  {isStudent && 'Saved Internships'}
-                  {isEmployer && 'Company Profile Views'}
-                  {isSchoolAdmin && 'Applications This Week'}
-                  {isGlobalAdmin && 'Applications This Week'}
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
       </main>
     </div>
   )
