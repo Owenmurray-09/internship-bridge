@@ -140,8 +140,8 @@
         "button": "Browse Opportunities"
       },
       "myApplications": {
-        "title": "My Applications",
-        "description": "Track the status of your internship applications",
+        "title": "My Applications and Internships",
+        "description": "Track the status of your applications and internships",
         "button": "View Applications"
       },
       "completeProfile": {
@@ -329,7 +329,7 @@
   },
   "applications": {
     "student": {
-      "title": "My Applications",
+      "title": "My Applications and Internships",
       "description": "Track the status of your internship applications",
       "noApplications": "You haven't applied to any internships yet.",
       "noResults": "No applications match this filter.",
@@ -359,6 +359,10 @@
         "pending": "Pending",
         "accepted": "Accepted",
         "reviewed": "Under Review"
+      },
+      "performanceComments": {
+        "title": "Employer Feedback",
+        "noComments": "No feedback yet."
       }
     },
     "review": {
@@ -392,6 +396,15 @@
         "accept": "Accept",
         "reject": "Reject",
         "moveBack": "Move to Reviewed"
+      },
+      "performanceComments": {
+        "title": "Performance Comments",
+        "placeholder": "Share feedback on this student's performance...",
+        "submit": "Add Comment",
+        "submitting": "Adding...",
+        "noComments": "No comments yet.",
+        "deleteConfirm": "Delete this comment?",
+        "edited": "edited"
       }
     }
   },
