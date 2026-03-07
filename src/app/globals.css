@@ -126,3 +126,26 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* School branding overrides — applied when a school context is active */
+html[data-school-branded="true"] .btn-school-primary {
+  background-color: var(--school-primary);
+  color: white;
+}
+html[data-school-branded="true"] .btn-school-primary:hover {
+  background-color: var(--school-secondary);
+}
+html[data-school-branded="true"] .btn-school-outline {
+  border-color: var(--school-primary);
+  color: var(--school-primary);
+}
+html[data-school-branded="true"] .btn-school-outline:hover {
+  background-color: var(--school-primary);
+  color: white;
+}
+html[data-school-branded="true"] .school-accent-text {
+  color: var(--school-primary);
+}
+html[data-school-branded="true"] .school-accent-border {
+  border-color: var(--school-primary);
+}

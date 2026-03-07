@@ -21,9 +21,11 @@ export default function DynamicLayout({ children }: DynamicLayoutProps) {
     if (currentSchool) {
       root.style.setProperty('--school-primary', currentSchool.primary_color)
       root.style.setProperty('--school-secondary', currentSchool.secondary_color)
+      root.dataset.schoolBranded = 'true'
     } else {
       root.style.removeProperty('--school-primary')
       root.style.removeProperty('--school-secondary')
+      delete root.dataset.schoolBranded
     }
   }, [currentSchool])
 
