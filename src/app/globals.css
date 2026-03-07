@@ -128,24 +128,51 @@
 }
 
 /* School branding overrides — applied when a school context is active */
-html[data-school-branded="true"] .btn-school-primary {
-  background-color: var(--school-primary);
-  color: white;
+
+/* Override shadcn theme tokens so all default buttons, focus rings, etc. use school colors */
+html[data-school-branded="true"] {
+  --primary: var(--school-primary);
+  --primary-foreground: #ffffff;
+  --ring: var(--school-primary);
 }
-html[data-school-branded="true"] .btn-school-primary:hover {
+
+/* Thicker nav bottom border to make secondary color visible */
+html[data-school-branded="true"] nav {
+  border-bottom-width: 3px !important;
+}
+
+/* Primary buttons hover with secondary school color */
+html[data-school-branded="true"] [data-slot="button"][data-variant="default"]:hover {
+  background-color: var(--school-secondary) !important;
+}
+
+/* Small red accent line under page headings */
+html[data-school-branded="true"] main > :first-child h1::after,
+html[data-school-branded="true"] main > :first-child h2::after {
+  content: '';
+  display: block;
+  width: 3rem;
+  height: 2px;
   background-color: var(--school-secondary);
+  margin-top: 0.5rem;
 }
-html[data-school-branded="true"] .btn-school-outline {
-  border-color: var(--school-primary);
-  color: var(--school-primary);
+
+/* Override hardcoded blue accent utilities with school primary */
+html[data-school-branded="true"] .bg-blue-600 {
+  background-color: var(--school-primary) !important;
 }
-html[data-school-branded="true"] .btn-school-outline:hover {
-  background-color: var(--school-primary);
-  color: white;
+html[data-school-branded="true"] .text-blue-600 {
+  color: var(--school-primary) !important;
 }
-html[data-school-branded="true"] .school-accent-text {
-  color: var(--school-primary);
+html[data-school-branded="true"] .hover\:text-blue-600:hover {
+  color: var(--school-primary) !important;
 }
-html[data-school-branded="true"] .school-accent-border {
-  border-color: var(--school-primary);
+html[data-school-branded="true"] .hover\:text-blue-800:hover {
+  color: var(--school-primary) !important;
+}
+html[data-school-branded="true"] .bg-blue-100 {
+  background-color: color-mix(in srgb, var(--school-primary) 12%, white) !important;
+}
+html[data-school-branded="true"] .text-blue-800 {
+  color: var(--school-primary) !important;
 }
