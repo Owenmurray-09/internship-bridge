@@ -93,9 +93,6 @@ export const companyProfileSchema = z.object({
     .min(1, 'Company name is required')
     .max(200, 'Company name too long')
     .transform((val) => val.trim()),
-  companySize: z
-    .enum(['1-10', '11-50', '51-200', '201-500', '501-1000', '1000+'])
-    .optional(),
   industry: z
     .string()
     .max(100, 'Industry too long')
@@ -159,10 +156,6 @@ export const internshipSchema = z.object({
     .datetime()
     .optional(),
   endDate: z
-    .string()
-    .datetime()
-    .optional(),
-  applicationDeadline: z
     .string()
     .datetime()
     .optional(),

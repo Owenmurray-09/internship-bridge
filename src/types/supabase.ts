@@ -74,7 +74,6 @@ export type Database = {
       company_profiles: {
         Row: {
           company_name: string
-          company_size: string | null
           created_at: string
           description: string | null
           id: string
@@ -89,7 +88,6 @@ export type Database = {
         }
         Insert: {
           company_name: string
-          company_size?: string | null
           created_at?: string
           description?: string | null
           id?: string
@@ -104,7 +102,6 @@ export type Database = {
         }
         Update: {
           company_name?: string
-          company_size?: string | null
           created_at?: string
           description?: string | null
           id?: string
@@ -129,7 +126,6 @@ export type Database = {
       }
       internships: {
         Row: {
-          application_deadline: string | null
           company_id: string
           created_at: string
           description: string
@@ -149,7 +145,6 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          application_deadline?: string | null
           company_id: string
           created_at?: string
           description: string
@@ -169,7 +164,6 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          application_deadline?: string | null
           company_id?: string
           created_at?: string
           description?: string

@@ -52,7 +52,6 @@ export interface CompanyProfile {
   id: string
   user_id: string
   company_name: string
-  company_size?: string
   industry?: string
   website_url?: string
   logo_url?: string
@@ -78,7 +77,6 @@ export interface Internship {
   duration_months?: number
   start_date?: string
   end_date?: string
-  application_deadline?: string
   status: InternshipStatus
   max_applications?: number
   school_id?: string

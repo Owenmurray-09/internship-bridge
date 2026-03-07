@@ -52,7 +52,6 @@ export default function CompanyProfilePage() {
         setIsEditing(true)
         reset({
           companyName: profile.company_name,
-          companySize: profile.company_size || undefined,
           industry: profile.industry || '',
           websiteUrl: profile.website_url || '',
           description: profile.description || '',
@@ -74,7 +73,6 @@ export default function CompanyProfilePage() {
       const row = {
         user_id: user.id,
         company_name: data.companyName,
-        company_size: data.companySize || null,
         industry: data.industry || null,
         website_url: data.websiteUrl || null,
         description: data.description || null,
@@ -177,24 +175,6 @@ export default function CompanyProfilePage() {
                 {errors.websiteUrl && (
                   <p className="text-red-500 text-sm">{errors.websiteUrl.message}</p>
                 )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="companySize">{t('fields.companySize')}</Label>
-                <select
-                  id="companySize"
-                  {...register('companySize')}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  disabled={isSubmitting}
-                >
-                  <option value="">{t('placeholders.companySize')}</option>
-                  <option value="1-10">1-10</option>
-                  <option value="11-50">11-50</option>
-                  <option value="51-200">51-200</option>
-                  <option value="201-500">201-500</option>
-                  <option value="501-1000">501-1000</option>
-                  <option value="1000+">1000+</option>
-                </select>
               </div>
 
               <div className="space-y-2">

@@ -63,11 +63,6 @@ export default function BrowseInternshipsPage() {
     )
   })
 
-  const formatDeadline = (date?: string) => {
-    if (!date) return null
-    return new Date(date).toLocaleDateString()
-  }
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -135,12 +130,6 @@ export default function BrowseInternshipsPage() {
                         </span>
                       )}
                     </div>
-
-                    {internship.application_deadline && (
-                      <p className="text-xs text-gray-500 mb-4">
-                        {t('deadline')}: {formatDeadline(internship.application_deadline)}
-                      </p>
-                    )}
 
                     <div className="mt-auto">
                       <Link href={`/internships/${internship.id}`}>

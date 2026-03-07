@@ -158,12 +158,6 @@ export default function InternshipDetailPage() {
                   <p className="font-medium">{formatDate(internship.start_date)}</p>
                 </div>
               )}
-              {internship.application_deadline && (
-                <div>
-                  <p className="text-sm text-gray-500">{t('deadline')}</p>
-                  <p className="font-medium">{formatDate(internship.application_deadline)}</p>
-                </div>
-              )}
             </div>
 
             {/* Description */}
