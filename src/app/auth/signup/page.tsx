@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClientSupabase } from '@/lib/supabase'
+import { sendNotification } from '@/lib/email'
 import { signupSchema, type SignupInput } from '@/lib/validation'
 import type { School } from '@/types/database'
 import { useTranslations } from '@/lib/i18n'
@@ -90,6 +91,12 @@ export default function SignUpPage() {
           // Silent fail for user profile creation
           // The auth user is still created successfully
         }
+
+        sendNotification({
+          type: 'welcome',
+          email: data.email,
+          fullName: data.fullName,
+        })
 
         // Create school membership if a school was selected
         if (schoolId) {

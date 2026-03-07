@@ -532,5 +532,37 @@
         "cancel": "Cancel"
       }
     }
+  },
+  "emails": {
+    "applicationSubmitted": {
+      "subject": "New Application Received",
+      "greeting": "Hi {{name}},",
+      "body": "{{studentName}} has submitted an application for your internship {{internshipTitle}}.",
+      "cta": "Review Application"
+    },
+    "applicationAccepted": {
+      "subject": "Your Application Was Accepted!",
+      "greeting": "Hi {{name}},",
+      "body": "Great news! Your application for {{internshipTitle}} at {{companyName}} has been accepted.",
+      "cta": "View My Applications"
+    },
+    "applicationRejected": {
+      "subject": "Application Status Update",
+      "greeting": "Hi {{name}},",
+      "body": "Your application for {{internshipTitle}} at {{companyName}} was not selected at this time.",
+      "cta": "Browse More Internships"
+    },
+    "welcome": {
+      "subject": "Welcome to InternshipBridge!",
+      "greeting": "Hi {{name}}!",
+      "body": "Welcome to InternshipBridge. Your account has been created successfully.",
+      "cta": "Go to Dashboard"
+    },
+    "performanceComment": {
+      "subject": "New Feedback on Your Internship",
+      "greeting": "Hi {{name}},",
+      "body": "{{companyName}} has left feedback on your performance at {{internshipTitle}}.",
+      "cta": "View My Applications"
+    }
   }
 }

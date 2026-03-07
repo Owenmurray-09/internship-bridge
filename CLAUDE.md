@@ -10,8 +10,8 @@ Multi-tenant internship platform connecting students with employers, built with 
 - `npm run lint` — ESLint
 
 ## Test Accounts
-- **Employer**: `employer@mail.com` / `1234Test!`
-- **Student**: `student@mail.com` / `1234Test!`
+- **Employer**: `employer@example.com` / `1234Test!`
+- **Student**: `student@example.com` / `1234Test!`
 
 ## Chrome DevTools MCP
 This project uses the `chrome-devtools-mcp` for browser-based testing (smoke tests, regression tests).
@@ -39,6 +39,11 @@ If Chrome DevTools tools are unavailable, check:
 ### Available Test Commands
 - `/smoke-test` — Quick verification that all pages load and core flows work (read-only)
 - `/regression-test` — Full test exercising forms, validation, state changes (creates test data)
+
+## Deployment
+- Deploy via Vercel CLI: `vercel --prod`
+- Vercel project: `murraymusics-projects/bridge`
+- Dashboard: https://vercel.com/murraymusics-projects/bridge
 
 ## Project Structure
 - `src/app/` — Next.js app router pages
