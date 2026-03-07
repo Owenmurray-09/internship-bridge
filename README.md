@@ -549,8 +549,8 @@ For development and testing:
 
 | Role | Email | Password |
 |------|-------|----------|
-| Employer | `employer@mail.com` | `1234Test!` |
-| Student | `student@mail.com` | `1234Test!` |
+| Employer | `employer@example.com` | `1234Test!` |
+| Student | `student@example.com` | `1234Test!` |
 
 ## Development
 

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
 import { createClientSupabase } from '@/lib/supabase'
+import { sendNotification } from '@/lib/email'
 import { useTranslations } from '@/lib/i18n'
 import DashboardNav from '@/components/DashboardNav'
 import type { ApplicationStatus } from '@/types/database'
@@ -111,6 +112,11 @@ export default function ReviewApplicationsPage() {
       .insert({ application_id: applicationId, employer_id: userId, comment: text })
 
     if (!error) {
+      sendNotification({
+        type: 'performance_comment_added',
+        applicationId,
+        comment: text,
+      })
       setNewComment((prev) => ({ ...prev, [applicationId]: '' }))
       await fetchComments(applicationId)
     }
@@ -191,6 +197,12 @@ export default function ReviewApplicationsPage() {
       .eq('id', id)
 
     if (!error && companyId) {
+      if (status === 'accepted' || status === 'rejected') {
+        sendNotification({
+          type: status === 'accepted' ? 'application_accepted' : 'application_rejected',
+          applicationId: id,
+        })
+      }
       await fetchApplications(companyId)
       if (status === 'accepted') {
         await fetchComments(id)

@@ -11,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClientSupabase } from '@/lib/supabase'
+import { sendNotification } from '@/lib/email'
 import { useTranslations } from '@/lib/i18n'
 import LanguageToggle from '@/components/LanguageToggle'
 
@@ -110,16 +111,24 @@ export default function ApplyToInternshipPage() {
     try {
       const supabase = createClientSupabase()
 
-      const { error } = await supabase.from('applications').insert({
+      const { data: inserted, error } = await supabase.from('applications').insert({
         internship_id: params.id as string,
         student_id: studentProfileId,
         cover_letter: data.coverLetter,
         status: 'pending',
-      })
+      }).select('id').single()
 
       if (error) {
         setFormError('root', { message: error.message })
         return
+      }
+
+      if (inserted) {
+        sendNotification({
+          type: 'application_submitted',
+          applicationId: inserted.id,
+          internshipId: params.id as string,
+        })
       }
 
       setSubmitted(true)

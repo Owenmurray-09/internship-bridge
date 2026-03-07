@@ -532,5 +532,37 @@
         "cancel": "Cancelar"
       }
     }
+  },
+  "emails": {
+    "applicationSubmitted": {
+      "subject": "Nueva Solicitud Recibida",
+      "greeting": "Hola {{name}},",
+      "body": "{{studentName}} ha enviado una solicitud para tu práctica {{internshipTitle}}.",
+      "cta": "Revisar Solicitud"
+    },
+    "applicationAccepted": {
+      "subject": "¡Tu Solicitud Fue Aceptada!",
+      "greeting": "Hola {{name}},",
+      "body": "¡Buenas noticias! Tu solicitud para {{internshipTitle}} en {{companyName}} ha sido aceptada.",
+      "cta": "Ver Mis Solicitudes"
+    },
+    "applicationRejected": {
+      "subject": "Actualización del Estado de Solicitud",
+      "greeting": "Hola {{name}},",
+      "body": "Tu solicitud para {{internshipTitle}} en {{companyName}} no fue seleccionada en esta ocasión.",
+      "cta": "Explorar Más Prácticas"
+    },
+    "welcome": {
+      "subject": "¡Bienvenido a InternshipBridge!",
+      "greeting": "¡Hola {{name}}!",
+      "body": "Bienvenido a InternshipBridge. Tu cuenta ha sido creada exitosamente.",
+      "cta": "Ir al Panel"
+    },
+    "performanceComment": {
+      "subject": "Nuevo Comentario Sobre Tu Práctica",
+      "greeting": "Hola {{name}},",
+      "body": "{{companyName}} ha dejado un comentario sobre tu desempeño en {{internshipTitle}}.",
+      "cta": "Ver Mis Solicitudes"
+    }
   }
 }

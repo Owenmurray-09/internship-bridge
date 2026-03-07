@@ -31,6 +31,7 @@ export interface User {
   full_name?: string
   phone?: string
   preferred_school_id?: string
+  preferred_locale?: string
   created_at: string
   updated_at: string
 }
