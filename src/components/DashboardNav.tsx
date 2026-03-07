@@ -96,12 +96,17 @@ export default function DashboardNav({ userName, userRole }: DashboardNavProps) 
               href="/dashboard"
               className={`text-xl font-semibold ${hasBranding ? 'text-white' : 'text-gray-900'}`}
             >
-              {currentSchool?.name || 'InternshipBridge'}
+              InternshipBridge
             </Link>
           </div>
           <div className="flex items-center space-x-4">
-            <SchoolPicker variant="compact" showAllSchoolsOption={showAllSchoolsOption} />
-            <LanguageToggle variant="compact" />
+            <SchoolPicker variant="compact" showAllSchoolsOption={showAllSchoolsOption} className={hasBranding ? 'text-white/80 hover:text-white hover:bg-white/10' : ''} />
+            <LanguageToggle variant="compact" className={hasBranding ? 'text-white/80 hover:text-white hover:bg-white/10' : ''} />
+            {currentSchool && (
+              <span className={`text-sm hidden sm:inline ${hasBranding ? 'text-white/80' : 'text-gray-600'}`}>
+                {currentSchool.name}
+              </span>
+            )}
             <span className={`text-sm hidden sm:inline ${hasBranding ? 'text-white/80' : 'text-gray-600'}`}>
               {t('common.welcome', { name: userName })}
             </span>
@@ -110,7 +115,7 @@ export default function DashboardNav({ userName, userRole }: DashboardNavProps) 
                 type="submit"
                 variant="outline"
                 size="sm"
-                className={hasBranding ? 'border-white/30 text-white hover:bg-white/10 hover:text-white' : ''}
+                className={hasBranding ? 'bg-white text-gray-900 border-white/30 hover:bg-white/90' : ''}
               >
                 {t('common.signOut')}
               </Button>

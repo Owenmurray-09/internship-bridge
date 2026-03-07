@@ -3,6 +3,7 @@
 import { useI18n, type Locale } from '@/lib/i18n'
 import { useTranslations } from '@/lib/i18n'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +15,7 @@ import { Globe, Languages } from 'lucide-react'
 interface LanguageToggleProps {
   variant?: 'compact' | 'full'
   showLabel?: boolean
+  className?: string
 }
 
 const languages: { code: Locale; nativeLabel: string }[] = [
@@ -21,7 +23,7 @@ const languages: { code: Locale; nativeLabel: string }[] = [
   { code: 'es', nativeLabel: 'Español' },
 ]
 
-export default function LanguageToggle({ variant = 'full', showLabel = true }: LanguageToggleProps) {
+export default function LanguageToggle({ variant = 'full', showLabel = true, className }: LanguageToggleProps) {
   const { locale, setLocale } = useI18n()
   const { t } = useTranslations('language')
 
@@ -31,7 +33,7 @@ export default function LanguageToggle({ variant = 'full', showLabel = true }: L
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm" className="gap-1 text-sm font-medium">
+          <Button variant="ghost" size="sm" className={cn("gap-1 text-sm font-medium", className)}>
             <Languages className="h-4 w-4" />
             <span className="uppercase font-semibold">{locale}</span>
           </Button>

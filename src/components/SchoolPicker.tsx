@@ -3,6 +3,7 @@
 import { useSchool } from '@/lib/school'
 import { useTranslations } from '@/lib/i18n'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,9 +15,10 @@ import { Building2 } from 'lucide-react'
 interface SchoolPickerProps {
   variant?: 'compact' | 'full'
   showAllSchoolsOption?: boolean
+  className?: string
 }
 
-export default function SchoolPicker({ variant = 'full', showAllSchoolsOption = false }: SchoolPickerProps) {
+export default function SchoolPicker({ variant = 'full', showAllSchoolsOption = false, className }: SchoolPickerProps) {
   const { currentSchool, setCurrentSchool, schools, isLoading } = useSchool()
   const { t } = useTranslations('school')
 
@@ -27,7 +29,7 @@ export default function SchoolPicker({ variant = 'full', showAllSchoolsOption = 
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm" className="gap-1 text-sm font-medium">
+          <Button variant="ghost" size="sm" className={cn("gap-1 text-sm font-medium", className)}>
             <Building2 className="h-4 w-4" />
             <span className="truncate max-w-[120px]">
               {currentSchool?.name ?? t('allSchools')}
