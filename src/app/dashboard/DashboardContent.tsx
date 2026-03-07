@@ -247,57 +247,6 @@ export default function DashboardContent({ userName, userRole }: DashboardConten
             </>
           )}
         </div>
-
-        {/* Quick Stats */}
-        <div className="mt-8">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">{t('quickStats.title')}</h3>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-2xl font-bold text-blue-600">0</div>
-                <p className="text-sm text-gray-600">
-                  {isStudent && t('quickStats.student.submitted')}
-                  {isEmployer && t('quickStats.employer.active')}
-                  {isSchoolAdmin && t('quickStats.schoolAdmin.students')}
-                  {isGlobalAdmin && t('quickStats.globalAdmin.schools')}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-2xl font-bold text-green-600">0</div>
-                <p className="text-sm text-gray-600">
-                  {isStudent && t('quickStats.student.invites')}
-                  {isEmployer && t('quickStats.employer.applications')}
-                  {isSchoolAdmin && t('quickStats.schoolAdmin.employers')}
-                  {isGlobalAdmin && t('quickStats.globalAdmin.users')}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-2xl font-bold text-orange-600">0</div>
-                <p className="text-sm text-gray-600">
-                  {isStudent && t('quickStats.student.views')}
-                  {isEmployer && t('quickStats.employer.thisWeek')}
-                  {isSchoolAdmin && t('quickStats.schoolAdmin.internships')}
-                  {isGlobalAdmin && t('quickStats.globalAdmin.internships')}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-2xl font-bold text-purple-600">0</div>
-                <p className="text-sm text-gray-600">
-                  {isStudent && t('quickStats.student.saved')}
-                  {isEmployer && t('quickStats.employer.profileViews')}
-                  {isSchoolAdmin && t('quickStats.schoolAdmin.thisWeek')}
-                  {isGlobalAdmin && t('quickStats.globalAdmin.thisWeek')}
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
       </main>
     </div>
   )
