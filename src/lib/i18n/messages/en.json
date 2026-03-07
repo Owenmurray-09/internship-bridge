@@ -10,17 +10,33 @@
     "back": "Back",
     "next": "Next",
     "submit": "Submit",
-    "close": "Close"
+    "close": "Close",
+    "welcome": "Welcome, {{name}}",
+    "signOut": "Sign Out"
   },
   "navigation": {
     "home": "Home",
     "dashboard": "Dashboard",
     "profile": "Profile",
+    "myProfile": "My Profile",
     "applications": "Applications",
+    "myApplications": "My Applications",
     "internships": "Internships",
+    "browseInternships": "Browse Internships",
+    "postInternship": "Post Internship",
+    "myInternships": "My Internships",
+    "reviewApplications": "Review Applications",
+    "companyProfile": "Company Profile",
+    "manageStudents": "Manage Students",
+    "manageEmployers": "Manage Employers",
+    "schoolSettings": "School Settings",
+    "manageSchools": "Manage Schools",
+    "manageUsers": "Manage Users",
+    "systemStatistics": "System Statistics",
     "messages": "Messages",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Logout",
+    "menu": "Menu"
   },
   "auth": {
     "login": {
@@ -109,10 +125,118 @@
     "overview": "Overview",
     "recentActivity": "Recent Activity",
     "quickActions": "Quick Actions",
-    "stats": "Statistics"
+    "stats": "Statistics",
+    "pageTitle": "Dashboard",
+    "roleDescription": {
+      "student": "Find and apply for internships that match your skills and interests.",
+      "employer": "Manage your internship postings and review applications.",
+      "schoolAdmin": "Manage your school's students, employers, and settings.",
+      "globalAdmin": "System-wide administration across all schools."
+    },
+    "cards": {
+      "browseInternships": {
+        "title": "Browse Internships",
+        "description": "Find internship opportunities that match your profile",
+        "button": "Browse Opportunities"
+      },
+      "myApplications": {
+        "title": "My Applications",
+        "description": "Track the status of your internship applications",
+        "button": "View Applications"
+      },
+      "completeProfile": {
+        "title": "Complete Profile",
+        "description": "Update your profile to attract employers",
+        "button": "Edit Profile"
+      },
+      "postInternship": {
+        "title": "Post New Internship",
+        "description": "Create a new internship opportunity",
+        "button": "Post Internship"
+      },
+      "myInternships": {
+        "title": "My Internships",
+        "description": "Manage your posted internship opportunities",
+        "button": "Manage Postings"
+      },
+      "reviewApplications": {
+        "title": "Review Applications",
+        "description": "Review and respond to student applications",
+        "button": "Review Applications"
+      },
+      "companyProfile": {
+        "title": "Company Profile",
+        "description": "Update your company information",
+        "button": "Edit Company Profile"
+      },
+      "manageStudents": {
+        "title": "Manage Students",
+        "description": "View and manage students at your school",
+        "button": "View Students"
+      },
+      "manageEmployers": {
+        "title": "Manage Employers",
+        "description": "View employers affiliated with your school",
+        "button": "View Employers"
+      },
+      "schoolSettings": {
+        "title": "School Settings",
+        "description": "Update school branding and configuration",
+        "button": "School Settings"
+      },
+      "manageSchools": {
+        "title": "Manage Schools",
+        "description": "Add, edit, and manage all schools in the system",
+        "button": "Manage Schools"
+      },
+      "manageUsers": {
+        "title": "Manage Users",
+        "description": "View and manage all users across all schools",
+        "button": "View Users"
+      },
+      "systemStats": {
+        "title": "System Statistics",
+        "description": "View aggregate statistics across all schools",
+        "button": "View Stats"
+      }
+    },
+    "quickStats": {
+      "title": "Quick Stats",
+      "student": {
+        "submitted": "Applications Submitted",
+        "invites": "Interview Invites",
+        "views": "Profile Views",
+        "saved": "Saved Internships"
+      },
+      "employer": {
+        "active": "Active Internships",
+        "applications": "Total Applications",
+        "thisWeek": "Applications This Week",
+        "profileViews": "Company Profile Views"
+      },
+      "schoolAdmin": {
+        "students": "Students",
+        "employers": "Employers",
+        "internships": "Active Internships",
+        "thisWeek": "Applications This Week"
+      },
+      "globalAdmin": {
+        "schools": "Total Schools",
+        "users": "Total Users",
+        "internships": "Active Internships",
+        "thisWeek": "Applications This Week"
+      }
+    }
   },
   "validation": {
     "required": "This field is required",
+    "titleRequired": "Title is required",
+    "titleTooLong": "Title too long",
+    "descriptionRequired": "Description is required",
+    "descriptionTooLong": "Description too long",
+    "locationTooLong": "Location too long",
+    "coverLetterRequired": "Cover letter is required",
+    "coverLetterTooLong": "Cover letter too long",
     "email": {
       "required": "Email is required",
       "invalid": "Invalid email format",

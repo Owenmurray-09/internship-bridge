@@ -10,7 +10,7 @@ import { createClientSupabase } from '@/lib/supabase'
 import { useTranslations } from '@/lib/i18n'
 import LanguageToggle from '@/components/LanguageToggle'
 import DashboardNav from '@/components/DashboardNav'
-import type { Internship } from '@/types/database'
+import type { Internship, UserRole } from '@/types/database'
 
 export default function BrowseInternshipsPage() {
   const router = useRouter()
@@ -21,7 +21,7 @@ export default function BrowseInternshipsPage() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [userName, setUserName] = useState('')
-  const [userRole, setUserRole] = useState<string>('student')
+  const [userRole, setUserRole] = useState<UserRole>('student')
 
   useEffect(() => {
     async function load() {
@@ -62,15 +62,6 @@ export default function BrowseInternshipsPage() {
       i.location?.toLowerCase().includes(q)
     )
   })
-
-  const formatStipend = (amount?: number, currency?: string) => {
-    if (!amount) return null
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency || 'USD',
-      minimumFractionDigits: 0,
-    }).format(amount)
-  }
 
   const formatDeadline = (date?: string) => {
     if (!date) return null
@@ -115,7 +106,7 @@ export default function BrowseInternshipsPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((internship) => {
-              const company = (internship as Record<string, unknown>).company_profiles as
+              const company = (internship as unknown as Record<string, unknown>).company_profiles as
                 | { company_name: string; location?: string }
                 | undefined
               return (
@@ -141,11 +132,6 @@ export default function BrowseInternshipsPage() {
                       {internship.remote_allowed && (
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                           {t('remote')}
-                        </span>
-                      )}
-                      {formatStipend(internship.stipend_amount, internship.stipend_currency) && (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                          {formatStipend(internship.stipend_amount, internship.stipend_currency)}
                         </span>
                       )}
                     </div>

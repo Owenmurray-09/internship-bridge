@@ -10,17 +10,33 @@
     "back": "Atrás",
     "next": "Siguiente",
     "submit": "Enviar",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "welcome": "Bienvenido, {{name}}",
+    "signOut": "Cerrar Sesión"
   },
   "navigation": {
     "home": "Inicio",
     "dashboard": "Panel",
     "profile": "Perfil",
+    "myProfile": "Mi Perfil",
     "applications": "Solicitudes",
+    "myApplications": "Mis Solicitudes",
     "internships": "Prácticas",
+    "browseInternships": "Explorar Prácticas",
+    "postInternship": "Publicar Práctica",
+    "myInternships": "Mis Prácticas",
+    "reviewApplications": "Revisar Solicitudes",
+    "companyProfile": "Perfil de Empresa",
+    "manageStudents": "Gestionar Estudiantes",
+    "manageEmployers": "Gestionar Empleadores",
+    "schoolSettings": "Configuración de Escuela",
+    "manageSchools": "Gestionar Escuelas",
+    "manageUsers": "Gestionar Usuarios",
+    "systemStatistics": "Estadísticas del Sistema",
     "messages": "Mensajes",
     "settings": "Configuración",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "menu": "Menú"
   },
   "auth": {
     "login": {
@@ -109,10 +125,118 @@
     "overview": "Resumen",
     "recentActivity": "Actividad Reciente",
     "quickActions": "Acciones Rápidas",
-    "stats": "Estadísticas"
+    "stats": "Estadísticas",
+    "pageTitle": "Panel",
+    "roleDescription": {
+      "student": "Encuentra y aplica a prácticas que coincidan con tus habilidades e intereses.",
+      "employer": "Gestiona tus publicaciones de prácticas y revisa solicitudes.",
+      "schoolAdmin": "Gestiona los estudiantes, empleadores y configuración de tu escuela.",
+      "globalAdmin": "Administración de todo el sistema en todas las escuelas."
+    },
+    "cards": {
+      "browseInternships": {
+        "title": "Explorar Prácticas",
+        "description": "Encuentra oportunidades de prácticas que coincidan con tu perfil",
+        "button": "Explorar Oportunidades"
+      },
+      "myApplications": {
+        "title": "Mis Solicitudes",
+        "description": "Sigue el estado de tus solicitudes de prácticas",
+        "button": "Ver Solicitudes"
+      },
+      "completeProfile": {
+        "title": "Completar Perfil",
+        "description": "Actualiza tu perfil para atraer empleadores",
+        "button": "Editar Perfil"
+      },
+      "postInternship": {
+        "title": "Publicar Nueva Práctica",
+        "description": "Crea una nueva oportunidad de práctica",
+        "button": "Publicar Práctica"
+      },
+      "myInternships": {
+        "title": "Mis Prácticas",
+        "description": "Gestiona tus oportunidades de prácticas publicadas",
+        "button": "Gestionar Publicaciones"
+      },
+      "reviewApplications": {
+        "title": "Revisar Solicitudes",
+        "description": "Revisa y responde a las solicitudes de estudiantes",
+        "button": "Revisar Solicitudes"
+      },
+      "companyProfile": {
+        "title": "Perfil de Empresa",
+        "description": "Actualiza la información de tu empresa",
+        "button": "Editar Perfil de Empresa"
+      },
+      "manageStudents": {
+        "title": "Gestionar Estudiantes",
+        "description": "Ver y gestionar estudiantes en tu escuela",
+        "button": "Ver Estudiantes"
+      },
+      "manageEmployers": {
+        "title": "Gestionar Empleadores",
+        "description": "Ver empleadores afiliados a tu escuela",
+        "button": "Ver Empleadores"
+      },
+      "schoolSettings": {
+        "title": "Configuración de Escuela",
+        "description": "Actualizar marca y configuración de la escuela",
+        "button": "Configuración de Escuela"
+      },
+      "manageSchools": {
+        "title": "Gestionar Escuelas",
+        "description": "Agregar, editar y gestionar todas las escuelas del sistema",
+        "button": "Gestionar Escuelas"
+      },
+      "manageUsers": {
+        "title": "Gestionar Usuarios",
+        "description": "Ver y gestionar todos los usuarios en todas las escuelas",
+        "button": "Ver Usuarios"
+      },
+      "systemStats": {
+        "title": "Estadísticas del Sistema",
+        "description": "Ver estadísticas agregadas en todas las escuelas",
+        "button": "Ver Estadísticas"
+      }
+    },
+    "quickStats": {
+      "title": "Estadísticas Rápidas",
+      "student": {
+        "submitted": "Solicitudes Enviadas",
+        "invites": "Invitaciones a Entrevista",
+        "views": "Vistas de Perfil",
+        "saved": "Prácticas Guardadas"
+      },
+      "employer": {
+        "active": "Prácticas Activas",
+        "applications": "Total de Solicitudes",
+        "thisWeek": "Solicitudes Esta Semana",
+        "profileViews": "Vistas del Perfil de Empresa"
+      },
+      "schoolAdmin": {
+        "students": "Estudiantes",
+        "employers": "Empleadores",
+        "internships": "Prácticas Activas",
+        "thisWeek": "Solicitudes Esta Semana"
+      },
+      "globalAdmin": {
+        "schools": "Total de Escuelas",
+        "users": "Total de Usuarios",
+        "internships": "Prácticas Activas",
+        "thisWeek": "Solicitudes Esta Semana"
+      }
+    }
   },
   "validation": {
     "required": "Este campo es obligatorio",
+    "titleRequired": "El título es obligatorio",
+    "titleTooLong": "Título demasiado largo",
+    "descriptionRequired": "La descripción es obligatoria",
+    "descriptionTooLong": "Descripción demasiado larga",
+    "locationTooLong": "Ubicación demasiado larga",
+    "coverLetterRequired": "La carta de presentación es obligatoria",
+    "coverLetterTooLong": "Carta de presentación demasiado larga",
     "email": {
       "required": "El correo electrónico es obligatorio",
       "invalid": "Formato de correo electrónico inválido",
