@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -11,6 +11,7 @@ import { useTranslations } from '@/lib/i18n'
 import LanguageToggle from '@/components/LanguageToggle'
 import DashboardNav from '@/components/DashboardNav'
 import type { Internship, UserRole } from '@/types/database'
+import { createInternshipSearch } from '@/lib/search'
 
 export default function BrowseInternshipsPage() {
   const router = useRouter()
@@ -43,7 +44,7 @@ export default function BrowseInternshipsPage() {
 
       const { data } = await supabase
         .from('internships')
-        .select('*, company_profiles(company_name, location)')
+        .select('*, company_profiles(company_name, location, industry)')
         .eq('status', 'active')
         .order('created_at', { ascending: false })
 
@@ -53,15 +54,12 @@ export default function BrowseInternshipsPage() {
     load()
   }, [router])
 
-  const filtered = internships.filter((i) => {
-    if (!search) return true
-    const q = search.toLowerCase()
-    return (
-      i.title.toLowerCase().includes(q) ||
-      i.description.toLowerCase().includes(q) ||
-      i.location?.toLowerCase().includes(q)
-    )
-  })
+  const fuse = useMemo(() => createInternshipSearch(internships), [internships])
+
+  const filtered = useMemo(() => {
+    if (!search.trim()) return internships
+    return fuse.search(search).map((r) => r.item.internship)
+  }, [search, fuse, internships])
 
   if (loading) {
     return (
@@ -86,7 +84,7 @@ export default function BrowseInternshipsPage() {
             placeholder={t('searchPlaceholder')}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="max-w-md"
+            className="max-w-md focus:max-w-full transition-all duration-300 ease-in-out"
           />
         </div>
 
@@ -102,7 +100,7 @@ export default function BrowseInternshipsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((internship) => {
               const company = (internship as unknown as Record<string, unknown>).company_profiles as
-                | { company_name: string; location?: string }
+                | { company_name: string; location?: string; industry?: string }
                 | undefined
               return (
                 <Card key={internship.id} className="flex flex-col">

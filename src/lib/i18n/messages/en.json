@@ -412,7 +412,7 @@
     "browse": {
       "title": "Browse Internships",
       "description": "Find internship opportunities that match your interests",
-      "searchPlaceholder": "Search by title, description, or location...",
+      "searchPlaceholder": "Search by title, company, skills, or location...",
       "noInternships": "No internships available right now. Check back soon!",
       "noResults": "No internships match your search.",
       "remote": "Remote",
