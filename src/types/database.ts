@@ -75,7 +75,7 @@ export interface Internship {
   skills_required?: string[]
   location?: string
   remote_allowed: boolean
-  duration_months?: number
+  duration_months?: string
   start_date?: string
   end_date?: string
   status: InternshipStatus

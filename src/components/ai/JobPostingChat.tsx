@@ -14,7 +14,7 @@ export interface GeneratedPosting {
   skills_required?: string[]
   location?: string
   remote_allowed?: boolean
-  duration_months?: number | null
+  duration_months?: string | null
 }
 
 interface ChatMessage {

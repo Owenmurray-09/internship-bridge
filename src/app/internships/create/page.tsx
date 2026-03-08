@@ -48,7 +48,7 @@ export default function CreateInternshipPage() {
   const [requirements, setRequirements] = useState<string[]>([])
   const [responsibilities, setResponsibilities] = useState<string[]>([])
   const [skillsRequired, setSkillsRequired] = useState<string[]>([])
-  const [durationMonths, setDurationMonths] = useState<number | null>(null)
+  const [durationMonths, setDurationMonths] = useState<string | null>(null)
 
   const {
     register,
@@ -296,7 +296,7 @@ export default function CreateInternshipPage() {
 
                   {durationMonths && (
                     <div className="text-sm text-gray-600">
-                      {t('fields.duration')}: {durationMonths} {t('fields.months')}
+                      {t('fields.duration')}: {durationMonths}
                     </div>
                   )}
                 </div>

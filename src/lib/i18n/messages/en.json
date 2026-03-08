@@ -449,7 +449,7 @@
         "location": "Location",
         "locationPlaceholder": "e.g., San José, Costa Rica",
         "remoteAllowed": "Remote work allowed",
-        "duration": "Duration (months)",
+        "duration": "Duration",
         "startDate": "Start Date",
         "endDate": "End Date",
         "requirements": "Requirements",

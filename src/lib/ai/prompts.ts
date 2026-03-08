@@ -12,7 +12,7 @@ A great internship posting needs:
 5. **Skills** — Technical and soft skills that are relevant
 6. **Location** — Where the internship is based
 7. **Remote/Hybrid/On-site** — Whether remote work is possible
-8. **Duration** — How long the internship lasts (in months)
+8. **Duration** — How long the internship lasts (e.g., "3 months", "1 week", "Summer semester")
 
 ## Conversation Strategy
 1. Start by asking what role they're hiring for and a bit about their company/team
@@ -33,7 +33,7 @@ When you have gathered enough information, output a structured posting in this E
   "skills_required": ["skill 1", "skill 2", ...],
   "location": "City, Country or Remote",
   "remote_allowed": true/false,
-  "duration_months": number or null
+  "duration_months": "free text like '3 months', '1 week', etc." or null
 }
 \`\`\`
 

@@ -449,7 +449,7 @@
         "location": "Ubicación",
         "locationPlaceholder": "ej., San José, Costa Rica",
         "remoteAllowed": "Trabajo remoto permitido",
-        "duration": "Duración (meses)",
+        "duration": "Duración",
         "startDate": "Fecha de Inicio",
         "endDate": "Fecha de Fin",
         "requirements": "Requisitos",
