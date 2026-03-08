@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { X } from 'lucide-react'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -14,6 +15,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { createClientSupabase } from '@/lib/supabase'
 import { useTranslations } from '@/lib/i18n'
 import LanguageToggle from '@/components/LanguageToggle'
+import JobPostingChat from '@/components/ai/JobPostingChat'
+import type { GeneratedPosting } from '@/components/ai/JobPostingChat'
 import type { InternshipStatus } from '@/types/database'
 
 type CreateInternshipInput = {
@@ -37,11 +40,20 @@ export default function CreateInternshipPage() {
   })
 
   const [companyId, setCompanyId] = useState<string | null>(null)
+  const [companyName, setCompanyName] = useState<string>()
+  const [industry, setIndustry] = useState<string>()
   const [loading, setLoading] = useState(true)
+
+  // Extra fields from AI that don't have form inputs
+  const [requirements, setRequirements] = useState<string[]>([])
+  const [responsibilities, setResponsibilities] = useState<string[]>([])
+  const [skillsRequired, setSkillsRequired] = useState<string[]>([])
+  const [durationMonths, setDurationMonths] = useState<number | null>(null)
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
     setError: setFormError,
   } = useForm<CreateInternshipInput>({
@@ -62,7 +74,7 @@ export default function CreateInternshipPage() {
 
       const { data: profile } = await supabase
         .from('company_profiles')
-        .select('id')
+        .select('id, company_name, industry')
         .eq('user_id', user.id)
         .single()
 
@@ -72,10 +84,31 @@ export default function CreateInternshipPage() {
       }
 
       setCompanyId(profile.id)
+      setCompanyName(profile.company_name)
+      setIndustry(profile.industry || undefined)
       setLoading(false)
     }
     checkCompanyProfile()
   }, [router])
+
+  const handleApplyPosting = (posting: GeneratedPosting) => {
+    setValue('title', posting.title, { shouldValidate: true })
+    setValue('description', posting.description, { shouldValidate: true })
+    if (posting.location) {
+      setValue('location', posting.location)
+    }
+    if (posting.remote_allowed !== undefined) {
+      setValue('remoteAllowed', posting.remote_allowed)
+    }
+    if (posting.requirements) setRequirements(posting.requirements)
+    if (posting.responsibilities) setResponsibilities(posting.responsibilities)
+    if (posting.skills_required) setSkillsRequired(posting.skills_required)
+    if (posting.duration_months) setDurationMonths(posting.duration_months)
+  }
+
+  const removeTag = (list: string[], setList: (v: string[]) => void, index: number) => {
+    setList(list.filter((_, i) => i !== index))
+  }
 
   const submitForm = async (data: CreateInternshipInput, status: InternshipStatus) => {
     if (!companyId) return
@@ -83,7 +116,7 @@ export default function CreateInternshipPage() {
     try {
       const supabase = createClientSupabase()
 
-      const row = {
+      const row: Record<string, unknown> = {
         company_id: companyId,
         title: data.title.trim(),
         description: data.description,
@@ -91,6 +124,11 @@ export default function CreateInternshipPage() {
         remote_allowed: data.remoteAllowed,
         status,
       }
+
+      if (requirements.length > 0) row.requirements = requirements
+      if (responsibilities.length > 0) row.responsibilities = responsibilities
+      if (skillsRequired.length > 0) row.skills_required = skillsRequired
+      if (durationMonths) row.duration_months = durationMonths
 
       const { data: inserted, error } = await supabase
         .from('internships')
@@ -109,7 +147,7 @@ export default function CreateInternshipPage() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ type: 'internship', id: inserted.id }),
-        }).catch(() => {}) // silent — embedding failure shouldn't block the user
+        }).catch(() => {})
       }
 
       router.push('/internships/manage')
@@ -125,6 +163,8 @@ export default function CreateInternshipPage() {
       </div>
     )
   }
+
+  const hasAiFields = requirements.length > 0 || responsibilities.length > 0 || skillsRequired.length > 0
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -199,6 +239,69 @@ export default function CreateInternshipPage() {
                 <Label htmlFor="remoteAllowed">{t('fields.remoteAllowed')}</Label>
               </div>
 
+              {/* AI-generated structured fields */}
+              {hasAiFields && (
+                <div className="space-y-3 border-t pt-4">
+                  <p className="text-xs text-purple-600 font-medium uppercase tracking-wide">
+                    {t('aiGenerated')}
+                  </p>
+
+                  {responsibilities.length > 0 && (
+                    <div className="space-y-1">
+                      <Label className="text-sm">{t('fields.responsibilities')}</Label>
+                      <div className="flex flex-wrap gap-1.5">
+                        {responsibilities.map((r, i) => (
+                          <span key={i} className="inline-flex items-center gap-1 bg-blue-50 text-blue-800 text-xs px-2 py-1 rounded-md">
+                            {r}
+                            <button type="button" onClick={() => removeTag(responsibilities, setResponsibilities, i)} className="text-blue-400 hover:text-blue-600">
+                              <X className="h-3 w-3" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {requirements.length > 0 && (
+                    <div className="space-y-1">
+                      <Label className="text-sm">{t('fields.requirements')}</Label>
+                      <div className="flex flex-wrap gap-1.5">
+                        {requirements.map((r, i) => (
+                          <span key={i} className="inline-flex items-center gap-1 bg-amber-50 text-amber-800 text-xs px-2 py-1 rounded-md">
+                            {r}
+                            <button type="button" onClick={() => removeTag(requirements, setRequirements, i)} className="text-amber-400 hover:text-amber-600">
+                              <X className="h-3 w-3" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {skillsRequired.length > 0 && (
+                    <div className="space-y-1">
+                      <Label className="text-sm">{t('fields.skillsRequired')}</Label>
+                      <div className="flex flex-wrap gap-1.5">
+                        {skillsRequired.map((s, i) => (
+                          <span key={i} className="inline-flex items-center gap-1 bg-green-50 text-green-800 text-xs px-2 py-1 rounded-md">
+                            {s}
+                            <button type="button" onClick={() => removeTag(skillsRequired, setSkillsRequired, i)} className="text-green-400 hover:text-green-600">
+                              <X className="h-3 w-3" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {durationMonths && (
+                    <div className="text-sm text-gray-600">
+                      {t('fields.duration')}: {durationMonths} {t('fields.months')}
+                    </div>
+                  )}
+                </div>
+              )}
+
               <div className="flex gap-3 pt-2">
                 <Button
                   type="button"
@@ -230,6 +333,13 @@ export default function CreateInternshipPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* AI Chat Assistant */}
+      <JobPostingChat
+        companyName={companyName}
+        industry={industry}
+        onApplyPosting={handleApplyPosting}
+      />
     </div>
   )
 }

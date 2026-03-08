@@ -459,8 +459,10 @@
         "skillsRequired": "Habilidades Requeridas",
         "skillsPlaceholder": "Ingresa cada habilidad y presiona Enter",
         "maxApplications": "Máximo de Solicitudes",
-        "maxApplicationsHint": "Dejar vacío para ilimitado"
+        "maxApplicationsHint": "Dejar vacío para ilimitado",
+        "months": "meses"
       },
+      "aiGenerated": "Detalles generados por IA",
       "actions": {
         "cancel": "Cancelar",
         "saveDraft": "Guardar Borrador",
@@ -571,6 +573,17 @@
       "semanticMatch": "Coincidencia inteligente",
       "noDirectMatches": "Sin coincidencias directas — buscando con IA...",
       "noResults": "No se encontraron pasantías similares."
+    },
+    "jobPosting": {
+      "toggle": "Asistente IA",
+      "title": "Asistente de Publicación",
+      "welcome": "¡Cuéntame sobre la práctica que estás ofreciendo y te ayudaré a escribir una gran publicación!",
+      "placeholder": "Describe el puesto...",
+      "thinking": "Pensando...",
+      "error": "Algo salió mal. Por favor, inténtalo de nuevo.",
+      "postingGenerated": "[Borrador listo — haz clic abajo para aplicarlo a tu formulario]",
+      "applyToForm": "Aplicar al Formulario",
+      "applied": "¡Aplicado!"
     }
   }
 }

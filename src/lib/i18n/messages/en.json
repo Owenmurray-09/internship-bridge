@@ -459,8 +459,10 @@
         "skillsRequired": "Required Skills",
         "skillsPlaceholder": "Enter each skill and press Enter",
         "maxApplications": "Maximum Applications",
-        "maxApplicationsHint": "Leave empty for unlimited"
+        "maxApplicationsHint": "Leave empty for unlimited",
+        "months": "months"
       },
+      "aiGenerated": "AI-generated details",
       "actions": {
         "cancel": "Cancel",
         "saveDraft": "Save Draft",
@@ -571,6 +573,17 @@
       "semanticMatch": "Smart match",
       "noDirectMatches": "No direct matches — searching with AI...",
       "noResults": "No matching internships found."
+    },
+    "jobPosting": {
+      "toggle": "AI Assistant",
+      "title": "Posting Assistant",
+      "welcome": "Tell me about the internship you're hiring for and I'll help you write a great posting!",
+      "placeholder": "Describe the role...",
+      "thinking": "Thinking...",
+      "error": "Something went wrong. Please try again.",
+      "postingGenerated": "[Draft posting ready — click below to apply it to your form]",
+      "applyToForm": "Apply to Form",
+      "applied": "Applied!"
     }
   }
 }
