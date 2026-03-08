@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react'
 import enMessages from './messages/en.json'
 import esMessages from './messages/es.json'
 
@@ -52,10 +52,6 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
     // Always start with 'en' for SSR consistency
     return initialLocale || 'en'
   })
-  const [messages, setMessages] = useState<TranslationMessages>(() => {
-    // Initialize with English messages for SSR consistency
-    return enMessages
-  })
   const [isLoading, setIsLoading] = useState(false)
   const [isHydrated, setIsHydrated] = useState(false)
 
@@ -76,23 +72,10 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
     }
   }, [initialLocale, locale])
 
-  // Load translation messages when locale changes
-  useEffect(() => {
-    try {
-      let loadedMessages: TranslationMessages
-      if (locale === 'en') {
-        loadedMessages = enMessages
-      } else if (locale === 'es') {
-        loadedMessages = esMessages
-      } else {
-        console.warn(`Unsupported locale: ${locale}, falling back to English`)
-        loadedMessages = enMessages
-      }
-      setMessages(loadedMessages)
-    } catch (error) {
-      console.error(`Failed to load messages for locale: ${locale}`, error)
-      setMessages(enMessages)
-    }
+  // Derive messages from locale (not state, to avoid stale HMR issues)
+  const messages: TranslationMessages = useMemo(() => {
+    if (locale === 'es') return esMessages
+    return enMessages
   }, [locale])
 
   const t = (key: string, params?: Record<string, string | number>): string => {

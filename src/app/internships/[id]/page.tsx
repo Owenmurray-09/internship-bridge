@@ -148,7 +148,7 @@ export default function InternshipDetailPage() {
                 <div>
                   <p className="text-sm text-gray-500">{t('duration')}</p>
                   <p className="font-medium">
-                    {internship.duration_months} {t('months')}
+                    {internship.duration_months}
                   </p>
                 </div>
               )}
