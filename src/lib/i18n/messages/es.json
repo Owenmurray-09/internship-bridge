@@ -564,5 +564,13 @@
       "body": "{{companyName}} ha dejado un comentario sobre tu desempeño en {{internshipTitle}}.",
       "cta": "Ver Mis Solicitudes"
     }
+  },
+  "ai": {
+    "search": {
+      "finding": "Buscando coincidencias inteligentes...",
+      "semanticMatch": "Coincidencia inteligente",
+      "noDirectMatches": "Sin coincidencias directas — buscando con IA...",
+      "noResults": "No se encontraron pasantías similares."
+    }
   }
 }

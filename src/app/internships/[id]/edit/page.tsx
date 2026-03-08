@@ -104,6 +104,13 @@ export default function EditInternshipPage() {
         return
       }
 
+      // Re-embed in background (fire-and-forget)
+      fetch('/api/ai/embed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'internship', id: internshipId }),
+      }).catch(() => {})
+
       router.push('/internships/manage')
     } catch {
       setFormError('root', { message: tErrors('general') })
