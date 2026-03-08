@@ -92,11 +92,24 @@ export default function CreateInternshipPage() {
         status,
       }
 
-      const { error } = await supabase.from('internships').insert(row)
+      const { data: inserted, error } = await supabase
+        .from('internships')
+        .insert(row)
+        .select('id')
+        .single()
 
       if (error) {
         setFormError('root', { message: error.message })
         return
+      }
+
+      // Auto-embed in background (fire-and-forget)
+      if (inserted?.id) {
+        fetch('/api/ai/embed', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'internship', id: inserted.id }),
+        }).catch(() => {}) // silent — embedding failure shouldn't block the user
       }
 
       router.push('/internships/manage')

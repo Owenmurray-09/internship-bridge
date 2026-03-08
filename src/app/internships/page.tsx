@@ -3,20 +3,22 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClientSupabase } from '@/lib/supabase'
 import { useTranslations } from '@/lib/i18n'
-import LanguageToggle from '@/components/LanguageToggle'
 import DashboardNav from '@/components/DashboardNav'
 import type { Internship, UserRole } from '@/types/database'
 import { createInternshipSearch } from '@/lib/search'
+import { useSemanticSearch } from '@/hooks/useSemanticSearch'
 
 export default function BrowseInternshipsPage() {
   const router = useRouter()
   const { t } = useTranslations('internships.browse')
   const { t: tCommon } = useTranslations('common')
+  const { t: tAi } = useTranslations('ai.search')
 
   const [internships, setInternships] = useState<Internship[]>([])
   const [loading, setLoading] = useState(true)
@@ -54,12 +56,37 @@ export default function BrowseInternshipsPage() {
     load()
   }, [router])
 
+  // Tier 1: Fuse.js (instant, client-side)
   const fuse = useMemo(() => createInternshipSearch(internships), [internships])
+  const fuseResults = useMemo(() => {
+    if (!search.trim()) return []
+    return fuse.search(search).map((r) => r.item.internship)
+  }, [search, fuse])
 
+  // Tier 2: Semantic search (debounced, server-side)
+  const { results: semanticResults, loading: semanticLoading } = useSemanticSearch({
+    query: search,
+    fuseResultCount: fuseResults.length,
+  })
+
+  // Track which IDs came from semantic search (for badge display)
+  const semanticIds = useMemo(
+    () => new Set(semanticResults.map((r) => r.id)),
+    [semanticResults]
+  )
+
+  // Merge: fuzzy first, then semantic-only (deduplicated)
   const filtered = useMemo(() => {
     if (!search.trim()) return internships
-    return fuse.search(search).map((r) => r.item.internship)
-  }, [search, fuse, internships])
+
+    const fuseIds = new Set(fuseResults.map((i) => i.id))
+    const semanticOnly = semanticResults
+      .filter((r) => !fuseIds.has(r.id))
+      .map((r) => internships.find((i) => i.id === r.id))
+      .filter(Boolean) as Internship[]
+
+    return [...fuseResults, ...semanticOnly]
+  }, [search, internships, fuseResults, semanticResults])
 
   if (loading) {
     return (
@@ -86,13 +113,22 @@ export default function BrowseInternshipsPage() {
             onChange={(e) => setSearch(e.target.value)}
             className="max-w-md focus:max-w-full transition-all duration-300 ease-in-out"
           />
+          {semanticLoading && (
+            <p className="text-xs text-gray-400 mt-1">
+              {tAi('finding')}
+            </p>
+          )}
         </div>
 
         {filtered.length === 0 ? (
           <Card>
             <CardContent className="p-12 text-center">
               <p className="text-gray-500 text-lg">
-                {search ? t('noResults') : t('noInternships')}
+                {!search
+                  ? t('noInternships')
+                  : semanticLoading
+                    ? tAi('noDirectMatches')
+                    : tAi('noResults')}
               </p>
             </CardContent>
           </Card>
@@ -102,6 +138,7 @@ export default function BrowseInternshipsPage() {
               const company = (internship as unknown as Record<string, unknown>).company_profiles as
                 | { company_name: string; location?: string; industry?: string }
                 | undefined
+              const isSemanticMatch = semanticIds.has(internship.id) && !fuseResults.some((f) => f.id === internship.id)
               return (
                 <Card key={internship.id} className="flex flex-col">
                   <CardHeader>
@@ -125,6 +162,12 @@ export default function BrowseInternshipsPage() {
                       {internship.remote_allowed && (
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                           {t('remote')}
+                        </span>
+                      )}
+                      {isSemanticMatch && (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                          <Sparkles className="h-3 w-3" />
+                          {tAi('semanticMatch')}
                         </span>
                       )}
                     </div>

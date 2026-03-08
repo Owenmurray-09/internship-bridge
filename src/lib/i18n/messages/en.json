@@ -564,5 +564,13 @@
       "body": "{{companyName}} has left feedback on your performance at {{internshipTitle}}.",
       "cta": "View My Applications"
     }
+  },
+  "ai": {
+    "search": {
+      "finding": "Finding smarter matches...",
+      "semanticMatch": "Smart match",
+      "noDirectMatches": "No direct matches — searching with AI...",
+      "noResults": "No matching internships found."
+    }
   }
 }

@@ -79,13 +79,24 @@ export default function CompanyProfilePage() {
         location: data.location || null,
       }
 
-      const { error } = await supabase
+      const { data: upserted, error } = await supabase
         .from('company_profiles')
         .upsert(row, { onConflict: 'user_id' })
+        .select('id')
+        .single()
 
       if (error) {
         setFormError('root', { message: error.message })
         return
+      }
+
+      // Auto-embed profile in background
+      if (upserted?.id) {
+        fetch('/api/ai/embed', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'company_profile', id: upserted.id }),
+        }).catch(() => {})
       }
 
       router.push(isEditing ? '/dashboard' : '/internships/create')

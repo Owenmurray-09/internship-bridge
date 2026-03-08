@@ -81,13 +81,24 @@ export default function StudentProfilePage() {
         bio: data.bio || null,
       }
 
-      const { error } = await supabase
+      const { data: upserted, error } = await supabase
         .from('student_profiles')
         .upsert(row, { onConflict: 'user_id' })
+        .select('id')
+        .single()
 
       if (error) {
         setFormError('root', { message: error.message })
         return
+      }
+
+      // Auto-embed profile in background
+      if (upserted?.id) {
+        fetch('/api/ai/embed', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'student_profile', id: upserted.id }),
+        }).catch(() => {})
       }
 
       router.push('/dashboard')

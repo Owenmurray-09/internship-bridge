@@ -53,6 +53,15 @@ If Chrome DevTools tools are unavailable, check:
 - `src/__tests__/` — Vitest tests
 - `src/middleware.ts` — Auth route protection and role-based access
 
+## AI Integration
+- **Provider**: All-in on OpenAI (single SDK, single API key)
+- **Models**: GPT-4o (chat/generation), GPT-4o-mini (ranking), text-embedding-3-small (embeddings), Whisper (STT), TTS
+- **Architecture docs**: `docs/ai-architecture.md` and `docs/ai-implementation-roadmap.md`
+- **API routes**: `src/app/api/ai/` — all server-side only
+- **Components**: `src/components/ai/` — reusable chat UI
+- **Lib**: `src/lib/ai/` — SDK client, embeddings, prompts, vector search
+- **Vector storage**: pgvector in Supabase with 1536-dim embeddings
+
 ## Conventions
 - All user-facing strings must use i18n (`useTranslations` hook) with both EN and ES translations
 - Validation uses Zod schemas in `src/lib/validation.ts`
