@@ -11,7 +11,13 @@ import {
   performanceCommentHtml,
 } from '@/lib/email-templates'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+let _resend: Resend | null = null
+function getResend(): Resend {
+  if (!_resend) {
+    _resend = new Resend(process.env.RESEND_API_KEY)
+  }
+  return _resend
+}
 const FROM_ADDRESS = 'InternshipBridge <noreply@owenmurraymusic.com>'
 
 // Service role client bypasses RLS for cross-user data lookups
@@ -98,7 +104,7 @@ export async function POST(request: NextRequest) {
         if (!recipientEmail) break
 
         const locale = toLocale(employer.preferred_locale)
-        await resend.emails.send({
+        await getResend().emails.send({
           from: FROM_ADDRESS,
           to: [recipientEmail],
           subject: getSubject('application_submitted', locale),
@@ -162,7 +168,7 @@ export async function POST(request: NextRequest) {
 
         const locale = toLocale(student.preferred_locale)
         const htmlFn = type === 'application_accepted' ? applicationAcceptedHtml : applicationRejectedHtml
-        await resend.emails.send({
+        await getResend().emails.send({
           from: FROM_ADDRESS,
           to: [recipientEmail],
           subject: getSubject(type, locale),
@@ -190,7 +196,7 @@ export async function POST(request: NextRequest) {
           .single()
 
         const locale = toLocale(userData?.preferred_locale)
-        await resend.emails.send({
+        await getResend().emails.send({
           from: FROM_ADDRESS,
           to: [recipientEmail],
           subject: getSubject('welcome', locale),
@@ -249,7 +255,7 @@ export async function POST(request: NextRequest) {
 
         const locale = toLocale(student.preferred_locale)
         const preview = comment.length > 200 ? comment.slice(0, 200) + '...' : comment
-        await resend.emails.send({
+        await getResend().emails.send({
           from: FROM_ADDRESS,
           to: [recipientEmail],
           subject: getSubject('performance_comment_added', locale),
