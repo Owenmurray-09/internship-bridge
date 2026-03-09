@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createServerSupabase } from '@/lib/supabase-server'
-import { openai } from '@/lib/ai/client'
+import { getOpenAI } from '@/lib/ai/client'
 import { JOB_POSTING_SYSTEM_PROMPT, JOB_POSTING_CONTEXT_PROMPT } from '@/lib/ai/prompts'
 
 export async function POST(req: Request) {
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     JOB_POSTING_SYSTEM_PROMPT + JOB_POSTING_CONTEXT_PROMPT(companyName, industry)
 
   try {
-    const stream = await openai.chat.completions.create({
+    const stream = await getOpenAI().chat.completions.create({
       model: 'gpt-4o',
       messages: [
         { role: 'system', content: systemPrompt },

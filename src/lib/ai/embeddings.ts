@@ -1,7 +1,7 @@
-import { openai } from './client'
+import { getOpenAI } from './client'
 
 export async function embedText(text: string): Promise<number[]> {
-  const response = await openai.embeddings.create({
+  const response = await getOpenAI().embeddings.create({
     model: 'text-embedding-3-small',
     input: text,
   })
@@ -10,7 +10,7 @@ export async function embedText(text: string): Promise<number[]> {
 
 export async function embedTexts(texts: string[]): Promise<number[][]> {
   if (texts.length === 0) return []
-  const response = await openai.embeddings.create({
+  const response = await getOpenAI().embeddings.create({
     model: 'text-embedding-3-small',
     input: texts,
   })
