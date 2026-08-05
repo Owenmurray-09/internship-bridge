@@ -58,12 +58,15 @@ export function SchoolProvider({ children }: SchoolProviderProps) {
   }
 
   useEffect(() => {
+    const supabase = createClientSupabase()
+
     const loadSchools = async () => {
       setIsLoading(true)
-      const supabase = createClientSupabase()
       const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) {
+        setSchools([])
+        setCurrentSchoolState(null)
         setIsLoading(false)
         return
       }
@@ -96,6 +99,16 @@ export function SchoolProvider({ children }: SchoolProviderProps) {
     }
 
     loadSchools()
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_IN' || event === 'SIGNED_OUT' || event === 'TOKEN_REFRESHED') {
+        loadSchools()
+      }
+    })
+
+    return () => {
+      subscription.unsubscribe()
+    }
   }, [])
 
   return React.createElement(

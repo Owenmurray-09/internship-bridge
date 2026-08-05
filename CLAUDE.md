@@ -41,8 +41,12 @@ If Chrome DevTools tools are unavailable, check:
 - `/regression-test` — Full test exercising forms, validation, state changes (creates test data)
 
 ## Deployment
-- Deploy via Vercel CLI: `vercel --prod`
+- **Always deploy from local via CLI** — the Vercel ↔ GitHub integration is broken; pushing to `main` does NOT trigger a deployment.
+- Deploy command: `npx vercel --prod --yes` (run from repo root; `--yes` skips the "link to existing project?" prompt)
+- If not logged in, ask the user to run `! npx vercel login` in the prompt so the interactive flow lands in-session.
+- Verify with `npx vercel inspect <url> | grep status` — look for `● Ready`.
 - Vercel project: `murraymusics-projects/bridge`
+- Production aliases: `owenmurraymusic.com`, `www.owenmurraymusic.com`, `bridge-murraymusics-projects.vercel.app`
 - Dashboard: https://vercel.com/murraymusics-projects/bridge
 
 ## Project Structure
