@@ -1,4 +1,4 @@
-# InternshipBridge
+# Bridge
 
 A multi-tenant web application connecting high school students with internship opportunities. Each school gets its own branded experience. Built as a responsive PWA for optimal mobile and desktop experience.
 
@@ -50,7 +50,7 @@ A multi-tenant web application connecting high school students with internship o
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd internship-bridge
+cd bridge
 ```
 
 2. Install dependencies:

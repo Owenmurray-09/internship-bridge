@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "InternshipBridge",
+  title: "Bridge",
   description: "Connecting talented students with amazing internship opportunities. Your bridge to professional experience.",
   generator: "Next.js",
   manifest: "/manifest.json",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   ],
   authors: [
     {
-      name: "InternshipBridge Team",
+      name: "Bridge Team",
     },
   ],
   icons: [
@@ -60,7 +60,7 @@ export default function RootLayout({
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="InternshipBridge" />
+        <meta name="apple-mobile-web-app-title" content="Bridge" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#2563eb" />
         <meta name="msapplication-tap-highlight" content="no" />

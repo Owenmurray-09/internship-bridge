@@ -71,14 +71,14 @@
   },
   "landing": {
     "hero": {
-      "title": "InternshipBridge",
+      "title": "Bridge",
       "subtitle": "Conectando estudiantes talentosos con oportunidades increíbles de prácticas",
       "description": "Tu puente hacia la experiencia profesional",
       "getStarted": "Comenzar",
       "signIn": "Iniciar Sesión"
     },
     "features": {
-      "title": "¿Por qué elegir InternshipBridge?",
+      "title": "¿Por qué elegir Bridge?",
       "subtitle": "Facilitamos que los estudiantes encuentren prácticas y que las empresas encuentren talento.",
       "students": {
         "title": "Para Estudiantes",
@@ -113,11 +113,11 @@
     },
     "cta": {
       "title": "¿Listo para comenzar?",
-      "subtitle": "Únete a miles de estudiantes y empleadores que ya usan InternshipBridge para hacer conexiones significativas.",
+      "subtitle": "Únete a miles de estudiantes y empleadores que ya usan Bridge para hacer conexiones significativas.",
       "createAccount": "Crear Cuenta"
     },
     "footer": {
-      "copyright": "© 2025 InternshipBridge. Construido para conectar talento con oportunidad."
+      "copyright": "© 2025 Bridge. Construido para conectar talento con oportunidad."
     }
   },
   "dashboard": {
@@ -555,9 +555,9 @@
       "cta": "Explorar Más Prácticas"
     },
     "welcome": {
-      "subject": "¡Bienvenido a InternshipBridge!",
+      "subject": "¡Bienvenido a Bridge!",
       "greeting": "¡Hola {{name}}!",
-      "body": "Bienvenido a InternshipBridge. Tu cuenta ha sido creada exitosamente.",
+      "body": "Bienvenido a Bridge. Tu cuenta ha sido creada exitosamente.",
       "cta": "Ir al Panel"
     },
     "performanceComment": {

@@ -96,7 +96,7 @@ export default function DashboardNav({ userName, userRole }: DashboardNavProps) 
               href="/dashboard"
               className={`text-xl font-semibold ${hasBranding ? 'text-white' : 'text-gray-900'}`}
             >
-              InternshipBridge
+              Bridge
             </Link>
           </div>
           <div className="flex items-center space-x-4">

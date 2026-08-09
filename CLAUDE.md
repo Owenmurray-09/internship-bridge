@@ -1,4 +1,4 @@
-# InternshipBridge - Claude Code Instructions
+# Bridge - Claude Code Instructions
 
 ## Project Overview
 Multi-tenant internship platform connecting students with employers, built with Next.js 16, Supabase, TypeScript, and Tailwind CSS. See README.md for full documentation.

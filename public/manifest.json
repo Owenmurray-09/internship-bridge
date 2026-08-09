@@ -1,6 +1,6 @@
 {
-  "name": "InternshipBridge",
-  "short_name": "InternBridge",
+  "name": "Bridge",
+  "short_name": "Bridge",
   "description": "Connecting talented students with amazing internship opportunities",
   "start_url": "/",
   "display": "standalone",

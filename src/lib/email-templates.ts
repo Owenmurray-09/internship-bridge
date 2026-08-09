@@ -42,8 +42,8 @@ const subjects: Record<string, Record<Locale, string>> = {
     es: 'Actualización del Estado de Solicitud',
   },
   welcome: {
-    en: 'Welcome to InternshipBridge!',
-    es: '¡Bienvenido a InternshipBridge!',
+    en: 'Welcome to Bridge!',
+    es: '¡Bienvenido a Bridge!',
   },
   performance_comment_added: {
     en: 'New Feedback on Your Internship',
@@ -58,11 +58,11 @@ function baseTemplate(content: string): string {
 <body style="margin:0;padding:0;background-color:#f9fafb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
   <div style="max-width:600px;margin:0 auto;padding:24px;">
     <div style="background-color:#ffffff;border-radius:8px;padding:32px;border:1px solid #e5e7eb;">
-      <h2 style="color:#2563eb;margin:0 0 24px 0;font-size:20px;">InternshipBridge</h2>
+      <h2 style="color:#2563eb;margin:0 0 24px 0;font-size:20px;">Bridge</h2>
       ${content}
     </div>
     <p style="color:#9ca3af;font-size:12px;text-align:center;margin-top:16px;">
-      InternshipBridge &mdash; Connecting students with opportunities
+      Bridge &mdash; Connecting students with opportunities
     </p>
   </div>
 </body>
@@ -70,7 +70,7 @@ function baseTemplate(content: string): string {
 }
 
 export function getSubject(type: string, locale: Locale): string {
-  return subjects[type]?.[locale] ?? subjects[type]?.en ?? 'InternshipBridge Notification'
+  return subjects[type]?.[locale] ?? subjects[type]?.en ?? 'Bridge Notification'
 }
 
 export function applicationSubmittedHtml(data: ApplicationSubmittedData): string {
@@ -169,7 +169,7 @@ export function welcomeHtml(data: WelcomeData): string {
     return baseTemplate(`
       <p style="color:#111827;font-size:16px;line-height:1.6;margin:0 0 16px;">¡Hola ${recipientName}!</p>
       <p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px;">
-        Bienvenido a <strong>InternshipBridge</strong>. Tu cuenta ha sido creada exitosamente.
+        Bienvenido a <strong>Bridge</strong>. Tu cuenta ha sido creada exitosamente.
       </p>
       <p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 24px;">
         Completa tu perfil para comenzar a conectar con oportunidades.
@@ -182,7 +182,7 @@ export function welcomeHtml(data: WelcomeData): string {
   return baseTemplate(`
     <p style="color:#111827;font-size:16px;line-height:1.6;margin:0 0 16px;">Hi ${recipientName}!</p>
     <p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px;">
-      Welcome to <strong>InternshipBridge</strong>. Your account has been created successfully.
+      Welcome to <strong>Bridge</strong>. Your account has been created successfully.
     </p>
     <p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 24px;">
       Complete your profile to start connecting with opportunities.

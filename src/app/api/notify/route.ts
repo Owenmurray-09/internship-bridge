@@ -18,7 +18,7 @@ function getResend(): Resend {
   }
   return _resend
 }
-const FROM_ADDRESS = 'InternshipBridge <noreply@owenmurraymusic.com>'
+const FROM_ADDRESS = 'Bridge <noreply@owenmurraymusic.com>'
 
 // Service role client bypasses RLS for cross-user data lookups
 function createServiceSupabase() {

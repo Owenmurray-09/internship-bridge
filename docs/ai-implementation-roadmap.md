@@ -1,4 +1,4 @@
-# AI Implementation Roadmap — InternshipBridge
+# AI Implementation Roadmap — Bridge
 
 This breaks the [AI Architecture](./ai-architecture.md) into concrete implementation phases. Each phase is independently shippable.
 

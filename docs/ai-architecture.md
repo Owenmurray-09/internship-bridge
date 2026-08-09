@@ -1,8 +1,8 @@
-# AI Architecture — InternshipBridge
+# AI Architecture — Bridge
 
 ## Vision
 
-Every user interaction in InternshipBridge is enhanced by AI: employers get help crafting compelling postings, students get career coaching and smart search, and both sides can discover ideal matches through semantic understanding rather than keyword matching alone. The AI layer treats the platform's structured data (profiles, postings, applications) as a knowledge base that a conversational interface can surface, explain, and act on.
+Every user interaction in Bridge is enhanced by AI: employers get help crafting compelling postings, students get career coaching and smart search, and both sides can discover ideal matches through semantic understanding rather than keyword matching alone. The AI layer treats the platform's structured data (profiles, postings, applications) as a knowledge base that a conversational interface can surface, explain, and act on.
 
 Long-term, all of these capabilities are accessible through a WhatsApp chatbot, making the platform usable without ever opening the web app.
 

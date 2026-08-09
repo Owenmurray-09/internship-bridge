@@ -1,4 +1,4 @@
-Run a full regression test of InternshipBridge using Chrome DevTools MCP. This is more exhaustive than a smoke test — it exercises form submissions, validation, state changes, and error handling.
+Run a full regression test of Bridge using Chrome DevTools MCP. This is more exhaustive than a smoke test — it exercises form submissions, validation, state changes, and error handling.
 
 ## Setup
 
@@ -125,7 +125,7 @@ Read the README.md "Features" section for the current feature set. Read `src/lib
 **Navigation**
 - Test hamburger menu opens/closes
 - Test all nav links navigate to correct pages
-- Test "InternshipBridge" logo link returns to dashboard
+- Test "Bridge" logo link returns to dashboard
 
 **Responsive Behavior** (if possible)
 - Resize page to mobile width (375px)

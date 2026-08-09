@@ -1,6 +1,6 @@
 # Security To-Do List
 
-This document tracks remaining security improvements for the InternshipBridge application after comprehensive security hardening.
+This document tracks remaining security improvements for the Bridge application after comprehensive security hardening.
 
 ## 🚨 High Priority Security Tasks
 

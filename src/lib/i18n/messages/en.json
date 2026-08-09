@@ -71,14 +71,14 @@
   },
   "landing": {
     "hero": {
-      "title": "InternshipBridge",
+      "title": "Bridge",
       "subtitle": "Connecting talented students with amazing internship opportunities",
       "description": "Your bridge to professional experience",
       "getStarted": "Get Started",
       "signIn": "Sign In"
     },
     "features": {
-      "title": "Why Choose InternshipBridge?",
+      "title": "Why Choose Bridge?",
       "subtitle": "We make it easy for students to find internships and for companies to find talent.",
       "students": {
         "title": "For Students",
@@ -113,11 +113,11 @@
     },
     "cta": {
       "title": "Ready to get started?",
-      "subtitle": "Join thousands of students and employers already using InternshipBridge to make meaningful connections.",
+      "subtitle": "Join thousands of students and employers already using Bridge to make meaningful connections.",
       "createAccount": "Create Account"
     },
     "footer": {
-      "copyright": "© 2025 InternshipBridge. Built for connecting talent with opportunity."
+      "copyright": "© 2025 Bridge. Built for connecting talent with opportunity."
     }
   },
   "dashboard": {
@@ -555,9 +555,9 @@
       "cta": "Browse More Internships"
     },
     "welcome": {
-      "subject": "Welcome to InternshipBridge!",
+      "subject": "Welcome to Bridge!",
       "greeting": "Hi {{name}}!",
-      "body": "Welcome to InternshipBridge. Your account has been created successfully.",
+      "body": "Welcome to Bridge. Your account has been created successfully.",
       "cta": "Go to Dashboard"
     },
     "performanceComment": {

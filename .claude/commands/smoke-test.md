@@ -1,4 +1,4 @@
-Run a smoke test of the InternshipBridge application using Chrome DevTools MCP.
+Run a smoke test of the Bridge application using Chrome DevTools MCP.
 
 ## Setup
 

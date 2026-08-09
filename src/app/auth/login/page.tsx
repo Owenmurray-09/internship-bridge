@@ -58,7 +58,7 @@ export default function LoginPage() {
       {/* Header with Language Toggle */}
       <div className="flex justify-between items-center p-4">
         <Link href="/" className="text-lg font-semibold text-gray-900">
-          InternshipBridge
+          Bridge
         </Link>
         <LanguageToggle variant="compact" />
       </div>

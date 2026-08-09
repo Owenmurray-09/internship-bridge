@@ -129,7 +129,7 @@ export default function EditInternshipPage() {
     <div className="min-h-screen flex flex-col bg-gray-50">
       <div className="flex justify-between items-center p-4">
         <Link href="/dashboard" className="text-lg font-semibold text-gray-900">
-          InternshipBridge
+          Bridge
         </Link>
         <LanguageToggle variant="compact" />
       </div>
