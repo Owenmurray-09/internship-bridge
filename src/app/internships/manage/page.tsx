@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClientSupabase } from '@/lib/supabase'
 import { useTranslations } from '@/lib/i18n'
-import LanguageToggle from '@/components/LanguageToggle'
+import DashboardNav from '@/components/DashboardNav'
 import type { Internship, InternshipStatus } from '@/types/database'
 
 const STATUS_COLORS: Record<InternshipStatus, string> = {
@@ -106,12 +106,7 @@ export default function ManageInternshipsPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <div className="flex justify-between items-center p-4">
-        <Link href="/dashboard" className="text-lg font-semibold text-gray-900">
-          Bridge
-        </Link>
-        <LanguageToggle variant="compact" />
-      </div>
+      <DashboardNav />
 
       <div className="max-w-4xl mx-auto w-full px-4 py-8">
         <div className="flex items-center justify-between mb-6">

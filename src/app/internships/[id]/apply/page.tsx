@@ -13,7 +13,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { createClientSupabase } from '@/lib/supabase'
 import { sendNotification } from '@/lib/email'
 import { useTranslations } from '@/lib/i18n'
-import LanguageToggle from '@/components/LanguageToggle'
+import DashboardNav from '@/components/DashboardNav'
 
 type ApplyInput = {
   coverLetter: string
@@ -148,12 +148,7 @@ export default function ApplyToInternshipPage() {
   if (submitted) {
     return (
       <div className="min-h-screen flex flex-col bg-gray-50">
-        <div className="flex justify-between items-center p-4">
-          <Link href="/dashboard" className="text-lg font-semibold text-gray-900">
-            Bridge
-          </Link>
-          <LanguageToggle variant="compact" />
-        </div>
+        <DashboardNav />
         <div className="flex-1 flex items-center justify-center py-12 px-4">
           <Card className="w-full max-w-lg text-center">
             <CardHeader>
@@ -176,12 +171,7 @@ export default function ApplyToInternshipPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <div className="flex justify-between items-center p-4">
-        <Link href="/dashboard" className="text-lg font-semibold text-gray-900">
-          Bridge
-        </Link>
-        <LanguageToggle variant="compact" />
-      </div>
+      <DashboardNav />
 
       <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <Card className="w-full max-w-lg">

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -13,7 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { createClientSupabase } from '@/lib/supabase'
 import { companyProfileSchema, type CompanyProfileInput } from '@/lib/validation'
 import { useTranslations } from '@/lib/i18n'
-import LanguageToggle from '@/components/LanguageToggle'
+import DashboardNav from '@/components/DashboardNav'
 
 export default function CompanyProfilePage() {
   const router = useRouter()
@@ -115,12 +114,7 @@ export default function CompanyProfilePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <div className="flex justify-between items-center p-4">
-        <Link href="/dashboard" className="text-lg font-semibold text-gray-900">
-          Bridge
-        </Link>
-        <LanguageToggle variant="compact" />
-      </div>
+      <DashboardNav />
 
       <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <Card className="w-full max-w-lg">

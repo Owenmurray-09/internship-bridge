@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
@@ -8,6 +8,7 @@ import SchoolPicker from '@/components/SchoolPicker'
 import LanguageToggle from '@/components/LanguageToggle'
 import { useTranslations } from '@/lib/i18n'
 import { useSchool } from '@/lib/school'
+import { createClientSupabase } from '@/lib/supabase'
 import type { UserRole } from '@/types/database'
 
 interface NavLink {
@@ -44,11 +45,36 @@ const NAV_LINKS: Record<string, NavLink[]> = {
 }
 
 interface DashboardNavProps {
-  userName: string
-  userRole: UserRole
+  // Optional: when omitted, the nav loads the signed-in user itself
+  userName?: string
+  userRole?: UserRole
 }
 
-export default function DashboardNav({ userName, userRole }: DashboardNavProps) {
+export default function DashboardNav({ userName: userNameProp, userRole: userRoleProp }: DashboardNavProps) {
+  const [loadedUser, setLoadedUser] = useState<{ name: string; role: UserRole } | null>(null)
+  const needsUser = userNameProp === undefined || userRoleProp === undefined
+
+  useEffect(() => {
+    if (!needsUser) return
+    const loadUser = async () => {
+      const supabase = createClientSupabase()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+      const { data: userData } = await supabase
+        .from('users')
+        .select('full_name, role')
+        .eq('id', user.id)
+        .single()
+      setLoadedUser({
+        name: userData?.full_name || user.email || '',
+        role: userData?.role || 'student',
+      })
+    }
+    loadUser()
+  }, [needsUser])
+
+  const userName = userNameProp ?? loadedUser?.name ?? ''
+  const userRole = userRoleProp ?? loadedUser?.role ?? 'student'
   const showAllSchoolsOption = userRole === 'global_admin' || userRole === 'employer'
   const [menuOpen, setMenuOpen] = useState(false)
   const links = NAV_LINKS[userRole] || NAV_LINKS.student
