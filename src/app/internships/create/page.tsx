@@ -14,6 +14,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { createClientSupabase } from '@/lib/supabase'
 import { useTranslations } from '@/lib/i18n'
 import DashboardNav from '@/components/DashboardNav'
+import InternshipTagsFields, { fetchTagSuggestions } from '@/components/InternshipTagsFields'
+import { normalizeSkills } from '@/lib/categories'
 import JobPostingChat from '@/components/ai/JobPostingChat'
 import type { GeneratedPosting } from '@/components/ai/JobPostingChat'
 import type { InternshipStatus } from '@/types/database'
@@ -48,11 +50,15 @@ export default function CreateInternshipPage() {
   const [responsibilities, setResponsibilities] = useState<string[]>([])
   const [skillsRequired, setSkillsRequired] = useState<string[]>([])
   const [durationMonths, setDurationMonths] = useState<string | null>(null)
+  const [category, setCategory] = useState('')
+  const [categoryError, setCategoryError] = useState('')
+  const [suggesting, setSuggesting] = useState(false)
 
   const {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors, isSubmitting },
     setError: setFormError,
   } = useForm<CreateInternshipInput>({
@@ -90,6 +96,27 @@ export default function CreateInternshipPage() {
     checkCompanyProfile()
   }, [router])
 
+  const getPosting = () => ({
+    title: getValues('title') || '',
+    description: getValues('description') || '',
+    requirements,
+    responsibilities,
+    skills: skillsRequired,
+  })
+
+  // Fill in category and skill tags with AI once there's enough to go on,
+  // unless the employer has already picked them
+  const autoSuggestTags = async (posting = getPosting()) => {
+    if (category || skillsRequired.length > 0 || suggesting) return
+    if (!posting.title.trim() || !posting.description.trim()) return
+    setSuggesting(true)
+    const result = await fetchTagSuggestions(posting)
+    setSuggesting(false)
+    if (!result) return
+    setCategory((current) => current || result.category)
+    setSkillsRequired((current) => normalizeSkills([...current, ...result.skills]))
+  }
+
   const handleApplyPosting = (posting: GeneratedPosting) => {
     setValue('title', posting.title, { shouldValidate: true })
     setValue('description', posting.description, { shouldValidate: true })
@@ -101,8 +128,24 @@ export default function CreateInternshipPage() {
     }
     if (posting.requirements) setRequirements(posting.requirements)
     if (posting.responsibilities) setResponsibilities(posting.responsibilities)
-    if (posting.skills_required) setSkillsRequired(posting.skills_required)
+    const postingSkills = normalizeSkills(posting.skills_required || [])
+    setSkillsRequired(postingSkills)
     if (posting.duration_months) setDurationMonths(posting.duration_months)
+    if (!category) {
+      setSuggesting(true)
+      fetchTagSuggestions({
+        title: posting.title,
+        description: posting.description,
+        requirements: posting.requirements,
+        responsibilities: posting.responsibilities,
+        skills: postingSkills,
+      }).then((result) => {
+        setSuggesting(false)
+        if (!result) return
+        setCategory((current) => current || result.category)
+        setSkillsRequired((current) => normalizeSkills([...current, ...result.skills]))
+      })
+    }
   }
 
   const removeTag = (list: string[], setList: (v: string[]) => void, index: number) => {
@@ -111,6 +154,12 @@ export default function CreateInternshipPage() {
 
   const submitForm = async (data: CreateInternshipInput, status: InternshipStatus) => {
     if (!companyId) return
+    // Category is what students filter by, so published internships need one
+    if (status === 'active' && !category) {
+      setCategoryError(t('tags.categoryRequired'))
+      return
+    }
+    setCategoryError('')
 
     try {
       const supabase = createClientSupabase()
@@ -121,6 +170,7 @@ export default function CreateInternshipPage() {
         description: data.description,
         location: data.location || null,
         remote_allowed: data.remoteAllowed,
+        category: category || null,
         status,
       }
 
@@ -163,7 +213,7 @@ export default function CreateInternshipPage() {
     )
   }
 
-  const hasAiFields = requirements.length > 0 || responsibilities.length > 0 || skillsRequired.length > 0
+  const hasAiFields = requirements.length > 0 || responsibilities.length > 0 || !!durationMonths
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -201,7 +251,7 @@ export default function CreateInternshipPage() {
                 <Label htmlFor="description">{t('fields.description')}</Label>
                 <Textarea
                   id="description"
-                  {...register('description')}
+                  {...register('description', { onBlur: () => autoSuggestTags() })}
                   placeholder={t('fields.descriptionPlaceholder')}
                   rows={5}
                   disabled={isSubmitting}
@@ -232,6 +282,18 @@ export default function CreateInternshipPage() {
                 />
                 <Label htmlFor="remoteAllowed">{t('fields.remoteAllowed')}</Label>
               </div>
+
+              <InternshipTagsFields
+                category={category}
+                onCategoryChange={(c) => { setCategory(c); if (c) setCategoryError('') }}
+                skills={skillsRequired}
+                onSkillsChange={setSkillsRequired}
+                getPosting={getPosting}
+                disabled={isSubmitting}
+                categoryError={categoryError}
+                suggesting={suggesting}
+                onSuggestingChange={setSuggesting}
+              />
 
               {/* AI-generated structured fields */}
               {hasAiFields && (
@@ -264,22 +326,6 @@ export default function CreateInternshipPage() {
                           <span key={i} className="inline-flex items-center gap-1 bg-amber-50 text-amber-800 text-xs px-2 py-1 rounded-md">
                             {r}
                             <button type="button" onClick={() => removeTag(requirements, setRequirements, i)} className="text-amber-400 hover:text-amber-600">
-                              <X className="h-3 w-3" />
-                            </button>
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {skillsRequired.length > 0 && (
-                    <div className="space-y-1">
-                      <Label className="text-sm">{t('fields.skillsRequired')}</Label>
-                      <div className="flex flex-wrap gap-1.5">
-                        {skillsRequired.map((s, i) => (
-                          <span key={i} className="inline-flex items-center gap-1 bg-green-50 text-green-800 text-xs px-2 py-1 rounded-md">
-                            {s}
-                            <button type="button" onClick={() => removeTag(skillsRequired, setSkillsRequired, i)} className="text-green-400 hover:text-green-600">
                               <X className="h-3 w-3" />
                             </button>
                           </span>

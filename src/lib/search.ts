@@ -47,3 +47,52 @@ export function createInternshipSearch(internships: Internship[]) {
     includeScore: true,
   })
 }
+
+export interface InternshipFilters {
+  category: string | null
+  skills: string[]
+}
+
+// Category must match exactly; with skills selected, the internship must have at
+// least one of them (case-insensitive) — "any" keeps results useful while data is sparse.
+export function filterInternships<T extends Pick<Internship, 'category' | 'skills_required'>>(
+  internships: T[],
+  { category, skills }: InternshipFilters
+): T[] {
+  const wanted = new Set(skills.map((s) => s.toLowerCase()))
+  return internships.filter((i) => {
+    if (category && i.category !== category) return false
+    if (wanted.size > 0 && !(i.skills_required || []).some((s) => wanted.has(s.toLowerCase()))) return false
+    return true
+  })
+}
+
+export interface Facet {
+  value: string
+  count: number
+}
+
+// Category and skill counts across the given internships, most common first
+export function getInternshipFacets(
+  internships: Pick<Internship, 'category' | 'skills_required'>[]
+): { categories: Facet[]; skills: Facet[] } {
+  const categories = new Map<string, number>()
+  const skills = new Map<string, { label: string; count: number }>()
+  for (const i of internships) {
+    if (i.category) categories.set(i.category, (categories.get(i.category) || 0) + 1)
+    const seen = new Set<string>()
+    for (const s of i.skills_required || []) {
+      const key = s.toLowerCase()
+      if (seen.has(key)) continue
+      seen.add(key)
+      const entry = skills.get(key)
+      if (entry) entry.count++
+      else skills.set(key, { label: s, count: 1 })
+    }
+  }
+  const byCount = (a: Facet, b: Facet) => b.count - a.count || a.value.localeCompare(b.value)
+  return {
+    categories: [...categories].map(([value, count]) => ({ value, count })).sort(byCount),
+    skills: [...skills.values()].map(({ label, count }) => ({ value: label, count })).sort(byCount),
+  }
+}

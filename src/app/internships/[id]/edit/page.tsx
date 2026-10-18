@@ -13,6 +13,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { createClientSupabase } from '@/lib/supabase'
 import { useTranslations } from '@/lib/i18n'
 import DashboardNav from '@/components/DashboardNav'
+import InternshipTagsFields from '@/components/InternshipTagsFields'
+import { isInternshipCategory } from '@/lib/categories'
 import type { InternshipStatus } from '@/types/database'
 
 type EditInternshipInput = {
@@ -39,10 +41,17 @@ export default function EditInternshipPage() {
 
   const [loading, setLoading] = useState(true)
   const [currentStatus, setCurrentStatus] = useState<InternshipStatus>('draft')
+  const [category, setCategory] = useState('')
+  const [categoryError, setCategoryError] = useState('')
+  const [skills, setSkills] = useState<string[]>([])
+  const [requirements, setRequirements] = useState<string[]>([])
+  const [responsibilities, setResponsibilities] = useState<string[]>([])
+  const [suggesting, setSuggesting] = useState(false)
 
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors, isSubmitting },
     setError: setFormError,
     reset,
@@ -71,6 +80,10 @@ export default function EditInternshipPage() {
       }
 
       setCurrentStatus(internship.status)
+      setCategory(isInternshipCategory(internship.category) ? internship.category : '')
+      setSkills(internship.skills_required || [])
+      setRequirements(internship.requirements || [])
+      setResponsibilities(internship.responsibilities || [])
       reset({
         title: internship.title,
         description: internship.description,
@@ -83,6 +96,13 @@ export default function EditInternshipPage() {
   }, [router, internshipId, reset])
 
   const submitForm = async (data: EditInternshipInput, status: InternshipStatus) => {
+    // Category is what students filter by, so published internships need one
+    if (status === 'active' && !category) {
+      setCategoryError(t('tags.categoryRequired'))
+      return
+    }
+    setCategoryError('')
+
     try {
       const supabase = createClientSupabase()
       const row = {
@@ -90,6 +110,8 @@ export default function EditInternshipPage() {
         description: data.description,
         location: data.location || null,
         remote_allowed: data.remoteAllowed,
+        category: category || null,
+        skills_required: skills,
         status,
       }
 
@@ -191,6 +213,24 @@ export default function EditInternshipPage() {
                 />
                 <Label htmlFor="remoteAllowed">{t('fields.remoteAllowed')}</Label>
               </div>
+
+              <InternshipTagsFields
+                category={category}
+                onCategoryChange={(c) => { setCategory(c); if (c) setCategoryError('') }}
+                skills={skills}
+                onSkillsChange={setSkills}
+                getPosting={() => ({
+                  title: getValues('title') || '',
+                  description: getValues('description') || '',
+                  requirements,
+                  responsibilities,
+                  skills,
+                })}
+                disabled={isSubmitting}
+                categoryError={categoryError}
+                suggesting={suggesting}
+                onSuggestingChange={setSuggesting}
+              />
 
               <div className="flex gap-3 pt-2">
                 <Button

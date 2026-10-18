@@ -75,6 +75,7 @@ export interface Internship {
   requirements?: string[]
   responsibilities?: string[]
   skills_required?: string[]
+  category?: string | null
   location?: string
   remote_allowed: boolean
   duration_months?: string

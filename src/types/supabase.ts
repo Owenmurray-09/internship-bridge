@@ -139,6 +139,7 @@ export type Database = {
           responsibilities: string[] | null
           school_id: string | null
           skills_required: string[] | null
+          category: string | null
           start_date: string | null
           status: Database["public"]["Enums"]["internship_status"] | null
           title: string
@@ -158,6 +159,7 @@ export type Database = {
           responsibilities?: string[] | null
           school_id?: string | null
           skills_required?: string[] | null
+          category?: string | null
           start_date?: string | null
           status?: Database["public"]["Enums"]["internship_status"] | null
           title: string
@@ -177,6 +179,7 @@ export type Database = {
           responsibilities?: string[] | null
           school_id?: string | null
           skills_required?: string[] | null
+          category?: string | null
           start_date?: string | null
           status?: Database["public"]["Enums"]["internship_status"] | null
           title?: string

@@ -436,7 +436,15 @@
       "noInternships": "No hay prácticas disponibles ahora. ¡Vuelve pronto!",
       "noResults": "Ninguna práctica coincide con tu búsqueda.",
       "remote": "Remoto",
-      "viewDetails": "Ver Detalles"
+      "viewDetails": "Ver Detalles",
+      "filters": {
+        "category": "Categoría",
+        "skills": "Habilidades",
+        "showAll": "Ver todas ({{count}})",
+        "showFewer": "Ver menos",
+        "clear": "Quitar filtros",
+        "noMatches": "Ninguna pasantía coincide con estos filtros."
+      }
     },
     "detail": {
       "backToList": "Volver a prácticas",
@@ -495,6 +503,21 @@
       "success": {
         "published": "¡Práctica publicada exitosamente!",
         "draftSaved": "¡Borrador guardado exitosamente!"
+      },
+      "tags": {
+        "intro": "La categoría y las habilidades ayudan a los estudiantes a encontrar esta pasantía.",
+        "suggest": "Sugerir con IA",
+        "suggesting": "Sugiriendo...",
+        "suggestError": "No se pudieron obtener sugerencias. Por favor elígelas tú.",
+        "suggestNeedsContent": "Primero agrega un título y una descripción.",
+        "category": "Categoría",
+        "categoryPlaceholder": "Selecciona una categoría",
+        "categoryRequired": "Por favor elige una categoría antes de publicar.",
+        "skills": "Habilidades",
+        "skillsPlaceholder": "ej., Servicio al cliente",
+        "skillsHint": "Etiquetas cortas, de 1 a 3 palabras. Presiona Enter para agregar. Hasta {{max}}.",
+        "add": "Agregar",
+        "removeSkill": "Quitar {{skill}}"
       }
     },
     "apply": {
@@ -553,6 +576,18 @@
         "confirm": "Eliminar",
         "cancel": "Cancelar"
       }
+    },
+    "categories": {
+      "technology": "Tecnología",
+      "food_hospitality": "Comida y Hospitalidad",
+      "retail": "Comercio",
+      "healthcare": "Salud",
+      "arts_media": "Artes y Medios",
+      "sports_recreation": "Deportes y Recreación",
+      "education": "Educación",
+      "trades": "Oficios",
+      "business_office": "Negocios y Oficina",
+      "other": "Otro"
     }
   },
   "emails": {

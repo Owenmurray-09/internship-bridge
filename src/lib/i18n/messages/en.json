@@ -436,7 +436,15 @@
       "noInternships": "No internships available right now. Check back soon!",
       "noResults": "No internships match your search.",
       "remote": "Remote",
-      "viewDetails": "View Details"
+      "viewDetails": "View Details",
+      "filters": {
+        "category": "Category",
+        "skills": "Skills",
+        "showAll": "Show all ({{count}})",
+        "showFewer": "Show fewer",
+        "clear": "Clear filters",
+        "noMatches": "No internships match these filters."
+      }
     },
     "detail": {
       "backToList": "Back to internships",
@@ -495,6 +503,21 @@
       "success": {
         "published": "Internship published successfully!",
         "draftSaved": "Draft saved successfully!"
+      },
+      "tags": {
+        "intro": "Category and skills help students find this internship.",
+        "suggest": "Suggest with AI",
+        "suggesting": "Suggesting...",
+        "suggestError": "Couldn't get suggestions. Please pick them yourself.",
+        "suggestNeedsContent": "Add a title and description first.",
+        "category": "Category",
+        "categoryPlaceholder": "Select a category",
+        "categoryRequired": "Please choose a category before publishing.",
+        "skills": "Skills",
+        "skillsPlaceholder": "e.g., Customer service",
+        "skillsHint": "Short tags, 1-3 words each. Press Enter to add. Up to {{max}}.",
+        "add": "Add",
+        "removeSkill": "Remove {{skill}}"
       }
     },
     "apply": {
@@ -553,6 +576,18 @@
         "confirm": "Delete",
         "cancel": "Cancel"
       }
+    },
+    "categories": {
+      "technology": "Technology",
+      "food_hospitality": "Food & Hospitality",
+      "retail": "Retail",
+      "healthcare": "Healthcare",
+      "arts_media": "Arts & Media",
+      "sports_recreation": "Sports & Recreation",
+      "education": "Education",
+      "trades": "Trades",
+      "business_office": "Business & Office",
+      "other": "Other"
     }
   },
   "emails": {

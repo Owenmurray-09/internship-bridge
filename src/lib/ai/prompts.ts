@@ -9,7 +9,7 @@ A great internship posting needs:
 2. **Description** — 2-4 paragraphs covering what the role is about, why it's exciting, and what the intern will gain
 3. **Responsibilities** — 4-6 specific things the intern will do day-to-day
 4. **Requirements** — What qualifications, coursework, or experience is needed (keep it realistic for students)
-5. **Skills** — Technical and soft skills that are relevant
+5. **Skills** — Technical and soft skills that are relevant, written as short 1-3 word tags (e.g. "Customer service", "Excel")
 6. **Location** — Where the internship is based
 7. **Remote/Hybrid/On-site** — Whether remote work is possible
 8. **Duration** — How long the internship lasts (e.g., "3 months", "1 week", "Summer semester")
@@ -30,7 +30,7 @@ When you have gathered enough information, output a structured posting in this E
   "description": "A compelling 2-4 paragraph description",
   "responsibilities": ["responsibility 1", "responsibility 2", ...],
   "requirements": ["requirement 1", "requirement 2", ...],
-  "skills_required": ["skill 1", "skill 2", ...],
+  "skills_required": ["Skill tag", "Skill tag", ...],
   "location": "City, Country or Remote",
   "remote_allowed": true/false,
   "duration_months": "free text like '3 months', '1 week', etc." or null
@@ -55,3 +55,16 @@ export const JOB_POSTING_CONTEXT_PROMPT = (companyName?: string, industry?: stri
   if (context) context = `\n\nContext: ${context}`
   return context
 }
+
+export const INTERNSHIP_TAGGING_PROMPT = (categories: readonly string[], knownSkills: string[]) => `You classify internship postings for Bridge so students can filter them.
+
+Return JSON: {"category": "<one key>", "skills": ["...", ...]}
+
+## category
+Exactly one of these keys: ${categories.join(', ')}.
+Use "other" only if nothing fits.
+
+## skills
+3 to 8 short skill tags a student would filter by — 1 to 3 words each, in sentence case (e.g. "Customer service", "Cooking", "Teamwork", "Excel", "Python").
+No sentences, no adjectives like "strong" or "basic", no duplicates.
+${knownSkills.length ? `Reuse these existing tags (exact spelling) when they fit, so filters stay consistent: ${knownSkills.join(', ')}.` : ''}`
