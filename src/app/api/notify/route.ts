@@ -28,7 +28,14 @@ function createServiceSupabase() {
   )
 }
 
+const PRODUCTION_URL = 'https://www.owenmurraymusic.com'
+
 function getBaseUrl(): string {
+  // VERCEL_URL is the per-deployment URL, which sits behind Vercel's
+  // deployment protection — never put it in production emails.
+  if (process.env.VERCEL_ENV === 'production') {
+    return PRODUCTION_URL
+  }
   if (process.env.NEXT_PUBLIC_VERCEL_URL) {
     return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
   }
