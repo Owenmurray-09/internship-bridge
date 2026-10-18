@@ -43,11 +43,12 @@ export function buildInternshipEmbeddingText(internship: {
 
 export function buildStudentProfileEmbeddingText(profile: {
   bio?: string | null
+  experience?: string | null
   email?: string | null
   graduation_year?: number | null
   gender?: string | null
 }): string {
-  return [profile.bio, profile.email, profile.graduation_year?.toString()]
+  return [profile.bio, profile.experience, profile.email, profile.graduation_year?.toString()]
     .filter(Boolean)
     .join(' ')
 }

@@ -44,6 +44,8 @@ export interface StudentProfile {
   gender?: string
   birth_year?: number
   bio?: string
+  experience?: string
+  resume_path?: string
   created_at: string
   updated_at: string
   user?: User

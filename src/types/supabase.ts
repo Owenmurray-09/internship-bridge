@@ -371,6 +371,8 @@ export type Database = {
       student_profiles: {
         Row: {
           bio: string | null
+          experience: string | null
+          resume_path: string | null
           birth_year: number | null
           created_at: string
           email: string | null
@@ -382,6 +384,8 @@ export type Database = {
         }
         Insert: {
           bio?: string | null
+          experience?: string | null
+          resume_path?: string | null
           birth_year?: number | null
           created_at?: string
           email?: string | null
@@ -393,6 +397,8 @@ export type Database = {
         }
         Update: {
           bio?: string | null
+          experience?: string | null
+          resume_path?: string | null
           birth_year?: number | null
           created_at?: string
           email?: string | null

@@ -284,14 +284,17 @@
       "graduationYear": "Año de Graduación",
       "birthYear": "Año de Nacimiento",
       "gender": "Género",
-      "bio": "Sobre Mí"
+      "bio": "Sobre Mí",
+      "experience": "Experiencia y Logros",
+      "resume": "Currículum (PDF, opcional)"
     },
     "placeholders": {
       "email": "tu@ejemplo.com",
       "graduationYear": "ej., 2027",
       "birthYear": "ej., 2009",
       "gender": "Seleccionar género (opcional)",
-      "bio": "Cuéntale a los empleadores un poco sobre ti..."
+      "bio": "Cuéntale a los empleadores un poco sobre ti...",
+      "experience": "Comparte lo que has hecho y de lo que estás orgulloso. Por ejemplo:\n• Trabajos o pasantías (dónde, cuándo, qué hiciste)\n• Proyectos escolares o personales\n• Voluntariado y servicio comunitario\n• Clubes, deportes o roles de liderazgo\n• Premios, certificaciones o reconocimientos\n• Habilidades (idiomas, programas, herramientas)"
     },
     "genderOptions": {
       "male": "Masculino",
@@ -301,7 +304,22 @@
     },
     "submitCreate": "Crear Perfil",
     "submitEdit": "Guardar Cambios",
-    "submitting": "Guardando..."
+    "submitting": "Guardando...",
+    "resume": {
+      "hint": "Sube un PDF de hasta 5 MB. Puedes guardar tu perfil sin uno.",
+      "choose": "Subir PDF",
+      "replace": "Reemplazar",
+      "remove": "Quitar",
+      "view": "Ver",
+      "uploading": "Subiendo...",
+      "current": "Currículum actual",
+      "selected": "Se subirá al guardar",
+      "errors": {
+        "type": "Por favor elige un archivo PDF.",
+        "size": "El archivo es demasiado grande. El límite es 5 MB.",
+        "upload": "No se pudo subir tu currículum. Inténtalo de nuevo."
+      }
+    }
   },
   "companyProfile": {
     "loading": "Cargando...",
@@ -405,7 +423,9 @@
         "noComments": "Sin comentarios aún.",
         "deleteConfirm": "¿Eliminar este comentario?",
         "edited": "editado"
-      }
+      },
+      "experience": "Experiencia y Logros",
+      "viewResume": "Ver currículum (PDF)"
     }
   },
   "internships": {

@@ -284,14 +284,17 @@
       "graduationYear": "Graduation Year",
       "birthYear": "Birth Year",
       "gender": "Gender",
-      "bio": "About Me"
+      "bio": "About Me",
+      "experience": "Experience & Accomplishments",
+      "resume": "Resume (PDF, optional)"
     },
     "placeholders": {
       "email": "you@example.com",
       "graduationYear": "e.g., 2027",
       "birthYear": "e.g., 2009",
       "gender": "Select gender (optional)",
-      "bio": "Tell employers a little about yourself..."
+      "bio": "Tell employers a little about yourself...",
+      "experience": "Share what you've done and are proud of. For example:\n• Jobs or internships (where, when, what you did)\n• School or personal projects\n• Volunteering and community service\n• Clubs, sports, or leadership roles\n• Awards, certifications, or honors\n• Skills (languages, software, tools)"
     },
     "genderOptions": {
       "male": "Male",
@@ -301,7 +304,22 @@
     },
     "submitCreate": "Create Profile",
     "submitEdit": "Save Changes",
-    "submitting": "Saving..."
+    "submitting": "Saving...",
+    "resume": {
+      "hint": "Upload a PDF up to 5 MB. You can save your profile without one.",
+      "choose": "Upload PDF",
+      "replace": "Replace",
+      "remove": "Remove",
+      "view": "View",
+      "uploading": "Uploading...",
+      "current": "Current resume",
+      "selected": "Will upload when you save",
+      "errors": {
+        "type": "Please choose a PDF file.",
+        "size": "File is too large. The limit is 5 MB.",
+        "upload": "Couldn't upload your resume. Please try again."
+      }
+    }
   },
   "companyProfile": {
     "loading": "Loading...",
@@ -405,7 +423,9 @@
         "noComments": "No comments yet.",
         "deleteConfirm": "Delete this comment?",
         "edited": "edited"
-      }
+      },
+      "experience": "Experience & Accomplishments",
+      "viewResume": "View resume (PDF)"
     }
   },
   "internships": {

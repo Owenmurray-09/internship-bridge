@@ -85,7 +85,20 @@ export const studentProfileSchema = z.object({
     .string()
     .max(500, 'Bio too long')
     .optional(),
+  experience: z
+    .string()
+    .max(2000, 'Experience too long')
+    .optional(),
 })
+
+// Resume uploads: PDF only, up to 5 MB (matches the resumes storage bucket)
+export const RESUME_MAX_BYTES = 5 * 1024 * 1024
+
+export function validateResumeFile(file: { type: string; size: number }): 'type' | 'size' | null {
+  if (file.type !== 'application/pdf') return 'type'
+  if (file.size > RESUME_MAX_BYTES) return 'size'
+  return null
+}
 
 export const companyProfileSchema = z.object({
   companyName: z

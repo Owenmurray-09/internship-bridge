@@ -39,6 +39,8 @@ interface ApplicationRow {
     email: string | null
     graduation_year: number | null
     bio: string | null
+    experience: string | null
+    resume_path: string | null
     users: {
       full_name: string | null
     }
@@ -79,7 +81,7 @@ export default function ReviewApplicationsPage() {
       .select(`
         id, cover_letter, status, applied_at, reviewed_at, notes, internship_id, student_id,
         internships!inner(title, company_id),
-        student_profiles(email, graduation_year, bio, users(full_name))
+        student_profiles(email, graduation_year, bio, experience, resume_path, users(full_name))
       `)
       .eq('internships.company_id', cId)
       .order('applied_at', { ascending: false })
@@ -121,6 +123,18 @@ export default function ReviewApplicationsPage() {
       await fetchComments(applicationId)
     }
     setSubmittingComment(null)
+  }
+
+  const openResume = async (path: string) => {
+    // Open the tab synchronously so popup blockers allow it, then point it at a short-lived signed URL
+    const tab = window.open('', '_blank')
+    const supabase = createClientSupabase()
+    const { data } = await supabase.storage.from('resumes').createSignedUrl(path, 60)
+    if (data?.signedUrl && tab) {
+      tab.location.href = data.signedUrl
+    } else {
+      tab?.close()
+    }
   }
 
   const deleteComment = async (commentId: string, applicationId: string) => {
@@ -310,6 +324,21 @@ export default function ReviewApplicationsPage() {
                       <div className="bg-gray-50 rounded-lg p-4">
                         <h4 className="text-sm font-medium text-gray-700 mb-2">{t('studentBio')}</h4>
                         <p className="text-sm text-gray-600">{student.bio}</p>
+                      </div>
+                    )}
+
+                    {isExpanded && student?.experience && (
+                      <div className="bg-gray-50 rounded-lg p-4">
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">{t('experience')}</h4>
+                        <p className="text-sm text-gray-600 whitespace-pre-line">{student.experience}</p>
+                      </div>
+                    )}
+
+                    {isExpanded && student?.resume_path && (
+                      <div>
+                        <Button variant="outline" size="sm" onClick={() => openResume(student.resume_path!)}>
+                          {t('viewResume')}
+                        </Button>
                       </div>
                     )}
 

@@ -3,6 +3,8 @@ import {
   loginSchema,
   signupSchema,
   studentProfileSchema,
+  validateResumeFile,
+  RESUME_MAX_BYTES,
   companyProfileSchema,
   internshipSchema,
   applicationSchema,
@@ -114,6 +116,40 @@ describe('studentProfileSchema', () => {
       bio: 'a'.repeat(500),
     })
     expect(result.success).toBe(true)
+  })
+  it('accepts a profile without experience', () => {
+    const result = studentProfileSchema.safeParse(validProfile)
+    expect(result.success).toBe(true)
+  })
+
+  it('accepts experience at exactly 2000 characters', () => {
+    const result = studentProfileSchema.safeParse({
+      ...validProfile,
+      experience: 'a'.repeat(2000),
+    })
+    expect(result.success).toBe(true)
+  })
+
+  it('rejects experience exceeding 2000 characters', () => {
+    const result = studentProfileSchema.safeParse({
+      ...validProfile,
+      experience: 'a'.repeat(2001),
+    })
+    expect(result.success).toBe(false)
+  })
+})
+
+describe('validateResumeFile', () => {
+  it('accepts a PDF within the size limit', () => {
+    expect(validateResumeFile({ type: 'application/pdf', size: RESUME_MAX_BYTES })).toBeNull()
+  })
+
+  it('rejects non-PDF files', () => {
+    expect(validateResumeFile({ type: 'application/msword', size: 1000 })).toBe('type')
+  })
+
+  it('rejects PDFs over 5 MB', () => {
+    expect(validateResumeFile({ type: 'application/pdf', size: RESUME_MAX_BYTES + 1 })).toBe('size')
   })
 })
 
